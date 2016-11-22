@@ -1,0 +1,9 @@
+target/
+*.class
+.settings/
+
+# Eclipse
+#.project
+
+# JDT-specific (Eclipse Java Development Tools)
+#.classpath
