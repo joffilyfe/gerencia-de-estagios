@@ -6,7 +6,7 @@ Para encontrar as informações sobre o projeto acesse a nossa [Wiki Page](https
 ## Equipe
 - André Alencar
 - Joffily Ferreira
-- Maria Aparecia
+- Maria Aparecida
 - Marianna Veríssimo
 - Rafael Medeiros
 
