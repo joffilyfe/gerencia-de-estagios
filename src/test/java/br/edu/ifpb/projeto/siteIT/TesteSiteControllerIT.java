@@ -25,7 +25,7 @@ public class TesteSiteControllerIT {
 	@Test
 	public void testa_botao_de_codigo_fonte() {
 		WebElement element = driver.findElement(By.className(("btn-success")));
-		assertEquals("Código fonte", element.getText());
+		assertEquals("Código fontex", element.getText());
 	}
 
 	@Test
