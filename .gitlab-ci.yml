@@ -5,6 +5,7 @@ variables:
 cache:
   paths:
     - /root/.m2/repository/
+
 .validate: &validate
   stage: build
   script:
@@ -14,7 +15,9 @@ cache:
 .verify: &verify
   stage: test
   script:
-    - 'mvn $MAVEN_CLI_OPTS verify site site:stage'
+    - 'nohup mvn exec:java -Dexec.mainClass="org.hsqldb.server.Server" -Dexec.args="-database.0 file:target/data/databases/estagiarios --dbname.0 estagiarios" &'
+    - 'mvn $MAVEN_CLI_OPTS test-compile'
+    - 'mvn $MAVEN_CLI_OPTS verify'
   except:
     - master
 
@@ -22,6 +25,7 @@ cache:
 validate:jdk8:
   <<: *validate
   image: maven:3.3.9-jdk-8
+
 
 # Verify merge requests using JDK8
 verify:jdk8:
