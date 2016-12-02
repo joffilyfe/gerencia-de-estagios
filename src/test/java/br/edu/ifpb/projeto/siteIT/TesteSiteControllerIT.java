@@ -1,4 +1,4 @@
-package br.edu.ifpb.projeto.controller;
+package br.edu.ifpb.projeto.siteIT;
 
 import static org.junit.Assert.assertEquals;
 
@@ -10,10 +10,10 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 
 
-public class TesteSiteController {
+public class TesteSiteControllerIT {
 	private WebDriver driver;
 	private String localhost = "http://localhost:8080/estagios";
-	
+
 	@Before
 	public void setUp() {
 		driver = new HtmlUnitDriver();
@@ -21,13 +21,13 @@ public class TesteSiteController {
 		// Abre a página
 		driver.get(localhost + "/site");
 	}
-	
+
 	@Test
 	public void testa_botao_de_codigo_fonte() {
 		WebElement element = driver.findElement(By.className(("btn-success")));
 		assertEquals("Código fonte", element.getText());
 	}
-	
+
 	@Test
 	public void testa_link_para_home() {
 		WebElement el = driver.findElement(By.linkText("Home"));
