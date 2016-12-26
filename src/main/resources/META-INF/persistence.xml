@@ -4,6 +4,9 @@
 	version="1.0">
 	<persistence-unit name="estagiarios">
 		<provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+		<class>br.edu.ifpb.projeto.model.Aluno</class>
+		<class>br.edu.ifpb.projeto.model.Usuario</class>
+		<class>br.edu.ifpb.projeto.model.Empresa</class>
 		<exclude-unlisted-classes>false</exclude-unlisted-classes>
 		<properties>
 			<property name="hibernate.dialect" value="org.hibernate.dialect.HSQLDialect" />
