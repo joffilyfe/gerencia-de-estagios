@@ -7,11 +7,13 @@
 		<class>br.edu.ifpb.projeto.model.Aluno</class>
 		<class>br.edu.ifpb.projeto.model.Usuario</class>
 		<class>br.edu.ifpb.projeto.model.Empresa</class>
+		<class>br.edu.ifpb.projeto.model.Vaga</class>
 		<exclude-unlisted-classes>false</exclude-unlisted-classes>
 		<properties>
 			<property name="hibernate.dialect" value="org.hibernate.dialect.HSQLDialect" />
 			<property name="hibernate.connection.driver_class" value="org.hsqldb.jdbc.JDBCDriver" />
 			<property name="hibernate.hbm2ddl.auto" value="update" />
+			<property name="eclipselink.ddl-generation" value = "create-tables"/>
 			<property name="hibernate.connection.username" value="sa" />
 			<property name="hibernate.connection.password" value="" />
 			<property name="hibernate.connection.url" value="jdbc:hsqldb:hsql://localhost/estagiarios" />
