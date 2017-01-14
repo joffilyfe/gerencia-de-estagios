@@ -32,10 +32,17 @@ public class SingleServlet extends HttpServlet {
 
 			try {
 				Class<?> controller = Class.forName(controllerPackage + controllerName);
-				Object obj = controller.newInstance();
-				Method method = controller.getMethod(methodName, HttpServletRequest.class, HttpServletResponse.class);
-				dispatcher = (RequestDispatcher) method.invoke(obj, request, response);
+
+				// Create a new classed with request and response objects
+				Object obj = controller.getDeclaredConstructor(HttpServletRequest.class, HttpServletResponse.class).newInstance(request, response);
+
+				// Call the method
+				Method method = controller.getMethod(methodName);
+
+				// dispatch with that result of method invoked previously 
+				dispatcher = (RequestDispatcher) method.invoke(obj);
 			} catch (Exception e) {
+				dispatcher = request.getRequestDispatcher("/view/helper/404.jsp");
 				e.printStackTrace();
 			}
 		}
