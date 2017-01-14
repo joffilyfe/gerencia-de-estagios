@@ -5,6 +5,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 
 @Entity
 public class Estagio {
@@ -13,7 +14,7 @@ public class Estagio {
 	private Integer id;
 	@ManyToOne
 	private Empresa empresa;
-	@ManyToOne
+	@OneToOne
 	private Aluno aluno;
 	@ManyToOne
 	private Vaga vaga;
@@ -25,7 +26,6 @@ public class Estagio {
 		this.aluno = aluno;
 		this.vaga = vaga;
 	}
-
 	
 	public Integer getId() {
 		return id;

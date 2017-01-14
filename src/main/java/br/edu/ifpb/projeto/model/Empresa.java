@@ -1,6 +1,11 @@
 package br.edu.ifpb.projeto.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.OneToMany;
 
 @Entity
 public class Empresa extends Usuario {
@@ -19,10 +24,32 @@ public class Empresa extends Usuario {
 	private String fax;
 	private Boolean habilitada;
 
+	@OneToMany(mappedBy="empresa", cascade=CascadeType.REMOVE, orphanRemoval=true)
+	private List<Estagio> estagios = new ArrayList<Estagio>();
+
+    @OneToMany(mappedBy="empresa", cascade = CascadeType.REMOVE, orphanRemoval = true)
+	private List<Vaga> vagas = new ArrayList<Vaga>();
+
 	public Empresa() {}
-	
+
 	public Empresa(String nome, String email) {
 		super(nome, email);
+	}
+
+	public void addEstagio(Estagio estagio) {
+		this.estagios.add(estagio);
+	}
+
+	public List<Estagio> getEstagios() {
+		return this.estagios;
+	}
+
+	public void addVaga(Vaga vaga) {
+		this.vagas.add(vaga);
+	}
+
+	public List<Vaga> getVagas() {
+		return this.vagas;
 	}
 
 	public Integer getCnpj() {

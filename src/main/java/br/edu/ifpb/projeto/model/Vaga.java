@@ -2,11 +2,13 @@ package br.edu.ifpb.projeto.model;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 
 @Entity
@@ -24,15 +26,14 @@ public class Vaga {
 	private String preRequisitos;
 	private Date dataDivulgacao;
 	private Date dataEntrevista;
-	private ArrayList<Aluno> alunos = new ArrayList<Aluno>();
+	@ManyToMany
+	private List<Aluno> alunos = new ArrayList<Aluno>();
 	@ManyToOne
 	private Empresa empresa;
-	private Boolean habilitada = false;
-	
 
 	public Vaga() {}
 	
-	private Vaga(String descricao, Empresa empresa) {
+	public Vaga(String descricao, Empresa empresa) {
 		this.descricao = descricao;
 		this.empresa = empresa;
 	}
@@ -135,13 +136,17 @@ public class Vaga {
 	}
 
 
-	public ArrayList<Aluno> getAlunos() {
+	public List<Aluno> getAlunos() {
 		return alunos;
 	}
 
 
 	public void setAlunos(ArrayList<Aluno> alunos) {
 		this.alunos = alunos;
+	}
+
+	public void addAluno(Aluno aluno) {
+		this.alunos.add(aluno);
 	}
 
 
@@ -155,18 +160,9 @@ public class Vaga {
 	}
 
 
-	public Boolean getHabilitada() {
-		return habilitada;
-	}
-
-
-	public void setHabilitada(Boolean habilitada) {
-		this.habilitada = habilitada;
-	}
-
 	@Override
 	public String toString() {
-		return "Vaga [descricao=" + descricao + ", empresa=" + empresa + ", habilitada=" + habilitada + "]";
+		return "Vaga [descricao=" + descricao + ", empresa=" + empresa + ", habilitada=" + "]";
 	}
 
 }

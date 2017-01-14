@@ -1,9 +1,15 @@
 package br.edu.ifpb.projeto.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToOne;
 
 @Entity
 public class Aluno {
@@ -14,10 +20,10 @@ public class Aluno {
 	private String email;
 	private Integer matricula;
 	private String competencias;
-	// É preciso criar a entidade Estagio
-	//private Estagio estagio;
-	//É preciso criar a entity Vaga
-	//private ArrayList<Vaga> vagas;
+	@OneToOne(mappedBy="aluno", targetEntity=Estagio.class, cascade=CascadeType.ALL)
+	private Estagio estagio;
+	@ManyToMany(mappedBy="alunos")
+	private List<Vaga> vagas = new ArrayList<Vaga>();
 	
 	public Aluno() {}
 
@@ -25,6 +31,10 @@ public class Aluno {
 		this.nome = nome;
 		this.email = email;
 		this.matricula = matricula;
+	}
+
+	public List<Vaga> getVagas() {
+		return this.vagas;
 	}
 
 	public String getNome() {
