@@ -1,5 +1,7 @@
 package br.edu.ifpb.projeto.model;
 
+import java.security.MessageDigest;
+
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.Entity;
@@ -8,6 +10,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.xml.bind.DatatypeConverter;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
@@ -22,9 +25,9 @@ public class Usuario {
 	private String email;
 	private String senha;
 	private Boolean coordenador;
-	
+
 	public Usuario() {}
-	
+
 	public Usuario(String nome, String email) {
 		this.nome = nome;
 		this.email = email;
@@ -59,7 +62,12 @@ public class Usuario {
 	}
 
 	public void setSenha(String senha) {
-		this.senha = senha;
+
+		try {
+			this.senha = DatatypeConverter.printHexBinary(MessageDigest.getInstance("SHA-256").digest(senha.getBytes("UTF-8")));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	public boolean isCoordenador() {
