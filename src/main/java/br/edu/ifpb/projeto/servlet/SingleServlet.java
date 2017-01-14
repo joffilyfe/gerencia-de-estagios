@@ -42,6 +42,7 @@ public class SingleServlet extends HttpServlet {
 				// dispatch with that result of method invoked previously 
 				dispatcher = (RequestDispatcher) method.invoke(obj);
 			} catch (Exception e) {
+				dispatcher = request.getRequestDispatcher("/view/helper/404.jsp");
 				e.printStackTrace();
 			}
 		}
