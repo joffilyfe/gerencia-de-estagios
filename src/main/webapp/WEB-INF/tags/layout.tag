@@ -1,4 +1,5 @@
 <%@ tag language="java" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ attribute name="title" %>
 
 <!DOCTYPE html>
@@ -10,6 +11,35 @@
 		<link href="${pageContext.request.contextPath}/assets/css/main.css" rel="stylesheet">
 	</head>
 	<body>
+		<div class="container">
+			<c:if test="${not empty errors}">
+				<div align="left">
+					<div>
+						<c:forEach var="msg" items="${errors}">
+							<div class="alert alert-danger" role="alert">${msg}</div>
+						</c:forEach>
+					</div>
+				</div>
+			</c:if>
+			<c:if test="${not empty infos}">
+				<div align="left">
+					<div>
+						<c:forEach var="msg" items="${infos}">
+							<div class="alert alert-info" role="alert">${msg}</div>
+						</c:forEach>
+					</div>
+				</div>
+			</c:if>
+			<c:if test="${not empty success}">
+				<div align="left">
+					<div>
+						<c:forEach var="msg" items="${success}">
+							<div class="alert alert-success" role="alert">${msg}</div>
+						</c:forEach>
+					</div>
+				</div>
+			</c:if>
+		</div>
 		<div class="container">
 			<div class="header clearfix">
 		        <nav>
