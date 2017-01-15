@@ -8,12 +8,15 @@ import java.util.List;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import br.edu.ifpb.projeto.dao.AlunoDAO;
 import br.edu.ifpb.projeto.dao.EmpresaDAO;
 import br.edu.ifpb.projeto.dao.PersistenceUtil;
+import br.edu.ifpb.projeto.dao.UsuarioDAO;
 import br.edu.ifpb.projeto.model.Aluno;
 import br.edu.ifpb.projeto.model.Empresa;
+import br.edu.ifpb.projeto.model.Usuario;
 
 
 public class UsuarioController extends ApplicationController {
@@ -21,6 +24,7 @@ public class UsuarioController extends ApplicationController {
 	// DAOS
 	private EmpresaDAO empresaDAO = new EmpresaDAO(PersistenceUtil.getCurrentEntityManager());
 	private AlunoDAO alunoDAO = new AlunoDAO(PersistenceUtil.getCurrentEntityManager());
+	private UsuarioDAO usuarioDAO = new UsuarioDAO(PersistenceUtil.getCurrentEntityManager());
 
 	public UsuarioController(HttpServletRequest request, HttpServletResponse response) {
 		super(request, response);
@@ -66,5 +70,35 @@ public class UsuarioController extends ApplicationController {
 		return dispatcher;
 	}
 
+	public RequestDispatcher login() throws IOException {
+		HttpSession session = request.getSession();
+		List<String> fields = new ArrayList<>(Arrays.asList("email", "senha"));
+		RequestDispatcher dispatcher = this.request.getRequestDispatcher("/view/usuario/login.jsp");
 
+
+		// Se já estiver logado, redireciona para home
+		if (session.getAttribute("usuario") != null) {
+			response.sendRedirect(request.getServletContext().getContextPath());
+		}
+
+		// Se o usuário não estiver na sessão
+		if (request.getMethod().equals("POST")) {
+
+			// Se o formulário for válido
+			if (super.validaFormulario(fields)) {
+				Usuario usuario = usuarioDAO.getByCredentials(request.getParameter("email"), request.getParameter("senha"));
+
+				// Se o usuário não for encontrado, manda mensagem de erro.
+				if (usuario == null) {
+					super.addFlashMessage("error", "E-mail ou senha incorretos");
+					return dispatcher;
+				}
+
+				session.setAttribute("usuario", usuario);
+				super.addFlashMessage("success", "Login realizado com sucesso");
+				response.sendRedirect(request.getServletContext().getContextPath());
+			}
+		}
+		return dispatcher;
+	}
 }
