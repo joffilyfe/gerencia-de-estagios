@@ -10,11 +10,13 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.NamedQuery;
 import javax.xml.bind.DatatypeConverter;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 @DiscriminatorColumn(name = "tipo_usuario")
+@NamedQuery(query = "SELECT u FROM Usuario u WHERE u.email = :email and u.senha = :senha", name = "authorize user")
 public class Usuario {
 
 	@Id
