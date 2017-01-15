@@ -101,4 +101,20 @@ public class UsuarioController extends ApplicationController {
 		}
 		return dispatcher;
 	}
+
+
+	public RequestDispatcher logout() throws IOException {
+		RequestDispatcher dispatcher = this.request.getRequestDispatcher("/view/usuario/login.jsp");
+		HttpSession session = request.getSession();
+
+		if (session.getAttribute("usuario") == null) {
+			return dispatcher;
+		}
+
+		session.removeAttribute("usuario");
+		super.addFlashMessage("info", "Logout realizado com sucesso.");
+
+
+		return dispatcher;
+	}
 }
