@@ -9,17 +9,18 @@ import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import br.edu.ifpb.projeto.dao.AlunoDAO;
 import br.edu.ifpb.projeto.dao.EmpresaDAO;
 import br.edu.ifpb.projeto.dao.PersistenceUtil;
-import br.edu.ifpb.projeto.dao.UsuarioDAO;
+import br.edu.ifpb.projeto.model.Aluno;
 import br.edu.ifpb.projeto.model.Empresa;
 
 
 public class UsuarioController extends ApplicationController {
 
 	// DAOS
-	private UsuarioDAO usuarioDAO = new UsuarioDAO(PersistenceUtil.getCurrentEntityManager());
 	private EmpresaDAO empresaDAO = new EmpresaDAO(PersistenceUtil.getCurrentEntityManager());
+	private AlunoDAO alunoDAO = new AlunoDAO(PersistenceUtil.getCurrentEntityManager());
 
 	public UsuarioController(HttpServletRequest request, HttpServletResponse response) {
 		super(request, response);
@@ -46,7 +47,14 @@ public class UsuarioController extends ApplicationController {
 					empresaDAO.commit();
 				}
 
+				// Cria um usuário do tipo aluno
 				if (this.request.getParameter("tipo").equals("aluno")) {
+					Aluno aluno = new Aluno(this.request.getParameter("nome"), this.request.getParameter("email"), 0);
+					aluno.setSenha(this.request.getParameter("senha"));
+
+					alunoDAO.beginTransaction();
+					alunoDAO.insert(aluno);
+					alunoDAO.commit();
 				}
 
 				this.addFlashMessage("success", "Cadastro realizado com sucesso");
