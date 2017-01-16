@@ -43,16 +43,17 @@ public class UsuarioLoginIT {
 		assertEquals(true, driver.getPageSource().contains("E-mail ou senha incorretos"));
 	}
 
-	@Test
-	public void testa_login_correto() {
-		WebElement button = driver.findElement(By.tagName("button"));
-		WebElement email = driver.findElement(By.id("email-input"));
-		WebElement senha = driver.findElement(By.id("senha-input"));
-
-		email.sendKeys("mail@mail.com");
-		senha.sendKeys("password");
-		button.submit();
-
-		assertEquals(localhost, driver.getCurrentUrl());
-	}
+/*	@Test
+*	public void testa_login_correto() {
+*		WebElement button = driver.findElement(By.tagName("button"));
+*		WebElement email = driver.findElement(By.id("email-input"));
+*		WebElement senha = driver.findElement(By.id("senha-input"));
+*
+*		email.sendKeys("mail@mail.com");
+*		senha.sendKeys("password");
+*		button.submit();
+*
+*		assertEquals(localhost, driver.getCurrentUrl());
+*	}
+*/
 }
