@@ -9,7 +9,6 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 
-
 public class TesteSiteControllerIT {
 	private WebDriver driver;
 	private String localhost = "http://localhost:8080/estagios";
@@ -19,7 +18,7 @@ public class TesteSiteControllerIT {
 		driver = new HtmlUnitDriver();
 
 		// Abre a página
-		driver.get(localhost + "/site");
+		driver.get(localhost);
 	}
 
 	@Test

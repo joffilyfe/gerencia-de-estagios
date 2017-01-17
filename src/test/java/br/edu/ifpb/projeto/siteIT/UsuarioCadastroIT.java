@@ -13,7 +13,7 @@ import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 
 public class UsuarioCadastroIT {
 	private WebDriver driver;
-	private String localhost = "http://localhost:8080/estagios/";
+	private String localhost = "http://localhost:8080/estagios";
 
 	@Before
 	public void setUp() {
@@ -21,7 +21,7 @@ public class UsuarioCadastroIT {
 		driver.manage().deleteAllCookies();
 
 		// Abre a página
-		driver.get(localhost + "usuario/cadastro");
+		driver.get(localhost + "/usuario/cadastro");
 	}
 
 	@Test
