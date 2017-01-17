@@ -2,7 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jstl/core" %>
 <%@ taglib prefix="t" tagdir="/WEB-INF/tags" %>
 
-<t:layout>
+<t:layout title="> Melhores oportunidades">
 	<jsp:body>
 		<div class="jumbotron">
         	<h1>Sistema para controle de estágios</h1>
