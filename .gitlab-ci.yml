@@ -17,7 +17,7 @@ cache:
   script:
     - 'nohup mvn exec:java -Dexec.mainClass="org.hsqldb.server.Server" -Dexec.args="-database.0 file:target/data/databases/estagiarios --dbname.0 estagiarios" &'
     - 'mvn $MAVEN_CLI_OPTS test-compile'
-    - 'mvn $MAVEN_CLI_OPTS verify'
+    - 'mvn $MAVEN_CLI_OPTS verify -P integration'
   except:
     - master
 

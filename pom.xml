@@ -103,6 +103,33 @@
   </dependencies>
 
 
+  <profiles>
+    <profile>
+      <id>integration</id>
+      <build>
+        <plugins>
+          <plugin>
+            <artifactId>maven-antrun-plugin</artifactId>
+            <executions>
+              <execution>
+                <phase>package</phase>
+                <goals>
+                  <goal>run</goal>
+                </goals>
+                <configuration>
+                  <tasks>
+                    <delete file="${project.build.outputDirectory}/META-INF/persistence.xml"/>
+                    <copy file="${basedir}/src/test/resources/META-INF/persistence.xml"
+                      tofile="${project.build.outputDirectory}/META-INF/persistence.xml"/>
+                    </tasks>
+                  </configuration>
+                </execution>
+              </executions>
+            </plugin>
+          </plugins>
+        </build>
+      </profile>
+    </profiles>
   <build>
     <finalName>estagios</finalName>
     <plugins>
