@@ -14,8 +14,8 @@ import javax.persistence.ManyToOne;
 @Entity
 public class Vaga {
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private Integer id;	
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Integer id;
 	private String descricao;
 	private String areaDeFormacao;
 	private String setor;
@@ -31,11 +31,20 @@ public class Vaga {
 	@ManyToOne
 	private Empresa empresa;
 
-	public Vaga() {}
-	
+	public Vaga() {
+	}
+
 	public Vaga(String descricao, Empresa empresa) {
 		this.descricao = descricao;
 		this.empresa = empresa;
+	}
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
 	}
 
 	public String getDescricao() {
@@ -45,101 +54,82 @@ public class Vaga {
 	public void setDescricao(String descricao) {
 		this.descricao = descricao;
 	}
-	
+
 	public String getAreaDeFormacao() {
 		return areaDeFormacao;
 	}
-
 
 	public void setAreaDeFormacao(String areaDeFormacao) {
 		this.areaDeFormacao = areaDeFormacao;
 	}
 
-
 	public String getSetor() {
 		return setor;
 	}
-
 
 	public void setSetor(String setor) {
 		this.setor = setor;
 	}
 
-
 	public Double getValorDaBolsa() {
 		return valorDaBolsa;
 	}
-
 
 	public void setValorDaBolsa(Double valorDaBolsa) {
 		this.valorDaBolsa = valorDaBolsa;
 	}
 
-
 	public Integer getQtdVagas() {
 		return qtdVagas;
 	}
-
 
 	public void setQtdVagas(Integer qtdVagas) {
 		this.qtdVagas = qtdVagas;
 	}
 
-
 	public String getBeneficios() {
 		return beneficios;
 	}
-
 
 	public void setBeneficios(String beneficios) {
 		this.beneficios = beneficios;
 	}
 
-
 	public Integer getQtdAlunos() {
 		return qtdAlunos;
 	}
-
 
 	public void setQtdAlunos(Integer qtdAlunos) {
 		this.qtdAlunos = qtdAlunos;
 	}
 
-
 	public String getPreRequisitos() {
 		return preRequisitos;
 	}
-
 
 	public void setPreRequisitos(String preRequisitos) {
 		this.preRequisitos = preRequisitos;
 	}
 
-
 	public Date getDataDivulgacao() {
 		return dataDivulgacao;
 	}
-
 
 	public void setDataDivulgacao(Date dataDivulgacao) {
 		this.dataDivulgacao = dataDivulgacao;
 	}
 
-
 	public Date getDataEntrevista() {
 		return dataEntrevista;
 	}
-
 
 	public void setDataEntrevista(Date dataEntrevista) {
 		this.dataEntrevista = dataEntrevista;
 	}
 
-
 	public List<Aluno> getAlunos() {
 		return alunos;
 	}
-
 
 	public void setAlunos(ArrayList<Aluno> alunos) {
 		this.alunos = alunos;
@@ -149,16 +139,13 @@ public class Vaga {
 		this.alunos.add(aluno);
 	}
 
-
 	public Empresa getEmpresa() {
 		return empresa;
 	}
 
-
 	public void setEmpresa(Empresa empresa) {
 		this.empresa = empresa;
 	}
-
 
 	@Override
 	public String toString() {
