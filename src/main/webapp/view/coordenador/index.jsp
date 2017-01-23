@@ -30,9 +30,10 @@
 								</c:when>
 								<c:otherwise>
 									<td>
-										<a href="#">
-											<button type="button" class="btn btn-primary btn-md">Liberar</button>
-										</a>
+										<form method="post" action="${pageContext.request.contextPath}/coordenacao/habilitar">
+											<input type="hidden" name="id" value="${empresa.id}">
+											<button type="submit" class="btn btn-primary btn-md">Liberar</button>
+										</form>
 									</td>
 								</c:otherwise>
 							</c:choose>

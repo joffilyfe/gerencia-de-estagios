@@ -9,6 +9,7 @@ import javax.servlet.http.HttpSession;
 
 import br.edu.ifpb.projeto.dao.EmpresaDAO;
 import br.edu.ifpb.projeto.dao.PersistenceUtil;
+import br.edu.ifpb.projeto.model.Empresa;
 import br.edu.ifpb.projeto.model.Usuario;
 
 public class CoordenadorController extends ApplicationController{
@@ -28,6 +29,24 @@ public class CoordenadorController extends ApplicationController{
 			response.sendRedirect(request.getServletContext().getContextPath());
 		}
 
+		return dispatcher;
+	}
+	
+	public RequestDispatcher habilitarempresa() throws IOException {
+		RequestDispatcher dispatcher = this.request.getRequestDispatcher("/coordenacao");
+		int idNumber = Integer.parseInt(request.getParameter("id"));
+		HttpSession session = request.getSession();
+		
+		if (session.getAttribute("usuario") == null  || ((Usuario) session.getAttribute("usuario")).isCoordenador() == false) {
+			response.sendRedirect(request.getServletContext().getContextPath());
+		}else{
+			Empresa empresa = empresaDAO.find(idNumber);
+			empresa.setHabilitada(true);
+			empresaDAO.beginTransaction();
+			empresaDAO.update(empresa);
+			empresaDAO.commit();
+		}
+		
 		return dispatcher;
 	}
 }
