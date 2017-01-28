@@ -9,6 +9,7 @@ public class Router {
 	public Router() {
 		addRoute("/", "SiteController", "index");
 		addRoute("/usuario/login", "UsuarioController", "login");
+		addRoute("/usuario/logout", "UsuarioController", "logout");
 		addRoute("/usuario/cadastro", "UsuarioController", "cadastro");
 
 		// Vaga
