@@ -9,7 +9,12 @@ public class Router {
 	public Router() {
 		addRoute("/", "SiteController", "index");
 		addRoute("/usuario/login", "UsuarioController", "login");
+		addRoute("/usuario/logout", "UsuarioController", "logout");
 		addRoute("/usuario/cadastro", "UsuarioController", "cadastro");
+		
+		// Coordenacao
+		addRoute("/coordenacao", "CoordenadorController", "index");
+		addRoute("/coordenacao/habilitar", "CoordenadorController", "habilitarempresa");
 
 		// Vaga
 		addRoute("/vagas", "VagaController", "index");
