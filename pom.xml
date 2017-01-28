@@ -132,6 +132,21 @@
     </profiles>
   <build>
     <finalName>estagios</finalName>
+
+	<testOutputDirectory>${project.build.directory}/test-classes</testOutputDirectory>
+	<sourceDirectory>${project.basedir}/src/main/java</sourceDirectory>
+	<testSourceDirectory>${project.basedir}/src/test/java</testSourceDirectory>
+    <resources>
+      <resource>
+        <directory>${project.basedir}/src/main/resources</directory>
+      </resource>
+    </resources>
+    <testResources>
+      <testResource>
+        <directory>${project.basedir}/src/test/resources</directory>
+      </testResource>
+    </testResources>
+
     <plugins>
      <plugin>
           <groupId>org.apache.maven.plugins</groupId>
