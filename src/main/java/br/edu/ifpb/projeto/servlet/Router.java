@@ -12,10 +12,12 @@ public class Router {
 		addRoute("/usuario/logout", "UsuarioController", "logout");
 		addRoute("/usuario/cadastro", "UsuarioController", "cadastro");
 		
+		
 		// Coordenacao
 		addRoute("/coordenacao", "CoordenadorController", "index");
-		addRoute("/coordenacao/habilitar", "CoordenadorController", "habilitarempresa");
-
+		addRoute("/coordenacao/empresas/habilitar", "CoordenadorController", "habilitarempresa");
+		addRoute("/coordenacao/empresas/listar", "CoordenadorController", "listarEmpresas");
+		
 		// Vaga
 		addRoute("/vagas", "VagaController", "index");
 		addRoute("/vaga/detalhes", "VagaController", "show");
