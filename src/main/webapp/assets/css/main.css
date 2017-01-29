@@ -4,22 +4,15 @@
 
 .header-default {
 	width: 100%;
+	/*
 	height: 400px;
 	height: 40vh;
 	background: #6f5499;
-	color: #ffffff;
+	color: #ffffff;*/
 	margin-bottom: 30px;
+	margin-top: 30px;
 }
 
 .header-default .title {
-	color: #ffffff;
-	font-size: 60px;
-}
-
-ul.nav.nav-pills.pull-right li a {
-	color: #fff;
-}
-
-ul.nav.nav-pills.pull-right li a:hover {
-	background: transparent;
+	color: #579954;
 }
