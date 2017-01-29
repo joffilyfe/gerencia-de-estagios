@@ -10,10 +10,18 @@ public class Router {
 		addRoute("/", "SiteController", "index");
 		addRoute("/usuario/login", "UsuarioController", "login");
 		addRoute("/usuario/cadastro", "UsuarioController", "cadastro");
+		
+		//Coordenador
+		addRoute("/usuario/candidatos","CoordenadorController","candidatos");
+		addRoute("/usuario/fichaAluno","CoordenadorController","FichaAluno");
+		addRoute("/usuario/fichaEmpresa","CoordenadorController","FichaEmpresa");
+		addRoute("/usuario/oferta","CoordenadorController","Oferta");
 
 		// Vaga
 		addRoute("/vagas", "VagaController", "index");
 		addRoute("/vaga/detalhes", "VagaController", "show");
+		
+		
 	}
 
 	public void addRoute(String url, String controller, String method) {

@@ -69,6 +69,7 @@ public class UsuarioController extends ApplicationController {
 		}
 		return dispatcher;
 	}
+	
 
 	public RequestDispatcher login() throws IOException {
 		HttpSession session = request.getSession();
@@ -117,4 +118,6 @@ public class UsuarioController extends ApplicationController {
 
 		return dispatcher;
 	}
+	
+	
 }
