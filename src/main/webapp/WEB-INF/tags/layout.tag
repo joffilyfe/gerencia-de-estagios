@@ -92,7 +92,9 @@
       		</div>
 		</div> -->
 		<div class="container">
-			<jsp:doBody />
+			<div class="row">
+				<jsp:doBody />
+			</div>
 		</div>
 	<script src="${pageContext.request.contextPath}/assets/js/bootstrap.js"></script>
 	</body>
