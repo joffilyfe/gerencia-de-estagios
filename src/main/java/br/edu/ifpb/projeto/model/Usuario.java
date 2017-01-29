@@ -20,15 +20,16 @@ import javax.xml.bind.DatatypeConverter;
 public class Usuario {
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	private String nome;
-	@Column(unique=true)
+	@Column(unique = true)
 	private String email;
 	private String senha;
 	private Boolean coordenador;
 
-	public Usuario() {}
+	public Usuario() {
+	}
 
 	public Usuario(String nome, String email) {
 		this.nome = nome;
@@ -67,7 +68,8 @@ public class Usuario {
 	public void setSenha(String senha) {
 
 		try {
-			this.senha = DatatypeConverter.printHexBinary(MessageDigest.getInstance("SHA-256").digest(senha.getBytes("UTF-8")));
+			this.senha = DatatypeConverter
+					.printHexBinary(MessageDigest.getInstance("SHA-256").digest(senha.getBytes("UTF-8")));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -79,6 +81,22 @@ public class Usuario {
 
 	public void setCoordenador(boolean coordenador) {
 		this.coordenador = coordenador;
+	}
+
+	public boolean isEmpresa() {
+		if (this instanceof Empresa) {
+			return true;
+		}
+
+		return false;
+	}
+
+	public boolean isAluno() {
+		if (this instanceof Aluno) {
+			return true;
+		}
+
+		return false;
 	}
 
 	@Override
