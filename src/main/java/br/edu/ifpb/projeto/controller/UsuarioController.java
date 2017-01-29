@@ -116,4 +116,14 @@ public class UsuarioController extends ApplicationController {
 
 		return null;
 	}
+
+	/*
+	 * Método responsável por exibir o painel do usuário
+	 */
+	public RequestDispatcher painel() throws IOException {
+		// Se o usuário não estiver logado, redireciona para o login
+		super.authUserOrRedirect("usuario");
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/view/usuario/painel.jsp");
+		return dispatcher;
+	}
 }
