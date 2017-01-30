@@ -14,6 +14,7 @@ public class Router {
 		addRoute("/usuario/logout", "UsuarioController", "logout");
 		addRoute("/usuario/cadastro", "UsuarioController", "cadastro");
 		addRoute("/usuario/painel", "UsuarioController", "painel");
+		addRoute("/usuario/painel/perfil/editar", "UsuarioController", "editarPerfil");
 
 		// Coordenacao
 		addRoute("/coordenacao", "CoordenadorController", "index");

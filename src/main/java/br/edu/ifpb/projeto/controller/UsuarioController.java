@@ -126,4 +126,13 @@ public class UsuarioController extends ApplicationController {
 		RequestDispatcher dispatcher = request.getRequestDispatcher("/view/usuario/painel.jsp");
 		return dispatcher;
 	}
+
+	/*
+	 * Método responsável por editar o perfil
+	 */
+	public RequestDispatcher editarPerfil() throws IOException {
+		super.authUserOrRedirect("usuario");
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/view/usuario/editar_perfil.jsp");
+		return dispatcher;
+	}
 }

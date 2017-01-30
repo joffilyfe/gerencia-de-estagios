@@ -34,14 +34,12 @@
             <div class="header clearfix">
               <nav>
                 <ul class="nav nav-pills pull-right">
-                  <c:if test="${not empty usuario}">
-                    <li><a>Logado como ${usuario.nome}</a></li>
-                  </c:if>
                   <li role="presentation" class="active"><a href="${pageContext.request.contextPath}">Home</a></li>
                   <c:if test="${usuario.coordenador}">
                     <li role="presentation"><a href="${pageContext.request.contextPath}/coordenacao">Painel Coordenador</a></li>
                   </c:if>
                   <c:if test="${not empty usuario}">
+                    <li role="presentation"><a href="${pageContext.request.contextPath}/usuario/painel">Painel</a></li>
                     <li role="presentation"><a href="${pageContext.request.contextPath}/usuario/logout">Sair</a></li>
                   </c:if>
                   <c:if test="${empty usuario}">
