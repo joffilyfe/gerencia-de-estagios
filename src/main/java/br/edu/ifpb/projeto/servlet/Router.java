@@ -16,6 +16,9 @@ public class Router {
 		addRoute("/usuario/painel", "UsuarioController", "painel");
 		addRoute("/usuario/painel/perfil/editar", "UsuarioController", "editarPerfil");
 
+		// Aluno
+		addRoute("/aluno/perfil/editar", "AlunoController", "editarPerfil");
+
 		// Coordenacao
 		addRoute("/coordenacao", "CoordenadorController", "index");
 		addRoute("/coordenacao/empresas/habilitar", "CoordenadorController", "habilitarempresa");
@@ -24,7 +27,7 @@ public class Router {
 		// Vaga
 		addRoute("/vagas", "VagaController", "index");
 		addRoute("/vaga/detalhes", "VagaController", "show");
-		
+
 		// Empresa
 		addRoute("/empresa/cadastro", "EmpresaController", "ofertarVaga");
 	}

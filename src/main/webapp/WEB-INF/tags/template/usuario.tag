@@ -20,7 +20,7 @@
 			  </c:if>
 
 			  <c:if test="${usuario.aluno}">
-			    <a href="${pageContext.request.contextPath}/usuario/perfil/editar" class="list-group-item">Editar meu perfil</a>
+			    <a href="${pageContext.request.contextPath}/aluno/perfil/editar" class="list-group-item">Editar meu perfil</a>
 			  </c:if>
 
 			</div>
