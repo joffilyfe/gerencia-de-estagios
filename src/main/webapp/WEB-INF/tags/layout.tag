@@ -23,6 +23,9 @@
 						<c:if test="${not empty usuario}">
 							<li><a>Logado como ${usuario.nome}</a></li>
 						</c:if>
+						<c:if test="${usuario.tipo_usuario eq 'Empresa'}">
+							<li role="presentation" class="active"><a href="${pageContext.request.contextPath}/empresa/cadastro">Cadastar empresa</a></li>
+						</c:if>
 						<c:if test="${usuario.coordenador}">
 							<li role="presentation" class="active"><a href="${pageContext.request.contextPath}/coordenacao">Painel Coordenador</a></li>
 						</c:if>
