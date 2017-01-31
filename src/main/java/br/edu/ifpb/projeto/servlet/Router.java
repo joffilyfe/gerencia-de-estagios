@@ -24,6 +24,9 @@ public class Router {
 		// Vaga
 		addRoute("/vagas", "VagaController", "index");
 		addRoute("/vaga/detalhes", "VagaController", "show");
+		
+		// Empresa
+		addRoute("/empresa/cadastro", "EmpresaController", "ofertarVaga");
 	}
 
 	public void addRoute(String url, String controller, String method) {

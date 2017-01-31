@@ -36,6 +36,10 @@ public class Usuario {
 		this.email = email;
 		this.coordenador = false;
 	}
+	
+	public String getTipo_usuario() {
+		return this.getClass().getSimpleName();
+	}
 
 	public Integer getId() {
 		return id;
