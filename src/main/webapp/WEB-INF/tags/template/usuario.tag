@@ -14,7 +14,15 @@
 			  	<a href="${pageContext.request.contextPath}/#" class="list-group-item">Cadastrar vaga</a>
 			  </c:if>
 			  
-			  <a href="${pageContext.request.contextPath}/coordenacao/empresas/habilitar" class="list-group-item">Editar meu perfil</a>
+			  <%-- Edição do perfil --%>
+			  <c:if test="${usuario.empresa}">
+			    <a href="${pageContext.request.contextPath}/empresa/cadastro" class="list-group-item">Editar meu perfil</a>
+			  </c:if>
+
+			  <c:if test="${usuario.aluno}">
+			    <a href="${pageContext.request.contextPath}/usuario/perfil/editar" class="list-group-item">Editar meu perfil</a>
+			  </c:if>
+
 			</div>
 		</div>
  		<div class="col-sm-8">
