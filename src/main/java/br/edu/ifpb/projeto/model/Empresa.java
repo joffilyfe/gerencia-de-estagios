@@ -19,6 +19,7 @@ public class Empresa extends Usuario {
 	private String cep;
 	private String pontoDeReferencia;
 	private String responsavel;
+	private String cargoResponsavel;
 	private String nomeDoContato;
 	private String telefone;
 	private String fax;
@@ -112,6 +113,14 @@ public class Empresa extends Usuario {
 	public void setResponsavel(String responsavel) {
 		this.responsavel = responsavel;
 	}
+	public String getCargoResponsavel() {
+		return cargoResponsavel;
+	}
+
+	public void setCargoResponsavel(String cargoResponsavel) {
+		this.cargoResponsavel = cargoResponsavel;
+	}
+
 	public String getNomeDoContato() {
 		return nomeDoContato;
 	}

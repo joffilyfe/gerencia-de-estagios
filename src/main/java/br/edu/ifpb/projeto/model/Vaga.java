@@ -19,12 +19,14 @@ public class Vaga {
 	private String descricao;
 	private String areaDeFormacao;
 	private String setor;
+	private String horarioEntrada;
+	private String horarioSaida;
 	private Double valorDaBolsa;
 	private Integer qtdVagas;
 	private String beneficios;
 	private Integer qtdAlunos;
-	private String preRequisitos;
-	private Date dataDivulgacao;
+	private Date dataDivulgacaoInicio;
+	private Date dataDivulgacaoFim;
 	private Date dataEntrevista;
 	@ManyToMany
 	private List<Aluno> alunos = new ArrayList<Aluno>();
@@ -71,6 +73,22 @@ public class Vaga {
 		this.setor = setor;
 	}
 
+	public String getHorarioEntrada() {
+		return horarioEntrada;
+	}
+
+	public void setHorarioEntrada(String horarioEntrada) {
+		this.horarioEntrada = horarioEntrada;
+	}
+
+	public String getHorarioSaida() {
+		return horarioSaida;
+	}
+
+	public void setHorarioSaida(String horarioSaida) {
+		this.horarioSaida = horarioSaida;
+	}
+
 	public Double getValorDaBolsa() {
 		return valorDaBolsa;
 	}
@@ -103,20 +121,20 @@ public class Vaga {
 		this.qtdAlunos = qtdAlunos;
 	}
 
-	public String getPreRequisitos() {
-		return preRequisitos;
+	public Date getDataDivulgacaoInicio() {
+		return dataDivulgacaoInicio;
 	}
 
-	public void setPreRequisitos(String preRequisitos) {
-		this.preRequisitos = preRequisitos;
+	public void setDataDivulgacaoInicio(Date dataDivulgacaoInicio) {
+		this.dataDivulgacaoInicio = dataDivulgacaoInicio;
 	}
 
-	public Date getDataDivulgacao() {
-		return dataDivulgacao;
+	public Date getDataDivulgacaoFim() {
+		return dataDivulgacaoFim;
 	}
 
-	public void setDataDivulgacao(Date dataDivulgacao) {
-		this.dataDivulgacao = dataDivulgacao;
+	public void setDataDivulgacaoFim(Date dataDivulgacaoFim) {
+		this.dataDivulgacaoFim = dataDivulgacaoFim;
 	}
 
 	public Date getDataEntrevista() {

@@ -38,6 +38,9 @@
                     <li><a>Logado como ${usuario.nome}</a></li>
                   </c:if>
                   <li role="presentation" class="active"><a href="${pageContext.request.contextPath}">Home</a></li>
+                  <c:if test="${usuario.tipo_usuario eq 'Empresa'}">
+                    <li role="presentation" class="active"><a href="${pageContext.request.contextPath}/empresa/cadastro">Cadastar empresa</a></li>
+                  </c:if>
                   <c:if test="${usuario.coordenador}">
                     <li role="presentation"><a href="${pageContext.request.contextPath}/coordenacao">Painel Coordenador</a></li>
                   </c:if>
@@ -54,6 +57,7 @@
           </div>
         </div>
       </div>
+
 		<div class="container">
 			<c:if test="${not empty errors}">
 				<div align="left">
