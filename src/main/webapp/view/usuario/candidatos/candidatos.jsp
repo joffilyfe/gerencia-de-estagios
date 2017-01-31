@@ -9,13 +9,13 @@
 				<table align="center" width=400 height=400 ">
   
 						
-							<c:forEach var="usuario" items="${users}">
+							<c:forEach var="aluno" items="${alunos}">
 								<tr>
 									
 									<td>${usuario.nome}</td>
-									<td><a href="/estagios/usuario/fichaAluno?id=${usuario.id}">Ficha do Aluno </a> | </td> 
-									<td><a href="/estagios/usuario/fichaEmpresa?id=${usuario.id}">Ficha da Empresa </a> |</td>
-									<td><a href="/estagios/usuario/oferta?id=${usuario.id}">Oferta</a></td>
+									<td><a href="/estagios/usuario/fichaAluno?id=${aluno.id}">Ficha do Aluno </a> | </td> 
+									<td><a href="/estagios/usuario/fichaEmpresa?id=${aluno.id}">Ficha da Empresa </a> |</td>
+									<td><a href="/estagios/usuario/oferta?id=${aluno.id}">Oferta</a></td>
 								</tr>
 							</c:forEach>
     			

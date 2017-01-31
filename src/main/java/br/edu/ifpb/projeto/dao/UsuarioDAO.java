@@ -43,18 +43,7 @@ public class UsuarioDAO extends GenericDAO<Usuario, Integer> {
 		return usuarios.get(0);
 	}
 	
-	public List<Usuario> ProcuraCandidatos(){
-		
-		Query q = this.getEntityManager().createQuery("SELECT u FROM Usuario u where tipo_usuario='Aluno'");
-		
-		@SuppressWarnings("unchecked")
-		List<Usuario> usuarios=q.getResultList();
-		
-		
-		if(usuarios.isEmpty()){return null;}
-		
-		return  usuarios;
-	}
+	
 	
 	public  Usuario findById(String id) {
         Query q = this.getEntityManager().createQuery("select a from Usuario a where a.id = :id");

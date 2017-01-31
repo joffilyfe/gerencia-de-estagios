@@ -11,8 +11,10 @@ import br.edu.ifpb.projeto.dao.AlunoDAO;
 import br.edu.ifpb.projeto.dao.EmpresaDAO;
 import br.edu.ifpb.projeto.dao.PersistenceUtil;
 import br.edu.ifpb.projeto.dao.UsuarioDAO;
+import br.edu.ifpb.projeto.dao.VagaDAO;
 import br.edu.ifpb.projeto.model.Aluno;
 import br.edu.ifpb.projeto.model.Usuario;
+import br.edu.ifpb.projeto.model.Vaga;
 
 public class CoordenadorController extends ApplicationController {
 	
@@ -24,6 +26,7 @@ public class CoordenadorController extends ApplicationController {
 		private EmpresaDAO empresaDAO = new EmpresaDAO(PersistenceUtil.getCurrentEntityManager());
 		private AlunoDAO alunoDAO = new AlunoDAO(PersistenceUtil.getCurrentEntityManager());
 		private UsuarioDAO usuarioDAO = new UsuarioDAO(PersistenceUtil.getCurrentEntityManager());
+		private VagaDAO vagasDAO = new VagaDAO(PersistenceUtil.getCurrentEntityManager());
 		
 		
 	
@@ -31,9 +34,18 @@ public class CoordenadorController extends ApplicationController {
 		RequestDispatcher dispatcher = this.request.getRequestDispatcher("/view/usuario/candidatos/candidatos.jsp");
 		
 		
-		List<Usuario> usuarios= usuarioDAO.ProcuraCandidatos();
+		List<Vaga> vagas= vagasDAO.ProcuraCandidatos();
+		
+		List<Aluno> a = null;
+		
+		for(int i=0;i<vagas.size();i++){
+			Vaga vaga=vagas.get(i);
+			a=vaga.getAlunos();
+			
+			
+		}
 
-		request.setAttribute("users", usuarios);
+		request.setAttribute("alunos", a);
 
 
 		return dispatcher;
