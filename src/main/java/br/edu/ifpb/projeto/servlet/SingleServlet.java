@@ -35,6 +35,8 @@ public class SingleServlet extends HttpServlet {
 			return;
 		}
 
+		request.setAttribute("router", router);
+
 		try {
 			Class<?> controller = Class.forName(controllerPackage + rcontroller.get(0));
 
