@@ -36,6 +36,11 @@ public class Usuario {
 	public Usuario(String nome, String email) {
 		this.nome = nome;
 		this.email = email;
+		this.coordenador = false;
+	}
+	
+	public String getTipo_usuario() {
+		return this.getClass().getSimpleName();
 	}
 
 	public Integer getId() {

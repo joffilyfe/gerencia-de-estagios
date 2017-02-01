@@ -18,7 +18,6 @@ import br.edu.ifpb.projeto.model.Aluno;
 import br.edu.ifpb.projeto.model.Empresa;
 import br.edu.ifpb.projeto.model.Usuario;
 
-
 public class UsuarioController extends ApplicationController {
 
 	// DAOS
@@ -42,7 +41,8 @@ public class UsuarioController extends ApplicationController {
 
 				// Cria um usuário do tipo empresa
 				if (this.request.getParameter("tipo").equals("empresa")) {
-					Empresa empresa = new Empresa(this.request.getParameter("nome"), this.request.getParameter("email"));
+					Empresa empresa = new Empresa(this.request.getParameter("nome"),
+							this.request.getParameter("email"));
 					empresa.setSenha(this.request.getParameter("senha"));
 
 					// Gravando empresa no banco
@@ -76,7 +76,6 @@ public class UsuarioController extends ApplicationController {
 		List<String> fields = new ArrayList<>(Arrays.asList("email", "senha"));
 		RequestDispatcher dispatcher = this.request.getRequestDispatcher("/view/usuario/login.jsp");
 
-
 		// Se já estiver logado, redireciona para home
 		if (session.getAttribute("usuario") != null) {
 			response.sendRedirect(request.getServletContext().getContextPath());
@@ -87,7 +86,8 @@ public class UsuarioController extends ApplicationController {
 
 			// Se o formulário for válido
 			if (super.validaFormulario(fields)) {
-				Usuario usuario = usuarioDAO.getByCredentials(request.getParameter("email"), request.getParameter("senha"));
+				Usuario usuario = usuarioDAO.getByCredentials(request.getParameter("email"),
+						request.getParameter("senha"));
 
 				// Se o usuário não for encontrado, manda mensagem de erro.
 				if (usuario == null) {
@@ -103,20 +103,19 @@ public class UsuarioController extends ApplicationController {
 		return dispatcher;
 	}
 
-
 	public RequestDispatcher logout() throws IOException {
-		RequestDispatcher dispatcher = this.request.getRequestDispatcher("/view/usuario/login.jsp");
 		HttpSession session = request.getSession();
 
 		if (session.getAttribute("usuario") == null) {
-			return dispatcher;
+			response.sendRedirect(request.getServletContext().getContextPath() + "/usuario/login");
 		}
 
 		session.removeAttribute("usuario");
 		super.addFlashMessage("info", "Logout realizado com sucesso.");
 
+		response.sendRedirect(request.getServletContext().getContextPath() + "/usuario/login");
 
-		return dispatcher;
+		return null;
 	}
 	
 	

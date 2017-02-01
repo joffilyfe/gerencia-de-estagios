@@ -9,19 +9,32 @@ public class Router {
 	public Router() {
 		addRoute("/", "SiteController", "index");
 		addRoute("/usuario/login", "UsuarioController", "login");
+		addRoute("/usuario/logout", "UsuarioController", "logout");
 		addRoute("/usuario/cadastro", "UsuarioController", "cadastro");
 		
+
 		//Coordenador
 		addRoute("/usuario/candidatos","CoordenadorController","candidatos");
 		addRoute("/usuario/fichaAluno","CoordenadorController","FichaAluno");
 		addRoute("/usuario/fichaEmpresa","CoordenadorController","FichaEmpresa");
 		addRoute("/usuario/oferta","CoordenadorController","Oferta");
 
+
+		
+		// Coordenacao
+		addRoute("/coordenacao", "CoordenadorController", "index");
+		addRoute("/coordenacao/empresas/habilitar", "CoordenadorController", "habilitarempresa");
+		addRoute("/coordenacao/empresas/listar", "CoordenadorController", "listarEmpresas");
+		
+
 		// Vaga
 		addRoute("/vagas", "VagaController", "index");
 		addRoute("/vaga/detalhes", "VagaController", "show");
 		
-		
+
+		// Empresa
+		addRoute("/empresa/cadastro", "EmpresaController", "ofertarVaga");
+
 	}
 
 	public void addRoute(String url, String controller, String method) {
