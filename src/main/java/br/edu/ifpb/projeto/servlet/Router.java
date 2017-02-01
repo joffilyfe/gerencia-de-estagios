@@ -8,20 +8,26 @@ public class Router {
 
 	public Router() {
 		addRoute("/", "SiteController", "index");
+
+		// Usuário
 		addRoute("/usuario/login", "UsuarioController", "login");
 		addRoute("/usuario/logout", "UsuarioController", "logout");
 		addRoute("/usuario/cadastro", "UsuarioController", "cadastro");
-		
-		
+		addRoute("/usuario/painel", "UsuarioController", "painel");
+		addRoute("/usuario/painel/perfil/editar", "UsuarioController", "editarPerfil");
+
+		// Aluno
+		addRoute("/aluno/perfil/editar", "AlunoController", "editarPerfil");
+
 		// Coordenacao
 		addRoute("/coordenacao", "CoordenadorController", "index");
 		addRoute("/coordenacao/empresas/habilitar", "CoordenadorController", "habilitarempresa");
 		addRoute("/coordenacao/empresas/listar", "CoordenadorController", "listarEmpresas");
-		
+
 		// Vaga
 		addRoute("/vagas", "VagaController", "index");
 		addRoute("/vaga/detalhes", "VagaController", "show");
-		
+
 		// Empresa
 		addRoute("/empresa/cadastro", "EmpresaController", "ofertarVaga");
 	}
