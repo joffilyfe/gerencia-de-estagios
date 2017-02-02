@@ -13,11 +13,9 @@ public class Router {
 		addRoute("/usuario/cadastro", "UsuarioController", "cadastro");
 		
 
-		//Coordenador
-		addRoute("/usuario/candidatos","CoordenadorController","candidatos");
-		addRoute("/usuario/fichaAluno","CoordenadorController","FichaAluno");
-		addRoute("/usuario/fichaEmpresa","CoordenadorController","FichaEmpresa");
-		addRoute("/usuario/oferta","CoordenadorController","Oferta");
+		
+		
+		
 
 
 		
@@ -25,6 +23,10 @@ public class Router {
 		addRoute("/coordenacao", "CoordenadorController", "index");
 		addRoute("/coordenacao/empresas/habilitar", "CoordenadorController", "habilitarempresa");
 		addRoute("/coordenacao/empresas/listar", "CoordenadorController", "listarEmpresas");
+		addRoute("/coordenacao/candidatos","CoordenadorController","candidatos");
+		addRoute("/coordenacao/fichaAluno","CoordenadorController","FichaAluno");
+		addRoute("/coordenacao/fichaEmpresa","CoordenadorController","FichaEmpresa");
+		addRoute("/coordenacao/oferta","CoordenadorController","Oferta");
 		
 
 		// Vaga

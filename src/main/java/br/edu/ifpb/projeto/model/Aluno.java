@@ -12,12 +12,23 @@ import javax.persistence.OneToOne;
 public class Aluno extends Usuario {
 	private Integer matricula;
 	private String competencias;
+	
+	private boolean estagiando=false;
 	@OneToOne(mappedBy="aluno", targetEntity=Estagio.class, cascade=CascadeType.ALL)
 	private Estagio estagio;
 	@ManyToMany(mappedBy="alunos")
 	private List<Vaga> vagas = new ArrayList<Vaga>();
 
 	public Aluno() {}
+
+	public boolean isEstagiando() {
+		return estagiando;
+	}
+
+	public void setEstagiando(boolean estagiando) {
+		this.estagiando = estagiando;
+	}
+
 
 	public Aluno(String nome, String email, Integer matricula) {
 		super(nome, email);

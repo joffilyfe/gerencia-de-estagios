@@ -61,12 +61,19 @@ public class CoordenadorController extends ApplicationController{
 		
 		
 	public RequestDispatcher candidatos() throws IOException {
-		RequestDispatcher dispatcher = this.request.getRequestDispatcher("/view/usuario/candidatos/candidatos.jsp");
+		RequestDispatcher dispatcher = this.request.getRequestDispatcher("/view/coordenador/candidatos.jsp");
 		
 		
 		List<Vaga> vagas= vagasDAO.ProcuraCandidatos();
-		
+		List<String> b= new ArrayList<String>();
+		b=null;
 		List<Aluno> a = null;
+		
+		if(vagas==null){
+			request.setAttribute("alunos", a);
+			return dispatcher;
+		}
+		else{
 		
 		for(int i=0;i<vagas.size();i++){
 			Vaga vaga=vagas.get(i);
@@ -74,14 +81,23 @@ public class CoordenadorController extends ApplicationController{
 			
 			
 		}
-
+		
+		for(int j=0;j<a.size();j++){
+			Aluno al=a.get(j);
+			if(al.isEstagiando()==true){
+			a.remove(j);
+				
+				
+			}
+		}
+		
 		request.setAttribute("alunos", a);
-
-
 		return dispatcher;
+		
+		}
 	}
 	public RequestDispatcher FichaAluno() throws IOException {
-		RequestDispatcher dispatcher = this.request.getRequestDispatcher("/view/usuario/candidatos/fichaAluno.jsp");
+		RequestDispatcher dispatcher = this.request.getRequestDispatcher("/view/coordenador/candidatos/fichaAluno.jsp");
 		
 		Aluno a= alunoDAO.findById(request.getParameter("id"));
 		
@@ -100,7 +116,7 @@ public class CoordenadorController extends ApplicationController{
 	}
 	
 	public RequestDispatcher FichaEmpresa() throws IOException {
-		RequestDispatcher dispatcher = this.request.getRequestDispatcher("/view/usuario/candidatos/fichaEmpresa.jsp");
+		RequestDispatcher dispatcher = this.request.getRequestDispatcher("/view/coordenador/candidatos/fichaEmpresa.jsp");
 		
 	
 		
@@ -110,7 +126,7 @@ public class CoordenadorController extends ApplicationController{
 	}
 	
 	public RequestDispatcher Oferta() throws IOException {
-		RequestDispatcher dispatcher = this.request.getRequestDispatcher("/view/usuario/candidatos/oferta.jsp");
+		RequestDispatcher dispatcher = this.request.getRequestDispatcher("/view/coordenador/candidatos/oferta.jsp");
 		return dispatcher;
 		
 	
