@@ -96,44 +96,7 @@ public class CoordenadorController extends ApplicationController{
 		
 		}
 	}
-	public RequestDispatcher FichaAluno() throws IOException {
-		RequestDispatcher dispatcher = this.request.getRequestDispatcher("/view/coordenador/candidatos/fichaAluno.jsp");
-		
-		Aluno a= alunoDAO.findById(request.getParameter("id"));
-		
-		request.setAttribute("aluno", a);
-		
 	
-		
-		Usuario u=usuarioDAO.findById(request.getParameter("id"));
-		
-		request.setAttribute("usuario",u);
-		
-		
-
-
-		return dispatcher;
-	}
-	
-	public RequestDispatcher FichaEmpresa() throws IOException {
-		RequestDispatcher dispatcher = this.request.getRequestDispatcher("/view/coordenador/candidatos/fichaEmpresa.jsp");
-		
-	
-		
-
-
-		return dispatcher;
-	}
-	
-	public RequestDispatcher Oferta() throws IOException {
-		RequestDispatcher dispatcher = this.request.getRequestDispatcher("/view/coordenador/candidatos/oferta.jsp");
-		return dispatcher;
-		
-	
-		
-
-	}
-
 	
 	public RequestDispatcher habilitarempresa() throws IOException {
 		RequestDispatcher dispatcher = this.request.getRequestDispatcher("/view/coordenador/habilitaEmpresas.jsp");
