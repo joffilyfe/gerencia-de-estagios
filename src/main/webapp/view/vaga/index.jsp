@@ -5,20 +5,21 @@
 <t:layout title="Vagas">
 	<jsp:body>
 		<div class="col-md-12">
+			<h1 class="page-header">Vagas abertas</h1>
 			<c:if test="${not empty vagas}">
 				<div class="panel panel-default">
 					<!-- Default panel contents -->
 					<div class="panel-heading">Listagem de vagas</div>
 
 					<!-- Table -->
-					<table class="table">
+					<table class="table table-striped">
 						<thead>
 							<tr>
 								<th>#</th>
 								<th>Empresa</th>
 								<th>Descrição curta</th>
 								<th>Bolsa</th>
-								<th>Ações</th>
+								<th></th>
 							</tr>
 						</thead>
 						<tbody>
@@ -28,7 +29,7 @@
 									<td>${vaga.empresa.nome}</td>
 									<td>${vaga.descricao}</td>
 									<td>R$ ${vaga.valorDaBolsa}</td>
-									<td><a href="/estagios/vaga/detalhes?id=${vaga.id}">Detalhes</a></td>
+									<td><a class="btn btn-default" href="${pageContext.request.contextPath}/vaga/detalhes?id=${vaga.id}">Detalhes</a></td>
 								</tr>
 							</c:forEach>
 						</tbody>
