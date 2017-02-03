@@ -16,9 +16,9 @@
 								<tr>
 									
 									<td>${aluno.nome}</td>
-									<td><a href="/view/coordenador/candidatos/fichaAluno?id=${aluno.id}">Ficha do Aluno</a></td>
-									<td>      <a href="/view/coordenador/candidatos/fichaEmpresa?id=${aluno.id}">Ficha da Empresa </a> </td>
-									<td><a href="/view/coordenador/candidatos/oferta?id=${aluno.id}">Oferta</a></td>
+									<td><a href="#">Ficha do Aluno</a></td>
+									<td>      <a href="#">Ficha da Empresa </a> </td>
+									<td><a href="#">Oferta</a></td>
 								</tr>
 							</c:forEach> 
 						</c:when>

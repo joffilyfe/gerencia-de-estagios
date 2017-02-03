@@ -65,8 +65,7 @@ public class CoordenadorController extends ApplicationController{
 		
 		
 		List<Vaga> vagas= vagasDAO.ProcuraCandidatos();
-		List<String> b= new ArrayList<String>();
-		b=null;
+		
 		List<Aluno> a = null;
 		
 		if(vagas==null){
@@ -81,8 +80,8 @@ public class CoordenadorController extends ApplicationController{
 			
 			
 		}
-		
-		for(int j=0;j<a.size();j++){
+		int x = a.size()-1;
+		for(int j=x;j>=0;j--){
 			Aluno al=a.get(j);
 			if(al.isEstagiando()==true){
 			a.remove(j);
@@ -102,39 +101,40 @@ public class CoordenadorController extends ApplicationController{
 		RequestDispatcher dispatcher = this.request.getRequestDispatcher("/view/coordenador/encerrarEstagio.jsp");
 		List<Aluno> alunos = alunoDAO.ProcuraAlunos();
 		
-		if(alunos==null){
-			request.setAttribute("alunos", alunos);
-			return dispatcher;
-		}
-		
-		
-		for(int i=0;i<alunos.size();i++){
-			
-			Aluno al = alunos.get(i);
-			
-			if(al.isEstagiando()==false){
-				alunos.remove(i);
-				
-			}
-			
-		}
-		
-		this.request.setAttribute("alunos",alunos);
-		
 		
 		if (request.getMethod().equals("POST")){
-			if(request.getParameter("id").matches("^\\d+$")){
+			
 				int idNumber = Integer.parseInt(request.getParameter("id"));
 				Aluno a = alunoDAO.find(idNumber);
 				a.setEstagiando(false);
 				alunoDAO.beginTransaction();
 				alunoDAO.update(a);
 				alunoDAO.commit();
-			}
+			
 		}
+		if(alunos==null){
+			request.setAttribute("alunos", alunos);
+			return dispatcher;
+		}
+		else{
+		
+			
+		int x = alunos.size()-1;
+		for(int j=x;j>=0;j--){
+			Aluno al=alunos.get(j);
+		if(al.isEstagiando()==false){
+			alunos.remove(j);
+					
+					
+				}
+		}	
+		
+		
+		this.request.setAttribute("alunos",alunos);
 				
 				
 		return dispatcher;
+		}
 	}
 	
 	
