@@ -11,12 +11,12 @@
 			  <%-- Menu para empresas --%>
 			  <c:if test="${usuario.empresa}">
 			  	<a href="${pageContext.request.contextPath}/#" class="list-group-item">Vagas ofertadas</a>
-			  	<a href="${pageContext.request.contextPath}/#" class="list-group-item">Cadastrar vaga</a>
+			  	<a href="${pageContext.request.contextPath}/empresa/cadastro" class="list-group-item">Cadastrar vaga</a>
 			  </c:if>
 			  
 			  <%-- Edição do perfil --%>
 			  <c:if test="${usuario.empresa}">
-			    <a href="${pageContext.request.contextPath}/empresa/cadastro" class="list-group-item">Editar meu perfil</a>
+			    <a href="${pageContext.request.contextPath}/empresa/editar" class="list-group-item">Editar meu perfil</a>
 			  </c:if>
 
 			  <c:if test="${usuario.aluno}">
