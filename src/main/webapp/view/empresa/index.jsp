@@ -4,10 +4,11 @@
 
 <t:layout>
 	<jsp:body>
-	 <t:menuCoordenador></t:menuCoordenador>
+	
+	 <t:menuEmpresa></t:menuEmpresa>
  		<div class="col-sm-8">
  			<div class="jumbotron">
-				<h3>Ao lado você tem as opções específicas do coordenador.</h3>
+				<h3>Ao lado você tem as opções específicas da empresa.</h3>
 			</div>
 		</div>
 

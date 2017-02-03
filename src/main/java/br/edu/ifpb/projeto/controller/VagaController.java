@@ -1,18 +1,30 @@
 package br.edu.ifpb.projeto.controller;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
+import br.edu.ifpb.projeto.dao.AlunoDAO;
+import br.edu.ifpb.projeto.dao.EmpresaDAO;
+import br.edu.ifpb.projeto.dao.EstagioDAO;
 import br.edu.ifpb.projeto.dao.PersistenceUtil;
 import br.edu.ifpb.projeto.dao.VagaDAO;
+import br.edu.ifpb.projeto.model.Aluno;
+import br.edu.ifpb.projeto.model.Empresa;
+import br.edu.ifpb.projeto.model.Estagio;
+import br.edu.ifpb.projeto.model.Usuario;
 import br.edu.ifpb.projeto.model.Vaga;
 
 public class VagaController extends ApplicationController {
 
 	private VagaDAO vagaDAO = new VagaDAO(PersistenceUtil.getCurrentEntityManager());
+	private AlunoDAO alunoDAO = new AlunoDAO(PersistenceUtil.getCurrentEntityManager());
+	private EstagioDAO estagioDAO = new EstagioDAO(PersistenceUtil.getCurrentEntityManager());
+	private EmpresaDAO empresaDAO = new EmpresaDAO(PersistenceUtil.getCurrentEntityManager());
 
 	public VagaController(HttpServletRequest request, HttpServletResponse response) {
 		super(request, response);
@@ -43,5 +55,102 @@ public class VagaController extends ApplicationController {
 
 		return dispatch;
 	}
+	
+	public RequestDispatcher listarVagas() throws IOException{
+		RequestDispatcher dispatcher = this.request.getRequestDispatcher("/view/vaga/listaVagas.jsp");
+		HttpSession session = request.getSession();		
+		Usuario usuario = (Usuario) session.getAttribute("usuario");
 
+		if (usuario == null){
+			response.sendRedirect(request.getServletContext().getContextPath());
+		}else if(usuario.isCoordenador() == false
+				&& usuario.isEmpresa() == false) {
+			response.sendRedirect(request.getServletContext().getContextPath());
+		}
+		
+		if (usuario.isCoordenador()){
+			this.request.setAttribute("vagas", vagaDAO.findAll());
+		}else if (usuario.isEmpresa()){
+			this.request.setAttribute("vagas", ((Empresa) usuario).getVagas());
+		}
+		
+		return dispatcher;
+	}
+
+	public RequestDispatcher listarCandidatos() throws IOException{
+	
+		HttpSession session = request.getSession();
+		String idVaga = request.getParameter("idvaga");
+		RequestDispatcher dispatcher = this.request.getRequestDispatcher("/view/vaga/listaCandidatos.jsp");
+		
+		if (session.getAttribute("usuario") == null){
+			response.sendRedirect(request.getServletContext().getContextPath());
+		}
+		
+		if(((Usuario) session.getAttribute("usuario")).isCoordenador() == false
+				&& ((Usuario) session.getAttribute("usuario")).isEmpresa() == false) {
+		}
+		
+		if (request.getMethod().equals("POST")){
+			if(idVaga.matches("^\\d+$")){
+				Vaga vaga = vagaDAO.find(Integer.parseInt(idVaga));
+				List<Aluno> candidatos = vaga.getAlunos();
+				
+				this.request.setAttribute("vaga", vaga);
+				this.request.setAttribute("candidatos", candidatos);
+			}
+		}
+			
+		return dispatcher;
+	}	
+	
+	public RequestDispatcher admitirCandidato() throws IOException{
+		
+		RequestDispatcher dispatcher = this.request.getRequestDispatcher("/vagas/candidatos");
+		HttpSession session = request.getSession();
+		int idAluno, idVaga, idEmpresa;
+		
+		if (session.getAttribute("usuario") == null  || ((Usuario) session.getAttribute("usuario")).isEmpresa() == false) {
+			response.sendRedirect(request.getServletContext().getContextPath());
+		}
+		
+		if (request.getMethod().equals("POST")){
+			if(request.getParameter("idaluno").matches("^\\d+$")){
+				idAluno = Integer.parseInt(request.getParameter("idaluno"));
+				Aluno aluno = alunoDAO.find(idAluno);
+				idVaga = Integer.parseInt(request.getParameter("idvaga"));
+				Vaga vaga = vagaDAO.find(idVaga);
+				idEmpresa = vaga.getEmpresa().getId();
+				Empresa empresa = empresaDAO.find(idEmpresa);
+				Estagio estagio = new Estagio(empresa,aluno,vaga);
+				this.request.setAttribute("estagio", estagio);
+				this.request.setAttribute("vaga", vaga);
+				
+				int qtdvagas = vaga.getQtdVagas();
+				if (qtdvagas> 0){
+					vaga.setQtdVagas(--qtdvagas);
+				}
+				
+				vagaDAO.beginTransaction();
+				vagaDAO.update(vaga);
+				vagaDAO.commit();
+					
+				estagioDAO.beginTransaction();
+				estagioDAO.insert(estagio);
+				estagioDAO.commit();
+				
+				aluno.getVagas().remove(vaga);
+				
+				alunoDAO.beginTransaction();
+				alunoDAO.update(aluno);
+				alunoDAO.commit();
+				
+				vaga.getAlunos().remove(aluno);
+				
+
+			}
+		}
+		
+		return dispatcher;
+	}		
 }

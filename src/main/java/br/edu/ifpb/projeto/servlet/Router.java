@@ -18,9 +18,18 @@ public class Router {
 		addRoute("/coordenacao/empresas/habilitar", "CoordenadorController", "habilitarempresa");
 		addRoute("/coordenacao/empresas/listar", "CoordenadorController", "listarEmpresas");
 		
+		//Empresa
+		addRoute("/empresa", "EmpresaController", "index");
+		addRoute("/empresa/vagas/candidatos","VagaController","listarCandidatos");
+		
 		// Vaga
 		addRoute("/vagas", "VagaController", "index");
 		addRoute("/vaga/detalhes", "VagaController", "show");
+		addRoute("/vagas/visualizarvagas", "VagaController", "listarVagas");
+		addRoute("/vagas/candidatos","VagaController","listarCandidatos");
+		
+		//Estagio
+		addRoute("/estagiarios/admissao", "EstagioController", "admitirCandidato");
 	}
 
 	public void addRoute(String url, String controller, String method) {

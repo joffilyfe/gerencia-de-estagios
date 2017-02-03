@@ -1,10 +1,12 @@
 package br.edu.ifpb.projeto.controller;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /*
  * Essa classe é responsável por disponibilizar métodos para todas as suas classes filhas.
@@ -16,7 +18,7 @@ import javax.servlet.http.HttpServletResponse;
 
 public class ApplicationController {
 
-	//HTTP
+	// HTTP
 	protected HttpServletRequest request;
 	protected HttpServletResponse response;
 
@@ -45,7 +47,8 @@ public class ApplicationController {
 
 			// custom validation for dates
 			if (field.matches("[\\w]*-data")) {
-				if (!this.request.getParameter(field).matches("(0[1-9]|[12][0-9]|3[01])/(0[1-9]|1[012])/(19|20)\\d{2,2}")) {
+				if (!this.request.getParameter(field)
+						.matches("(0[1-9]|[12][0-9]|3[01])/(0[1-9]|1[012])/(19|20)\\d{2,2}")) {
 					errors.add("O campo " + field + " precisa de um formato válido.");
 					return false;
 				}
@@ -74,6 +77,13 @@ public class ApplicationController {
 		if (type == "error") {
 			this.errors.add(message);
 			this.request.setAttribute("errors", this.errors);
+		}
+	}
+
+	protected void authUserOrRedirect(String field) throws IOException {
+		HttpSession session = request.getSession();
+		if (session.getAttribute(field) == null) {
+			response.sendRedirect(request.getServletContext().getContextPath() + "/usuario/login");
 		}
 	}
 }
