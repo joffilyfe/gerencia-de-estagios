@@ -35,9 +35,7 @@
               <nav>
                 <ul class="nav nav-pills pull-right">
                   <li role="presentation" class="active"><a href="${pageContext.request.contextPath}">Home</a></li>
-                  <c:if test="${usuario.tipo_usuario eq 'Empresa'}">
-                    <li role="presentation" class="active"><a href="${pageContext.request.contextPath}/empresa/cadastro">Cadastar empresa</a></li>
-                  </c:if>
+                  
                   <c:if test="${usuario.coordenador}">
                     <li role="presentation"><a href="${pageContext.request.contextPath}/coordenacao">Painel Coordenador</a></li>
                   </c:if>

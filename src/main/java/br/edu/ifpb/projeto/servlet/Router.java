@@ -30,6 +30,7 @@ public class Router {
 
 		// Empresa
 		addRoute("/empresa/cadastro", "EmpresaController", "ofertarVaga");
+		addRoute("/empresa/editar", "EmpresaController", "editarPerfil");
 	}
 
 	public void addRoute(String url, String controller, String method) {
