@@ -6,7 +6,8 @@
 
 	<jsp:body>
 		<t:menuCoordenador></t:menuCoordenador>
-	<!-- align="center" width=400 height=400  -->
+		<div class="col-sm-8">
+		<h3>Alunos candidatos a vaga</h3>
 				<table class="table table-hover">
   
 					<c:choose>
@@ -16,7 +17,7 @@
 									
 									<td>${aluno.nome}</td>
 									<td><a href="/view/coordenador/candidatos/fichaAluno?id=${aluno.id}">Ficha do Aluno</a></td>
-									<td>      <a href="/view/coordenador/candidatos/fichaEmpresa?id=${aluno.id}">Ficha da Empresa </a> /td>
+									<td>      <a href="/view/coordenador/candidatos/fichaEmpresa?id=${aluno.id}">Ficha da Empresa </a> </td>
 									<td><a href="/view/coordenador/candidatos/oferta?id=${aluno.id}">Oferta</a></td>
 								</tr>
 							</c:forEach> 
@@ -30,7 +31,7 @@
     				
     			
 				</table>
-		
+		</div>
 	</jsp:body>
 
 
