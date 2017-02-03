@@ -64,19 +64,20 @@ public class ApplicationController {
 
 	// Add messages to request
 	protected void addFlashMessage(String type, String message) {
+		HttpSession session = request.getSession();
 		if (type == "success") {
 			this.success.add(message);
-			this.request.setAttribute("success", this.success);
+			session.setAttribute("success", this.success);
 		}
 
 		if (type == "info") {
 			this.info.add(message);
-			this.request.setAttribute("infos", this.info);
+			session.setAttribute("infos", this.info);
 		}
 
 		if (type == "error") {
 			this.errors.add(message);
-			this.request.setAttribute("errors", this.errors);
+			session.setAttribute("errors", this.errors);
 		}
 	}
 

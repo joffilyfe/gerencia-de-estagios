@@ -63,6 +63,7 @@
 						<c:forEach var="msg" items="${errors}">
 							<div class="alert alert-danger" role="alert">${msg}</div>
 						</c:forEach>
+						 <c:remove var="errors"/>
 					</div>
 				</div>
 			</c:if>
@@ -72,6 +73,7 @@
 						<c:forEach var="msg" items="${infos}">
 							<div class="alert alert-info" role="alert">${msg}</div>
 						</c:forEach>
+						<c:remove var="infos"/>
 					</div>
 				</div>
 			</c:if>
@@ -81,6 +83,7 @@
 						<c:forEach var="msg" items="${success}">
 							<div class="alert alert-success" role="alert">${msg}</div>
 						</c:forEach>
+						<c:remove var="success"/>
 					</div>
 				</div>
 			</c:if>
