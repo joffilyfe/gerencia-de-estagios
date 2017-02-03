@@ -18,6 +18,7 @@ public class Router {
 
 		// Aluno
 		addRoute("/aluno/perfil/editar", "AlunoController", "editarPerfil");
+		addRoute("/aluno/candidatar/vaga", "AlunoController", "candidatarVaga");
 
 		// Coordenacao
 		addRoute("/coordenacao", "CoordenadorController", "index");

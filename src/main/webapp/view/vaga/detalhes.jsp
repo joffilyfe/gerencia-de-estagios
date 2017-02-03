@@ -59,6 +59,7 @@
 			</c:if>
 			
 			<div>
+				<a class="btn btn-success" href="${pageContext.request.contextPath}/aluno/candidatar/vaga?id=${vaga.id}">Concorrer a vaga</a>
 				<ul class="pager">
 	  				<li class="previous"><a href="${pageContext.request.contextPath}/vagas">Voltar para vagas</a></li>
 	  			</ul>
