@@ -12,6 +12,7 @@
 			  <a href="${pageContext.request.contextPath}/coordenacao/empresas/habilitar" class="list-group-item">Habilitar empresa</a>
 			  <a href="#" class="list-group-item">Visualizar Vagas</a>
 			  <a href="#" class="list-group-item">Habilitar vaga</a>
-			   <a href="${pageContext.request.contextPath}/coordenacao/candidatos" class="list-group-item">Visualizar candidatos</a>
+			  <a href="${pageContext.request.contextPath}/coordenacao/candidatos" class="list-group-item">Visualizar candidatos</a>
+			  <a href="${pageContext.request.contextPath}/coordenacao/encerrarEstagio" class="list-group-item">Encerrar Estágio</a>			
 			</div>
 		</div>

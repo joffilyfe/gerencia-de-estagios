@@ -97,6 +97,46 @@ public class CoordenadorController extends ApplicationController{
 		}
 	}
 	
+	public RequestDispatcher encerrar() throws IOException {
+		
+		RequestDispatcher dispatcher = this.request.getRequestDispatcher("/view/coordenador/encerrarEstagio.jsp");
+		List<Aluno> alunos = alunoDAO.ProcuraAlunos();
+		
+		if(alunos==null){
+			request.setAttribute("alunos", alunos);
+			return dispatcher;
+		}
+		
+		
+		for(int i=0;i<alunos.size();i++){
+			
+			Aluno al = alunos.get(i);
+			
+			if(al.isEstagiando()==false){
+				alunos.remove(i);
+				
+			}
+			
+		}
+		
+		this.request.setAttribute("alunos",alunos);
+		
+		
+		if (request.getMethod().equals("POST")){
+			if(request.getParameter("id").matches("^\\d+$")){
+				int idNumber = Integer.parseInt(request.getParameter("id"));
+				Aluno a = alunoDAO.find(idNumber);
+				a.setEstagiando(false);
+				alunoDAO.beginTransaction();
+				alunoDAO.update(a);
+				alunoDAO.commit();
+			}
+		}
+				
+				
+		return dispatcher;
+	}
+	
 	
 	public RequestDispatcher habilitarempresa() throws IOException {
 		RequestDispatcher dispatcher = this.request.getRequestDispatcher("/view/coordenador/habilitaEmpresas.jsp");
