@@ -8,27 +8,36 @@ public class Router {
 
 	public Router() {
 		addRoute("/", "SiteController", "index");
+
+		// Usuário
 		addRoute("/usuario/login", "UsuarioController", "login");
 		addRoute("/usuario/logout", "UsuarioController", "logout");
 		addRoute("/usuario/cadastro", "UsuarioController", "cadastro");
-		
-		
+		addRoute("/usuario/painel", "UsuarioController", "painel");
+		addRoute("/usuario/painel/perfil/editar", "UsuarioController", "editarPerfil");
+
+		// Aluno
+		addRoute("/aluno/perfil/editar", "AlunoController", "editarPerfil");
+		addRoute("/aluno/candidatar/vaga", "AlunoController", "candidatarVaga");
+
 		// Coordenacao
 		addRoute("/coordenacao", "CoordenadorController", "index");
 		addRoute("/coordenacao/empresas/habilitar", "CoordenadorController", "habilitarempresa");
 		addRoute("/coordenacao/empresas/listar", "CoordenadorController", "listarEmpresas");
-		
-		//Empresa
-		addRoute("/empresa", "EmpresaController", "index");
-		addRoute("/empresa/vagas/candidatos","VagaController","listarCandidatos");
-		
+
 		// Vaga
 		addRoute("/vagas", "VagaController", "index");
 		addRoute("/vaga/detalhes", "VagaController", "show");
 		addRoute("/vagas/visualizarvagas", "VagaController", "listarVagas");
-		addRoute("/vagas/candidatos","VagaController","listarCandidatos");
-		
-		//Estagio
+		addRoute("/vagas/candidatos", "VagaController", "listarCandidatos");
+
+		// Empresa
+		addRoute("/empresa", "EmpresaController", "index");
+		addRoute("/empresa/vagas/candidatos", "VagaController", "listarCandidatos");
+		addRoute("/empresa/cadastro", "EmpresaController", "ofertarVaga");
+		addRoute("/empresa/editar", "EmpresaController", "editarPerfil");
+
+		// Estagio
 		addRoute("/estagiarios/admissao", "EstagioController", "admitirCandidato");
 	}
 

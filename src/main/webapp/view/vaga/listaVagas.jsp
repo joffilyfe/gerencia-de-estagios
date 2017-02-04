@@ -26,7 +26,7 @@
 		    			<c:forEach var="vaga" items="${vagas}">
 		    				<c:if test="${vaga.qtdVagas gt 0}">
 			    				<tr>
-			    					<td>${vaga.dataDivulgacao}</td>
+			    					<td>${vaga.dataDivulgacaoInicio}</td>
 			    					<td>${vaga.empresa.nome}</td>
 			    					<td>${vaga.descricao}</td>
 			    					<td>${vaga.qtdVagas}</td>

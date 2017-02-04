@@ -1,6 +1,11 @@
 package br.edu.ifpb.projeto.controller;
 
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpServletRequest;
@@ -18,117 +23,176 @@ import br.edu.ifpb.projeto.model.Estagio;
 import br.edu.ifpb.projeto.model.Usuario;
 import br.edu.ifpb.projeto.model.Vaga;
 
-public class EmpresaController extends ApplicationController{
+public class EmpresaController extends ApplicationController {
+
+	// DAOS
 	private EmpresaDAO empresaDAO = new EmpresaDAO(PersistenceUtil.getCurrentEntityManager());
 	private VagaDAO vagaDAO = new VagaDAO(PersistenceUtil.getCurrentEntityManager());
-	private AlunoDAO alunoDAO = new AlunoDAO(PersistenceUtil.getCurrentEntityManager());
-	private EstagioDAO estagioDAO = new EstagioDAO(PersistenceUtil.getCurrentEntityManager());
-	
+	private AlunoDAO alunoDAO = new AlunoDAO();
+	private EstagioDAO estagioDAO = new EstagioDAO();
+
 	public EmpresaController(HttpServletRequest request, HttpServletResponse response) {
 		super(request, response);
 	}
-	
+
 	public RequestDispatcher index() throws IOException {
 		RequestDispatcher dispatcher = this.request.getRequestDispatcher("/view/empresa/index.jsp");
 		HttpSession session = request.getSession();
 		this.request.setAttribute("vagas", vagaDAO.findAll());
-		
-		if (session.getAttribute("usuario") == null  || ((Usuario) session.getAttribute("usuario")).isEmpresa() == false) {
+
+		if (session.getAttribute("usuario") == null
+				|| ((Usuario) session.getAttribute("usuario")).isEmpresa() == false) {
 			response.sendRedirect(request.getServletContext().getContextPath());
 		}
 
 		return dispatcher;
 	}
-	
-	public RequestDispatcher habilitarempresa() throws IOException {
-		RequestDispatcher dispatcher = this.request.getRequestDispatcher("/view/coordenador/habilitaEmpresas.jsp");
+
+	public RequestDispatcher ofertarVaga() throws IOException, ParseException {
+		super.authUserOrRedirect("usuario");
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/view/empresa/cadastro.jsp");
 		HttpSession session = request.getSession();
-		int idNumber; 
-		this.request.setAttribute("empresas", empresaDAO.findAll());
-		
-		if (session.getAttribute("usuario") == null  || ((Usuario) session.getAttribute("usuario")).isCoordenador() == false) {
-			response.sendRedirect(request.getServletContext().getContextPath());
-		}
-		if (request.getMethod().equals("POST")){
-				if(request.getParameter("id").matches("^\\d+$")){
-					idNumber = Integer.parseInt(request.getParameter("id"));
-					Empresa empresa = empresaDAO.find(idNumber);				
-		
-					if(request.getParameter("habilitar").equals("true")){
-						empresa.setHabilitada(true);
-					}else if(request.getParameter("habilitar").equals("false")){
-						empresa.setHabilitada(false);
-					}
-		
-					empresaDAO.beginTransaction();
-					empresaDAO.update(empresa);
-					empresaDAO.commit();
-				} else{
-					super.addFlashMessage("error", "Empresa não foi encontrada");
-				}
+		Empresa empresa = (Empresa) session.getAttribute("usuario");
+
+		List<String> fields = new ArrayList<String>(
+				Arrays.asList("areaEstagio", "setor", "horarioEntrada", "horarioSaida", "valorBolsa", "vagas",
+						"beneficios", "numeroAlunosSelecao", "periodoDivulgacaoInicio-data",
+						"periodoDivulgacaoFim-data", "dataEntrevista-data", "principaisAtividades"));
+
+		if (request.getMethod().equals("POST")) {
+			if (super.validaFormulario(fields)) {
+
+				Vaga vaga = new Vaga(request.getParameter("principaisAtividades"), empresa);
+				SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+				sdf.setLenient(false);
+
+				vaga.setAreaDeFormacao(request.getParameter("areaEstagio"));
+				vaga.setSetor(request.getParameter("setor"));
+				vaga.setHorarioEntrada(request.getParameter("horarioEntrada"));
+				vaga.setHorarioSaida(request.getParameter("horarioSaida"));
+				vaga.setValorDaBolsa(Double.parseDouble(request.getParameter("valorBolsa")));
+				vaga.setQtdVagas(Integer.parseInt(request.getParameter("vagas")));
+				vaga.setBeneficios(request.getParameter("beneficios"));
+				vaga.setQtdAlunos(Integer.parseInt(request.getParameter("numeroAlunosSelecao")));
+				vaga.setDataDivulgacaoInicio(sdf.parse(request.getParameter("periodoDivulgacaoInicio-data")));
+				vaga.setDataDivulgacaoFim(sdf.parse(request.getParameter("periodoDivulgacaoFim-data")));
+				vaga.setDataEntrevista(sdf.parse(request.getParameter("dataEntrevista-data")));
+
+				vagaDAO.beginTransaction();
+				vagaDAO.insert(vaga);
+				vagaDAO.commit();
+
+				this.addFlashMessage("success", "Cadastro realizado com sucesso");
 			}
-		
-		
-		return dispatcher;
-	}
-	
-	
-	
-	
-	public RequestDispatcher listarEmpresas() throws IOException{
-		RequestDispatcher dispatcher = this.request.getRequestDispatcher("/view/coordenador/listaEmpresas.jsp");
-		HttpSession session = request.getSession();
-		this.request.setAttribute("empresas", empresaDAO.findAll());
-		
-
-		if (session.getAttribute("usuario") == null  || ((Usuario) session.getAttribute("usuario")).isCoordenador() == false) {
-			response.sendRedirect(request.getServletContext().getContextPath());
 		}
+
 		return dispatcher;
 	}
-	
-	public RequestDispatcher admitirCandidato() throws IOException{
-		
+
+	public RequestDispatcher editarPerfil() throws IOException {
+		super.authUserOrRedirect("usuario");
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/view/empresa/editar_perfil.jsp");
+		HttpSession session = request.getSession();
+		Empresa empresa = (Empresa) session.getAttribute("usuario");
+
+		List<String> fields = new ArrayList<String>(Arrays.asList("nome", "cnpj", "endereco", "numero", "complemento",
+				"bairro", "cidade", "estado", "cep", "referencia", "responsavel", "cargoResponsavel",
+				"nomeContatoSelecao", "telefone", "fax", "email"));
+
+		if (request.getMethod().equals("POST")) {
+			if (super.validaFormulario(fields)) {
+				empresa.setNome(request.getParameter("nome"));
+				empresa.setCnpj(Integer.parseInt(request.getParameter("cnpj")));
+				empresa.setEndereco(request.getParameter("endereco"));
+				empresa.setNumero(Integer.parseInt(request.getParameter("numero")));
+				empresa.setComplemento(request.getParameter("complemento"));
+				empresa.setBairro(request.getParameter("bairro"));
+				empresa.setCidade(request.getParameter("cidade"));
+				empresa.setEstado(request.getParameter("estado"));
+				empresa.setCep(request.getParameter("cep"));
+				empresa.setPontoDeReferencia(request.getParameter("referencia"));
+				empresa.setResponsavel(request.getParameter("responsavel"));
+				empresa.setCargoResponsavel(request.getParameter("cargoResponsavel"));
+				empresa.setNomeDoContato(request.getParameter("nomeContatoSelecao"));
+				empresa.setTelefone(request.getParameter("telefone"));
+				empresa.setFax(request.getParameter("fax"));
+				empresa.setEmail(request.getParameter("email"));
+
+				empresaDAO.beginTransaction();
+				empresaDAO.update(empresa);
+				empresaDAO.commit();
+
+				super.addFlashMessage("success", "Perfil atualizado com sucesso!");
+			}
+		}
+
+		if (request.getMethod().equals("GET")) {
+			request.setAttribute("nome", empresa.getNome());
+			request.setAttribute("cnpj", empresa.getCnpj());
+			request.setAttribute("endereco", empresa.getEndereco());
+			request.setAttribute("numero", empresa.getNumero());
+			request.setAttribute("complemento", empresa.getComplemento());
+			request.setAttribute("bairro", empresa.getBairro());
+			request.setAttribute("cidade", empresa.getCidade());
+			request.setAttribute("estado", empresa.getEstado());
+			request.setAttribute("cep", empresa.getCep());
+			request.setAttribute("referencia", empresa.getPontoDeReferencia());
+			request.setAttribute("responsavel", empresa.getResponsavel());
+			request.setAttribute("cargoResponsavel", empresa.getCargoResponsavel());
+			request.setAttribute("nomeContatoSelecao", empresa.getNomeDoContato());
+			request.setAttribute("telefone", empresa.getTelefone());
+			request.setAttribute("fax", empresa.getFax());
+			request.setAttribute("email", empresa.getEmail());
+		}
+
+		return dispatcher;
+	}
+
+	/*
+	 * Método responsável por admitir candidatos em uma vaga específica
+	 */
+	public RequestDispatcher admitirCandidato() throws IOException {
 		RequestDispatcher dispatcher = this.request.getRequestDispatcher("/view/coordenador/listaCandidatos.jsp");
 		HttpSession session = request.getSession();
+
+		if (session.getAttribute("usuario") == null
+				|| ((Usuario) session.getAttribute("usuario")).isCoordenador() == false) {
+			response.sendRedirect(request.getServletContext().getContextPath());
+			return dispatcher;
+		}
+
 		int idAluno, idVaga, idEmpresa;
-		
-		
-		if (request.getMethod().equals("POST")){
-			if(request.getParameter("idaluno").matches("^\\d+$")){
+
+		if (request.getMethod().equals("POST")) {
+			if (request.getParameter("idaluno").matches("^\\d+$")) {
 				idAluno = Integer.parseInt(request.getParameter("idaluno"));
 				Aluno aluno = alunoDAO.find(idAluno);
 				idVaga = Integer.parseInt(request.getParameter("idvaga"));
 				Vaga vaga = vagaDAO.find(idVaga);
 				idEmpresa = vaga.getEmpresa().getId();
 				Empresa empresa = empresaDAO.find(idEmpresa);
-				Estagio estagio = new Estagio(empresa,aluno,vaga);
+				Estagio estagio = new Estagio(empresa, aluno, vaga);
 				this.request.setAttribute("estagio", estagio);
-				
+
 				estagioDAO.beginTransaction();
 				estagioDAO.insert(estagio);
 				estagioDAO.commit();
-				
+
 				aluno.getVagas().remove(vaga);
-				
+
 				alunoDAO.beginTransaction();
 				alunoDAO.update(aluno);
 				alunoDAO.commit();
-				
+
 				vaga.getAlunos().remove(aluno);
-				
+
 				vagaDAO.beginTransaction();
 				vagaDAO.update(vaga);
 				vagaDAO.commit();
 
 			}
 		}
-		
-		if (session.getAttribute("usuario") == null  || ((Usuario) session.getAttribute("usuario")).isCoordenador() == false) {
-			response.sendRedirect(request.getServletContext().getContextPath());
-		}
-		
+
 		return dispatcher;
-	}	
-		
+	}
 }

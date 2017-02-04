@@ -3,7 +3,7 @@
 <%@ attribute name="title" required="false" %>
 
 <c:if test="${empty title}" >
- <c:set var="title" value="Internship IFPB" />
+ <c:set var="title" value="Estágio IFPB" />
 </c:if>
 
 <!DOCTYPE html>
@@ -15,36 +15,50 @@
 		<link href="${pageContext.request.contextPath}/assets/css/main.css" rel="stylesheet">
 	</head>
 	<body>
-		<div class="header-default">
-			<div class="container">
-				<div class="header clearfix">
-			        <nav>
-			          <ul class="nav nav-pills pull-right">
-						<c:if test="${not empty usuario}">
-							<li><a>Logado como ${usuario.nome}</a></li>
-						</c:if>
-						<c:if test="${usuario.coordenador}">
-							<li role="presentation" class="active"><a href="${pageContext.request.contextPath}/coordenacao">Painel Coordenador</a></li>
-						</c:if>
-						<c:if test="${usuario.tipo_usuario eq 'Empresa'}">
-							<li role="presentation" class="active"><a href="${pageContext.request.contextPath}/empresa">Painel Empresa</a></li>
-						</c:if>												
-			            <li role="presentation" class="active"><a href="${pageContext.request.contextPath}">Home</a></li>
-						<c:if test="${not empty usuario}">
-							<li role="presentation"><a href="${pageContext.request.contextPath}/usuario/logout">Sair</a></li>
-						</c:if>
-						<c:if test="${empty usuario}">
-							<li role="presentation"><a href="${pageContext.request.contextPath}/usuario/login">Login</a></li>
-							<li role="presentation"><a href="${pageContext.request.contextPath}/usuario/cadastro">Cadastro</a></li>
-						</c:if>
-			          </ul>
-			        </nav>
-	      		</div>
-			</div>
-			<div class="container">
-				<h1 class="title">${title}</h1>
-			</div>
-		</div>
+
+    <%-- header --%>
+    <div class="header-default">
+      <%-- Logo e Título --%>
+      <div class="container">
+        <div class="col-md-6">
+          <div class="col-md-2">
+            <a href="${pageContext.request.contextPath}">
+              <img class="img-responsive" src="${pageContext.request.contextPath}/assets/images/logo.png">
+            </a>
+            </div>
+            <div class="col-md-10">
+              <h1 class="title"> ${title}</h1>
+            </div>
+          </div>
+          <%-- Menu --%>
+          <div class="col-md-6">
+            <div class="header clearfix">
+              <nav>
+                <ul class="nav nav-pills pull-right">
+                  <li role="presentation" class="active"><a href="${pageContext.request.contextPath}">Home</a></li>
+				  <li role="presentation">
+				  	<a class="success" href="${pageContext.request.contextPath}/vagas">Vagas</a>
+				  </li>
+                  <c:if test="${usuario.coordenador}">
+                    <li role="presentation"><a href="${pageContext.request.contextPath}/coordenacao">Painel Coordenador</a></li>
+                  </c:if>
+				  <c:if test="${usuario.tipo_usuario eq 'Empresa'}">
+				     <li role="presentation" class="active"><a href="${pageContext.request.contextPath}/empresa">Painel Empresa</a></li>
+				  </c:if>	
+                  <c:if test="${not empty usuario}">
+                    <li role="presentation"><a href="${pageContext.request.contextPath}/usuario/painel">Painel</a></li>
+                    <li role="presentation"><a href="${pageContext.request.contextPath}/usuario/logout">Sair</a></li>
+                  </c:if>
+                  <c:if test="${empty usuario}">
+                    <li role="presentation"><a href="${pageContext.request.contextPath}/usuario/login">Login</a></li>
+                    <li role="presentation"><a href="${pageContext.request.contextPath}/usuario/cadastro">Cadastro</a></li>
+                  </c:if>
+                </ul>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
 		<div class="container">
 			<c:if test="${not empty errors}">
 				<div align="left">
@@ -52,6 +66,7 @@
 						<c:forEach var="msg" items="${errors}">
 							<div class="alert alert-danger" role="alert">${msg}</div>
 						</c:forEach>
+						 <c:remove var="errors"/>
 					</div>
 				</div>
 			</c:if>
@@ -61,6 +76,7 @@
 						<c:forEach var="msg" items="${infos}">
 							<div class="alert alert-info" role="alert">${msg}</div>
 						</c:forEach>
+						<c:remove var="infos"/>
 					</div>
 				</div>
 			</c:if>
@@ -70,6 +86,7 @@
 						<c:forEach var="msg" items="${success}">
 							<div class="alert alert-success" role="alert">${msg}</div>
 						</c:forEach>
+						<c:remove var="success"/>
 					</div>
 				</div>
 			</c:if>
