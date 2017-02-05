@@ -15,6 +15,7 @@
 		<link href="${pageContext.request.contextPath}/assets/css/main.css" rel="stylesheet">
 	</head>
 	<body>
+
     <%-- header --%>
     <div class="header-default">
       <%-- Logo e Título --%>
@@ -41,6 +42,9 @@
                   <c:if test="${usuario.coordenador}">
                     <li role="presentation"><a href="${pageContext.request.contextPath}/coordenacao">Painel Coordenador</a></li>
                   </c:if>
+				  <c:if test="${usuario.tipo_usuario eq 'Empresa'}">
+				     <li role="presentation" class="active"><a href="${pageContext.request.contextPath}/empresa">Painel Empresa</a></li>
+				  </c:if>	
                   <c:if test="${not empty usuario}">
                     <li role="presentation"><a href="${pageContext.request.contextPath}/usuario/painel">Painel</a></li>
                     <li role="presentation"><a href="${pageContext.request.contextPath}/usuario/logout">Sair</a></li>
@@ -55,7 +59,6 @@
           </div>
         </div>
       </div>
-
 		<div class="container">
 			<c:if test="${not empty errors}">
 				<div align="left">
