@@ -10,7 +10,7 @@
 			  <a href="${pageContext.request.contextPath}/coordenacao" class="list-group-item active"><strong>Opções</strong></a>
 			  <a href="${pageContext.request.contextPath}/coordenacao/empresas/listar" class="list-group-item">Visualizar empresas</a>
 			  <a href="${pageContext.request.contextPath}/coordenacao/empresas/habilitar" class="list-group-item">Habilitar empresa</a>
-			  <a href="#" class="list-group-item">Visualizar Vagas</a>
+			  <a href="${pageContext.request.contextPath}/coordenacao/vagas/listar" class="list-group-item">Visualizar Vagas</a>
 			  <a href="#" class="list-group-item">Habilitar vaga</a>
 			</div>
 		</div>
