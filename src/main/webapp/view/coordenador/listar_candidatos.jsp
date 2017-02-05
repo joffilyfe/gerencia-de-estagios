@@ -16,6 +16,7 @@
 								<th>#</th>
 								<th>Nome</th>
 								<th>competencias</th>
+								<th>Ações></th>
 							</tr>
 		    			</thead>
 				        <c:forEach var="aluno" items="${alunos}" varStatus="loop">
@@ -24,6 +25,14 @@
 								<td>${loop.count}</td>
 								<td>${aluno.nome }</td>
 								<td>${aluno.competencias}</td>
+								<td>
+									<c:if test="${not aluno.estagiando}">
+										<a class="btn btn-primary" href="${pageContext.request.contextPath}/coordenacao/estagio/habilitar?aluno=${aluno.id}&vaga=${vaga.id}">Transformar em estágio</a>
+									</c:if>
+									<c:if test="${aluno.estagiando}">
+										<a class="btn btn-default" href="#" disabled>Aluno estagiando</a>
+									</c:if>
+								</td>
 							</tr>
 						</tbody>
 				        </c:forEach>
