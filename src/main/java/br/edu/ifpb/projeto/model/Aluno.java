@@ -6,18 +6,19 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
-import javax.persistence.OneToOne;
+import javax.persistence.OneToMany;
 
 @Entity
 public class Aluno extends Usuario {
 	private Integer matricula;
 	private String competencias;
-	@OneToOne(mappedBy="aluno", targetEntity=Estagio.class, cascade=CascadeType.ALL)
-	private Estagio estagio;
-	@ManyToMany(mappedBy="alunos")
+	@ManyToMany(mappedBy = "alunos")
 	private List<Vaga> vagas = new ArrayList<Vaga>();
+	@OneToMany(mappedBy = "aluno", cascade = CascadeType.REMOVE, orphanRemoval = true)
+	private List<Estagio> estagios = new ArrayList<Estagio>();
 
-	public Aluno() {}
+	public Aluno() {
+	}
 
 	public Aluno(String nome, String email, Integer matricula) {
 		super(nome, email);
@@ -42,6 +43,27 @@ public class Aluno extends Usuario {
 
 	public void setCompetencias(String competencias) {
 		this.competencias = competencias;
+	}
+
+	public List<Estagio> getEstagios() {
+		return estagios;
+	}
+
+	public void setEstagios(List<Estagio> estagios) {
+		this.estagios = estagios;
+	}
+
+	public void addEstagio(Estagio estagio) {
+		this.estagios.add(estagio);
+	}
+
+	public boolean isEstagiando() {
+		for (Estagio estagio : estagios) {
+			if (!estagio.isEncerrado()) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	@Override
