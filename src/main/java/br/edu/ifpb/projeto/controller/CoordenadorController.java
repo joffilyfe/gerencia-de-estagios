@@ -11,6 +11,7 @@ import javax.servlet.http.HttpSession;
 import br.edu.ifpb.projeto.dao.EmpresaDAO;
 import br.edu.ifpb.projeto.dao.PersistenceUtil;
 import br.edu.ifpb.projeto.dao.VagaDAO;
+import br.edu.ifpb.projeto.model.Aluno;
 import br.edu.ifpb.projeto.model.Empresa;
 import br.edu.ifpb.projeto.model.Usuario;
 import br.edu.ifpb.projeto.model.Vaga;
@@ -95,5 +96,40 @@ public class CoordenadorController extends ApplicationController {
 		request.setAttribute("vagas", vagas);
 
 		return dispatcher;
+	}
+
+	/*
+	 * Método responsável por listar os alunos interessados em uma vaga
+	 */
+	public RequestDispatcher verAlunosCandidatos() throws IOException {
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/view/coordenador/listar_candidatos.jsp");
+
+		// Verifica usuário
+		if (!super.canAccess("usuario", "Usuario")) {
+			response.sendRedirect(request.getServletContext().getContextPath());
+			return dispatcher;
+		}
+
+		// Verifica id da vaga
+		if (request.getParameter("id") == null || !request.getParameter("id").matches("^\\d+$")) {
+			response.sendRedirect(request.getServletContext().getContextPath());
+			return dispatcher;
+		}
+
+		Vaga vaga = vagaDAO.find(Integer.parseInt(request.getParameter("id")));
+
+		// Verifica se vaga existe
+		if (vaga == null) {
+			response.sendRedirect(request.getServletContext().getContextPath());
+			return dispatcher;
+		}
+
+		List<Aluno> alunos = vaga.getAlunos();
+
+		request.setAttribute("vaga", vaga);
+		request.setAttribute("alunos", alunos);
+
+		return dispatcher;
+
 	}
 }

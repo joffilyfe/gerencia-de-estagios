@@ -7,38 +7,34 @@
 	<jsp:body>
 	 <t:menuCoordenador></t:menuCoordenador>
  		<div class="col-sm-8">
- 		<h3>Vagas abertas</h3>
+ 		<h3>${vaga.titulo} - Candidatos</h3>
 			<c:choose>
-			    <c:when test="${not empty vagas}">
+			    <c:when test="${not empty alunos}">
 			    	<table class="table table-hover">
 				    	<thead>
 							<tr>
 								<th>#</th>
-								<th>Título</th>
-								<th>Empresa</th>
-								<th>Alunos Interessados</th>
+								<th>Nome</th>
+								<th>competencias</th>
 							</tr>
 		    			</thead>
-				        <c:forEach var="vaga" items="${vagas}" varStatus="loop">
+				        <c:forEach var="aluno" items="${alunos}" varStatus="loop">
 						<tbody>
 							<tr>
 								<td>${loop.count}</td>
-								<td>
-									<a href="${pageContext.request.contextPath}/coordenacao/vagas/detalhes?id=${vaga.id}">${vaga.titulo}</a>
-								</td>
-								<td>${vaga.empresa.nome}</td>
-								<td>${fn:length(vaga.alunos)}</td>
+								<td>${aluno.nome }</td>
+								<td>${aluno.competencias}</td>
 							</tr>
 						</tbody>
 				        </c:forEach>
 			        </table>
 			    </c:when>     
 			    <c:otherwise>
-			        <p>Nenhuma empresa cadastrada no momento</p>
+			        <p>Nenhum aluno interessado nesta vaga</p>
 			    </c:otherwise>
 			</c:choose>
 			<ul class="pager">
-  				<li class="previous"><a href="${pageContext.request.contextPath}/coordenacao">Voltar</a></li>
+  				<li class="previous"><a href="${pageContext.request.contextPath}/coordenacao/vagas/listar">Voltar</a></li>
   			</ul>
 		</div>
 	</jsp:body>
