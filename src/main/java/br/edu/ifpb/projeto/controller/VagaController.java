@@ -70,22 +70,31 @@ public class VagaController extends ApplicationController {
 	}
 
 	public RequestDispatcher listarCandidatos() throws IOException {
-
 		HttpSession session = request.getSession();
 		String idVaga = request.getParameter("idvaga");
 		RequestDispatcher dispatcher = this.request.getRequestDispatcher("/view/vaga/listaCandidatos.jsp");
 
-		if (session.getAttribute("usuario") == null) {
+		// Verifica se o usuário é empresa
+		if (!super.canAccess("usuario", "Empresa")) {
+			super.addFlashMessage("error", "Você não possui acesso");
 			response.sendRedirect(request.getServletContext().getContextPath());
+			return dispatcher;
 		}
 
-		if (((Usuario) session.getAttribute("usuario")).isCoordenador() == false
-				&& ((Usuario) session.getAttribute("usuario")).isEmpresa() == false) {
-		}
+		Empresa empresa = (Empresa) session.getAttribute("usuario");
 
 		if (request.getMethod().equals("POST")) {
 			if (idVaga.matches("^\\d+$")) {
+				vagaDAO.beginTransaction();
 				Vaga vaga = vagaDAO.find(Integer.parseInt(idVaga));
+
+				if (vaga.getEmpresa() != empresa) {
+					super.addFlashMessage("error", "Você não tem acesso a está vaga");
+					response.sendRedirect(request.getServletContext().getContextPath());
+					return dispatcher;
+				}
+
+				vagaDAO.commit();
 				List<Aluno> candidatos = vaga.getAlunos();
 
 				this.request.setAttribute("vaga", vaga);
