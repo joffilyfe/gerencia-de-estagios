@@ -16,6 +16,7 @@ public class Vaga {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
+	private String titulo;
 	private String descricao;
 	private String areaDeFormacao;
 	private String setor;
@@ -47,6 +48,14 @@ public class Vaga {
 
 	public void setId(Integer id) {
 		this.id = id;
+	}
+
+	public String getTitulo() {
+		return titulo;
+	}
+
+	public void setTitulo(String titulo) {
+		this.titulo = titulo;
 	}
 
 	public String getDescricao() {
