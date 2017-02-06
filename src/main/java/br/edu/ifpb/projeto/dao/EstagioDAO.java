@@ -31,4 +31,30 @@ public class EstagioDAO extends GenericDAO<Estagio, Integer> {
 
 		return estagios.get(0);
 	}
+
+	public List<Estagio> getAllByEncerrado(boolean status) {
+		Query q = this.entityManager
+				.createQuery("SELECT e FROM Estagio e WHERE e.editado = true and e.encerrado = :status");
+
+		q.setParameter("status", status);
+		List<Estagio> estagios = q.getResultList();
+
+		if (estagios.isEmpty()) {
+			return null;
+		}
+
+		return estagios;
+	}
+
+	public List<Estagio> getAllActive() {
+		Query q = this.entityManager.createQuery("SELECT e FROM Estagio e WHERE e.editado = true");
+
+		List<Estagio> estagios = q.getResultList();
+
+		if (estagios.isEmpty()) {
+			return null;
+		}
+
+		return estagios;
+	}
 }
