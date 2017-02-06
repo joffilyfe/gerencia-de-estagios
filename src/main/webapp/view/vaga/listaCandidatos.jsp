@@ -13,32 +13,32 @@
 		<div class="col-sm-8">
 			<h3>Alunos Candidatos</h3>			
 			<c:if test="${not empty candidatos}">
-					<h4>Vaga: "${vaga.descricao}"</h4>
+					<h4>Vaga: ${vaga.titulo}</h4>
 					<table class="table table-hover">
 				    	<thead>
 							<tr>
-								<th>Matrícula</th>
 								<th>Nome</th>
+								<th>Matrícula</th>
 								<th>Competências</th>
-								<th>Período</th>
-								<th>CRE</th>
-								<th></th>
+								<th>Ações</th>
 							</tr>
 				    	</thead>
 				    	<c:forEach var="aluno" items="${candidatos}">
 				    		<tr>
-				    			<td>${aluno.matricula}</td>
 				    			<td>${aluno.nome}</td>
+				    			<td>${aluno.matricula}</td>
 				    			<td>${aluno.competencias}</td>	
-				    			<td></td>
-				    			<td></td>
 				    			<td>
 				    				<form method="post" action="${pageContext.request.contextPath}/estagiarios/admissao">
 										<input type="hidden" name="idaluno" value="${aluno.id}">
 										<input type="hidden" name="idvaga" value="${vaga.id}">
-								   <!-- <input type="hidden" name="idempresa" value="${vaga.empresa.id}">  -->
-										<c:if test="${sessionScope.usuario.tipo_usuario eq 'Empresa'}">
-											<button type="submit" class="btn btn-primary btn-md" name="admitircandidato" value="true">Admitir</button>											
+
+										<c:if test="${usuario.tipo_usuario eq 'Empresa' and not aluno.admitido}">
+											<button type="submit" class="btn btn-success btn-md" name="admitircandidato" value="true">Admitir</button>											
+										</c:if>
+
+										<c:if test="${aluno.admitido}">
+											<button class="btn btn-default" disabled>Já admitido</button>
 										</c:if>
 									</form>		    						
 				    			</td>		

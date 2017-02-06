@@ -5,17 +5,19 @@ import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
+import javax.persistence.Transient;
 
 @Entity
 public class Aluno extends Usuario {
 	private Integer matricula;
 	private String competencias;
-	@ManyToMany(mappedBy = "alunos")
-	private List<Vaga> vagas = new ArrayList<Vaga>();
+	@OneToMany(mappedBy = "aluno")
+	private List<VagaAluno> vagaAluno = new ArrayList<VagaAluno>();
 	@OneToMany(mappedBy = "aluno", cascade = CascadeType.REMOVE, orphanRemoval = true)
 	private List<Estagio> estagios = new ArrayList<Estagio>();
+	@Transient
+	private boolean admitido = false;
 
 	public Aluno() {
 	}
@@ -26,7 +28,20 @@ public class Aluno extends Usuario {
 	}
 
 	public List<Vaga> getVagas() {
-		return this.vagas;
+		List<Vaga> vagas = new ArrayList<Vaga>();
+		for (VagaAluno vaga : vagaAluno) {
+			vagas.add(vaga.getVaga());
+		}
+
+		return vagas;
+	}
+
+	public void addVagaAluno(VagaAluno vagaAluno) {
+		this.vagaAluno.add(vagaAluno);
+	}
+
+	public List<VagaAluno> getVagaAluno() {
+		return this.vagaAluno;
 	}
 
 	public Integer getMatricula() {
@@ -59,11 +74,19 @@ public class Aluno extends Usuario {
 
 	public boolean isEstagiando() {
 		for (Estagio estagio : estagios) {
-			if (!estagio.isEncerrado()) {
+			if (!estagio.isEncerrado() && estagio.isEditado()) {
 				return true;
 			}
 		}
 		return false;
+	}
+
+	public boolean isAdmitido() {
+		return admitido;
+	}
+
+	public void setAdmitido(boolean admitido) {
+		this.admitido = admitido;
 	}
 
 	@Override
