@@ -48,7 +48,7 @@
 									</c:if>
 								</td>
 								<td>
-									<a class="btn btn-warning" href="${pageContext.request.contextPath}/coordenacao/estagio/habilitar?aluno=${aluno.id}&vaga=${vaga.id}">Editar</a>
+									<a class="btn btn-warning" href="${pageContext.request.contextPath}/coordenacao/estagios/editar?id=${estagio.id}">Editar</a>
 								</td>
 							</tr>
 						</tbody>

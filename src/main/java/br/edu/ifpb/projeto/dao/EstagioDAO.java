@@ -45,4 +45,16 @@ public class EstagioDAO extends GenericDAO<Estagio, Integer> {
 
 		return estagios;
 	}
+
+	public List<Estagio> getAllActive() {
+		Query q = this.entityManager.createQuery("SELECT e FROM Estagio e WHERE e.editado = true");
+
+		List<Estagio> estagios = q.getResultList();
+
+		if (estagios.isEmpty()) {
+			return null;
+		}
+
+		return estagios;
+	}
 }

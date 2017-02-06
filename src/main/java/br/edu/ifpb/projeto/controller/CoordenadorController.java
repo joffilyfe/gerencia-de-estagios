@@ -249,9 +249,47 @@ public class CoordenadorController extends ApplicationController {
 		// boolean Status =
 		// Boolean.parseBoolean(request.getParameter("status"));;
 
-		List<Estagio> estagios = estagioDAO.getAllByEncerrado(false);
+		List<Estagio> estagios = estagioDAO.getAllActive();
 		request.setAttribute("estagios", estagios);
 
+		return dispatcher;
+	}
+
+	/*
+	 * Método responsável por editar estágio
+	 */
+	public RequestDispatcher editarEstagio() throws IOException {
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/view/coordenador/editar_estagio.jsp");
+
+		// Verifica usuário
+		if (!super.canAccess("usuario", "Usuario")) {
+			super.addFlashMessage("error", "Você não possui acesso");
+			response.sendRedirect(request.getServletContext().getContextPath());
+			return dispatcher;
+		}
+
+		Estagio estagio = estagioDAO.find(Integer.parseInt(request.getParameter("id")));
+		request.setAttribute("estagio", estagio);
+
+		// Se for uma edição
+		if (request.getMethod().equals("POST")) {
+			List<String> fields = new ArrayList<>(Arrays.asList("obrigatorio", "encerrado", "id"));
+
+			// Valida campos
+			if (super.validaFormulario(fields)) {
+
+				estagio.setEncerrado(Boolean.parseBoolean(request.getParameter("encerrado")));
+				estagio.setObrigatorio(Boolean.parseBoolean(request.getParameter("obrigatorio")));
+
+				estagioDAO.beginTransaction();
+				estagioDAO.update(estagio);
+				estagioDAO.commit();
+
+				super.addFlashMessage("success", "Estágio editado com successo");
+				response.sendRedirect(request.getServletContext().getContextPath() + "/coordenacao/estagios/listar");
+			}
+
+		}
 		return dispatcher;
 	}
 }
