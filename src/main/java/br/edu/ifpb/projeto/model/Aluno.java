@@ -6,6 +6,7 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
+import javax.persistence.Transient;
 
 @Entity
 public class Aluno extends Usuario {
@@ -15,6 +16,8 @@ public class Aluno extends Usuario {
 	private List<VagaAluno> vagaAluno = new ArrayList<VagaAluno>();
 	@OneToMany(mappedBy = "aluno", cascade = CascadeType.REMOVE, orphanRemoval = true)
 	private List<Estagio> estagios = new ArrayList<Estagio>();
+	@Transient
+	private boolean admitido = false;
 
 	public Aluno() {
 	}
@@ -76,6 +79,14 @@ public class Aluno extends Usuario {
 			}
 		}
 		return false;
+	}
+
+	public boolean isAdmitido() {
+		return admitido;
+	}
+
+	public void setAdmitido(boolean admitido) {
+		this.admitido = admitido;
 	}
 
 	@Override

@@ -1,6 +1,7 @@
 package br.edu.ifpb.projeto.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -9,15 +10,18 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import br.edu.ifpb.projeto.dao.PersistenceUtil;
+import br.edu.ifpb.projeto.dao.VagaAlunoDAO;
 import br.edu.ifpb.projeto.dao.VagaDAO;
 import br.edu.ifpb.projeto.model.Aluno;
 import br.edu.ifpb.projeto.model.Empresa;
 import br.edu.ifpb.projeto.model.Usuario;
 import br.edu.ifpb.projeto.model.Vaga;
+import br.edu.ifpb.projeto.model.VagaAluno;
 
 public class VagaController extends ApplicationController {
 
 	private VagaDAO vagaDAO = new VagaDAO(PersistenceUtil.getCurrentEntityManager());
+	private VagaAlunoDAO vagaAlunoDAO = new VagaAlunoDAO(PersistenceUtil.getCurrentEntityManager());
 
 	public VagaController(HttpServletRequest request, HttpServletResponse response) {
 		super(request, response);
@@ -69,6 +73,9 @@ public class VagaController extends ApplicationController {
 		return dispatcher;
 	}
 
+	/*
+	 * Método responsável por listar os candidatos a uma vaga (Empresa)
+	 */
 	public RequestDispatcher listarCandidatos() throws IOException {
 		HttpSession session = request.getSession();
 		String idVaga = request.getParameter("idvaga");
@@ -77,25 +84,50 @@ public class VagaController extends ApplicationController {
 		// Verifica se o usuário é empresa
 		if (!super.canAccess("usuario", "Empresa")) {
 			super.addFlashMessage("error", "Você não possui acesso");
-			response.sendRedirect(request.getServletContext().getContextPath());
+			response.sendRedirect(request.getServletContext().getContextPath() + "/vagas/visualizarvagas");
 			return dispatcher;
 		}
 
 		Empresa empresa = (Empresa) session.getAttribute("usuario");
 
 		if (request.getMethod().equals("POST")) {
+
 			if (idVaga.matches("^\\d+$")) {
-				vagaDAO.beginTransaction();
 				Vaga vaga = vagaDAO.find(Integer.parseInt(idVaga));
 
+				if (vaga == null) {
+					super.addFlashMessage("error", "Vaga não encontrada");
+					response.sendRedirect(request.getServletContext().getContextPath() + "/vagas/visualizarvagas");
+					return dispatcher;
+				}
+
+				// Verifica se a vaga é da empresa
 				if (vaga.getEmpresa() != empresa) {
 					super.addFlashMessage("error", "Você não tem acesso a está vaga");
 					response.sendRedirect(request.getServletContext().getContextPath());
 					return dispatcher;
 				}
 
-				vagaDAO.commit();
-				List<Aluno> candidatos = vaga.getAlunos();
+				List<Aluno> candidatos = new ArrayList<Aluno>();
+
+				// vagaAlunoDAO.beginTransaction();
+				List<VagaAluno> vagaAlunos = vagaAlunoDAO.findBy(vaga);
+				// vagaAlunoDAO.commit();
+
+				// Setando os alunos como admitidos
+				if (vagaAlunos != null) {
+					for (VagaAluno vagaAluno : vagaAlunos) {
+						Aluno aluno = vagaAluno.getAluno();
+
+						if (vagaAluno.isAdmitido()) {
+							aluno.setAdmitido(true);
+						}
+
+						candidatos.add(aluno);
+					}
+				} else {
+					System.out.println("Sem vaga aluno");
+				}
 
 				this.request.setAttribute("vaga", vaga);
 				this.request.setAttribute("candidatos", candidatos);
