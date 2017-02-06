@@ -9,6 +9,7 @@
 		<class>br.edu.ifpb.projeto.model.Empresa</class>
 		<class>br.edu.ifpb.projeto.model.Vaga</class>
 		<class>br.edu.ifpb.projeto.model.Estagio</class>
+		<class>br.edu.ifpb.projeto.model.VagaAluno</class>
 		<exclude-unlisted-classes>false</exclude-unlisted-classes>
 		<properties>
 			<property name="hibernate.dialect" value="org.hibernate.dialect.HSQLDialect" />
