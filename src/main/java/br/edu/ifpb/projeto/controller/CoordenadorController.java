@@ -14,17 +14,21 @@ import br.edu.ifpb.projeto.dao.AlunoDAO;
 import br.edu.ifpb.projeto.dao.EmpresaDAO;
 import br.edu.ifpb.projeto.dao.EstagioDAO;
 import br.edu.ifpb.projeto.dao.PersistenceUtil;
+import br.edu.ifpb.projeto.dao.VagaAlunoDAO;
 import br.edu.ifpb.projeto.dao.VagaDAO;
 import br.edu.ifpb.projeto.model.Aluno;
 import br.edu.ifpb.projeto.model.Empresa;
 import br.edu.ifpb.projeto.model.Estagio;
 import br.edu.ifpb.projeto.model.Usuario;
 import br.edu.ifpb.projeto.model.Vaga;
+import br.edu.ifpb.projeto.model.VagaAluno;
 
 public class CoordenadorController extends ApplicationController {
 	private EmpresaDAO empresaDAO = new EmpresaDAO(PersistenceUtil.getCurrentEntityManager());
 	private VagaDAO vagaDAO = new VagaDAO(PersistenceUtil.getCurrentEntityManager());
 	private AlunoDAO alunoDAO = new AlunoDAO(PersistenceUtil.getCurrentEntityManager());
+	private VagaAlunoDAO vagaAlunoDAO = new VagaAlunoDAO(PersistenceUtil.getCurrentEntityManager());
+	private EstagioDAO estagioDAO = new EstagioDAO(PersistenceUtil.getCurrentEntityManager());
 
 	public CoordenadorController(HttpServletRequest request, HttpServletResponse response) {
 		super(request, response);
@@ -122,7 +126,9 @@ public class CoordenadorController extends ApplicationController {
 			return dispatcher;
 		}
 
+		vagaDAO.beginTransaction();
 		Vaga vaga = vagaDAO.find(Integer.parseInt(request.getParameter("id")));
+		vagaDAO.commit();
 
 		// Verifica se vaga existe
 		if (vaga == null) {
@@ -130,10 +136,25 @@ public class CoordenadorController extends ApplicationController {
 			return dispatcher;
 		}
 
-		List<Aluno> alunos = vaga.getAlunos();
+		// List<Aluno> alunos = vaga.getAlunos();
+		List<Aluno> candidatos = new ArrayList<Aluno>();
+		List<VagaAluno> vagaAlunos = vagaAlunoDAO.findBy(vaga);
+
+		// Setando os alunos como admitidos
+		if (vagaAlunos != null) {
+			for (VagaAluno vagaAluno : vagaAlunos) {
+				Aluno aluno = vagaAluno.getAluno();
+
+				if (vagaAluno.isAdmitido()) {
+					aluno.setAdmitido(true);
+				}
+
+				candidatos.add(aluno);
+			}
+		}
 
 		request.setAttribute("vaga", vaga);
-		request.setAttribute("alunos", alunos);
+		request.setAttribute("alunos", candidatos);
 
 		return dispatcher;
 
@@ -188,15 +209,13 @@ public class CoordenadorController extends ApplicationController {
 
 			// Valida campos obrigatórios
 			if (super.validaFormulario(fields)) {
-				Estagio estagio = new Estagio();
-				estagio.setAluno(aluno);
-				estagio.setVaga(vaga);
-				estagio.setEmpresa(vaga.getEmpresa());
+				Estagio estagio = estagioDAO.getBy(vaga, aluno);
+				estagio.setEditado(true);
 				estagio.setObrigatorio(Boolean.parseBoolean(request.getParameter("obrigatorio")));
 				estagio.setEncerrado(Boolean.parseBoolean(request.getParameter("encerrado")));
 
 				estagioDAO.beginTransaction();
-				estagioDAO.insert(estagio);
+				estagioDAO.update(estagio);
 				estagioDAO.commit();
 
 				alunoDAO.beginTransaction();

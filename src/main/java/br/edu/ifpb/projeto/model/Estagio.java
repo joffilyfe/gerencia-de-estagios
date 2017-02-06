@@ -22,6 +22,8 @@ public class Estagio {
 	private boolean encerrado;
 	@Column(columnDefinition = "boolean default 'false'")
 	private boolean obrigatorio;
+	@Column(columnDefinition = "boolean default 'false'")
+	private boolean editado;
 
 	public Estagio() {
 	}
@@ -78,6 +80,14 @@ public class Estagio {
 
 	public void setObrigatorio(boolean obrigatorio) {
 		this.obrigatorio = obrigatorio;
+	}
+
+	public boolean isEditado() {
+		return editado;
+	}
+
+	public void setEditado(boolean editado) {
+		this.editado = editado;
 	}
 
 }

@@ -74,7 +74,7 @@ public class Aluno extends Usuario {
 
 	public boolean isEstagiando() {
 		for (Estagio estagio : estagios) {
-			if (!estagio.isEncerrado()) {
+			if (!estagio.isEncerrado() && estagio.isEditado()) {
 				return true;
 			}
 		}
