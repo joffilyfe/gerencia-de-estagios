@@ -232,4 +232,26 @@ public class CoordenadorController extends ApplicationController {
 		return dispatcher;
 
 	}
+
+	/*
+	 * Método responsável por listar todos os estágios
+	 */
+	public RequestDispatcher listarEstagios() throws IOException {
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/view/coordenador/listar_estagios.jsp");
+
+		// Verifica usuário
+		if (!super.canAccess("usuario", "Usuario")) {
+			super.addFlashMessage("error", "Você não possui acesso");
+			response.sendRedirect(request.getServletContext().getContextPath());
+			return dispatcher;
+		}
+
+		// boolean Status =
+		// Boolean.parseBoolean(request.getParameter("status"));;
+
+		List<Estagio> estagios = estagioDAO.getAllByEncerrado(false);
+		request.setAttribute("estagios", estagios);
+
+		return dispatcher;
+	}
 }
