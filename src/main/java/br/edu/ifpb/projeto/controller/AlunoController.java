@@ -12,16 +12,19 @@ import javax.servlet.http.HttpSession;
 
 import br.edu.ifpb.projeto.dao.AlunoDAO;
 import br.edu.ifpb.projeto.dao.EstagioDAO;
+import br.edu.ifpb.projeto.dao.PersistenceUtil;
+import br.edu.ifpb.projeto.dao.VagaAlunoDAO;
 import br.edu.ifpb.projeto.dao.VagaDAO;
 import br.edu.ifpb.projeto.model.Aluno;
 import br.edu.ifpb.projeto.model.Vaga;
+import br.edu.ifpb.projeto.model.VagaAluno;
 
 public class AlunoController extends ApplicationController {
 
 	// DAO
-	private AlunoDAO alunoDAO = new AlunoDAO();
-	private VagaDAO vagaDAO = new VagaDAO();
-	private EstagioDAO estagioDAO = new EstagioDAO();
+	private AlunoDAO alunoDAO = new AlunoDAO(PersistenceUtil.getCurrentEntityManager());
+	private VagaDAO vagaDAO = new VagaDAO(PersistenceUtil.getCurrentEntityManager());
+	private EstagioDAO estagioDAO = new EstagioDAO(PersistenceUtil.getCurrentEntityManager());
 
 	public AlunoController(HttpServletRequest request, HttpServletResponse response) {
 		super(request, response);
@@ -88,18 +91,36 @@ public class AlunoController extends ApplicationController {
 
 		Aluno aluno = (Aluno) session.getAttribute("usuario");
 
+		VagaAlunoDAO vagaAlunoDAO = new VagaAlunoDAO();
+
 		// Se o aluno já estiver concorrendo a vaga.. redirecione para vagas.
-		if (vagaDAO.getByIdAndAluno(aluno, vaga) != null) {
+		if (vagaAlunoDAO.findBy(aluno, vaga) != null) {
 			super.addFlashMessage("info", "Você já está concorrendo a vaga");
 			response.sendRedirect(request.getServletContext().getContextPath() + "/vagas");
 			return dispatcher;
 		}
 
-		// Grava o aluno na vaga
+		VagaAluno vagaAluno = new VagaAluno();
+		vagaAluno.setAluno(aluno);
+		vagaAluno.setVaga(vaga);
+
+		aluno.addVagaAluno(vagaAluno);
+		vaga.addVagaAluno(vagaAluno);
+
+		// Commita o vaga aluno
+		vagaAlunoDAO.beginTransaction();
+		vagaAlunoDAO.insert(vagaAluno);
+		vagaAlunoDAO.commit();
+
+		// Commita a vaga
 		vagaDAO.beginTransaction();
-		vaga.addAluno(aluno);
 		vagaDAO.update(vaga);
 		vagaDAO.commit();
+
+		// Commita o aluno
+		alunoDAO.beginTransaction();
+		alunoDAO.update(aluno);
+		alunoDAO.commit();
 
 		super.addFlashMessage("success", "Parabéns você está concorrendo a vaga (" + vaga.getId() + ")");
 		response.sendRedirect(request.getServletContext().getContextPath() + "/vagas");
