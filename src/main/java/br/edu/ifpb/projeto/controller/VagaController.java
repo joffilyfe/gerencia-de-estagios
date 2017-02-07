@@ -14,7 +14,6 @@ import br.edu.ifpb.projeto.dao.VagaAlunoDAO;
 import br.edu.ifpb.projeto.dao.VagaDAO;
 import br.edu.ifpb.projeto.model.Aluno;
 import br.edu.ifpb.projeto.model.Empresa;
-import br.edu.ifpb.projeto.model.Usuario;
 import br.edu.ifpb.projeto.model.Vaga;
 import br.edu.ifpb.projeto.model.VagaAluno;
 
@@ -56,19 +55,17 @@ public class VagaController extends ApplicationController {
 	public RequestDispatcher listarVagas() throws IOException {
 		RequestDispatcher dispatcher = this.request.getRequestDispatcher("/view/vaga/listaVagas.jsp");
 		HttpSession session = request.getSession();
-		Usuario usuario = (Usuario) session.getAttribute("usuario");
 
-		if (usuario == null) {
+		Empresa empresa = (Empresa) session.getAttribute("usuario");
+
+		// Verifica se o usuário tem acesso e se a empresa existe
+		if (!super.canAccess("usuario", "Empresa") || empresa == null) {
+			super.addFlashMessage("error", "Você não possui acesso");
 			response.sendRedirect(request.getServletContext().getContextPath());
-		} else if (usuario.isCoordenador() == false && usuario.isEmpresa() == false) {
-			response.sendRedirect(request.getServletContext().getContextPath());
+			return dispatcher;
 		}
 
-		if (usuario.isCoordenador()) {
-			this.request.setAttribute("vagas", vagaDAO.findAll());
-		} else if (usuario.isEmpresa()) {
-			this.request.setAttribute("vagas", ((Empresa) usuario).getVagas());
-		}
+		this.request.setAttribute("vagas", empresa.getVagas());
 
 		return dispatcher;
 	}
