@@ -16,6 +16,7 @@
 						<thead>
 							<tr>
 								<th>#</th>
+								<th>Título</th>
 								<th>Empresa</th>
 								<th>Descrição curta</th>
 								<th>Bolsa</th>
@@ -23,9 +24,10 @@
 							</tr>
 						</thead>
 						<tbody>
-							<c:forEach var="vaga" items="${vagas}">
+							<c:forEach var="vaga" items="${vagas}" varStatus="loop">
 								<tr>
-									<td>#</td>
+									<td>${loop.count}</td>
+									<td>${vaga.titulo}</td>
 									<td>${vaga.empresa.nome}</td>
 									<td>${vaga.descricao}</td>
 									<td>R$ ${vaga.valorDaBolsa}</td>
