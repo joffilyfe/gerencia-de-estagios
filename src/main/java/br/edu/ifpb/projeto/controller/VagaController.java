@@ -99,7 +99,7 @@ public class VagaController extends ApplicationController {
 				}
 
 				// Verifica se a vaga é da empresa
-				if (vaga.getEmpresa() != empresa) {
+				if (vaga.getEmpresa().getId() != empresa.getId()) {
 					super.addFlashMessage("error", "Você não tem acesso a está vaga");
 					response.sendRedirect(request.getServletContext().getContextPath());
 					return dispatcher;
