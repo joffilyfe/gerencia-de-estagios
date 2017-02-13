@@ -17,6 +17,7 @@
 								<th>Responsável</th>
 								<th>Telefone</th>
 								<th>E-mail</th>
+								<th>Ações</th>
 							</tr>
 		    			</thead>
 				        <c:forEach var="empresa" items="${empresas}">
@@ -34,6 +35,9 @@
 								<td>${empresa.responsavel}</td>
 								<td>${empresa.telefone}</td>
 								<td>${empresa.email}</td>
+								<td>
+									<a class="btn btn-default" href="${pageContext.request.contextPath}/coordenacao/empresa/editar?id=${empresa.id}">Editar</a>
+								</td>
 							</tr>
 						</tbody>
 				        </c:forEach>
