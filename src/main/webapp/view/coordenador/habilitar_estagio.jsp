@@ -1,11 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-<%@ taglib prefix="t" tagdir="/WEB-INF/tags" %>
+<%@ taglib prefix="t" tagdir="/WEB-INF/tags/template" %>
 
-<t:layout>
+<t:usuario>
 	<jsp:body>
-	 <t:menuCoordenador></t:menuCoordenador>
  		<div class="col-sm-8">
  		<h3>Transformar vaga em portunidade de estágio</h3>
  			<form method="POST">
@@ -34,4 +33,4 @@
  			</form>
 		</div>
 	</jsp:body>
-</t:layout>
+</t:usuario>
