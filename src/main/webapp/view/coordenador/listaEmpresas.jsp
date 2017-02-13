@@ -1,10 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="t" tagdir="/WEB-INF/tags" %>
+<%@ taglib prefix="t" tagdir="/WEB-INF/tags/template" %>
 
-<t:layout>
+<t:usuario>
 	<jsp:body>
-	 <t:menuCoordenador></t:menuCoordenador>
  		<div class="col-sm-8">
  		<h3>Empresas</h3>
 			<c:choose>
@@ -25,11 +24,13 @@
 							<tr>
 								<td>${empresa.nome}</td>
 								<td>${empresa.email}</td>
-								<c:choose>
-									<c:when test="${empresa.habilitada}">
-										<td>Liberada</td>
-									</c:when>
-								</c:choose>
+								<td>
+									<c:choose>
+										<c:when test="${empresa.habilitada}">
+											Liberada
+										</c:when>
+									</c:choose>
+								</td>
 								<td>${empresa.responsavel}</td>
 								<td>${empresa.telefone}</td>
 								<td>${empresa.email}</td>
@@ -47,4 +48,4 @@
   			</ul>
 		</div>
 	</jsp:body>
-</t:layout>
+</t:usuario>
