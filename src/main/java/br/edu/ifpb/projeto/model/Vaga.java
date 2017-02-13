@@ -176,6 +176,11 @@ public class Vaga {
 		this.empresa = empresa;
 	}
 
+	
+	public void decrementarVaga(){
+		this.qtdVagas = this.qtdVagas-1;
+	}
+	
 	@Override
 	public String toString() {
 		return "Vaga [descricao=" + descricao + ", empresa=" + empresa + ", habilitada=" + "]";
