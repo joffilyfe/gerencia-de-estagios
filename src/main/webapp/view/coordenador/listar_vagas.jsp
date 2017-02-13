@@ -5,7 +5,7 @@
 
 <t:usuario>
 	<jsp:body>
- 		<div class="col-sm-8">
+ 		<div class="col-sm-12">
  		<h3>Vagas abertas</h3>
 			<c:choose>
 			    <c:when test="${not empty vagas}">

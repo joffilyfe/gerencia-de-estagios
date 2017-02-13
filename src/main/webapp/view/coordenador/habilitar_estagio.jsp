@@ -5,7 +5,7 @@
 
 <t:usuario>
 	<jsp:body>
- 		<div class="col-sm-8">
+ 		<div class="col-sm-12">
  		<h3>Transformar vaga em portunidade de estágio</h3>
  			<form method="POST">
  				<input type="hidden" name="aluno" value="${aluno.id}">
