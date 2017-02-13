@@ -26,3 +26,25 @@
 #tipo-5 {width:60%; float:left;}
 #tipo-6 {width:50%; float:left;}
 	.clearfix { clear:both; }
+	
+	
+footer {
+	background-color: #5cb85c;
+	height: 100px;
+}
+
+#contentBody {
+	padding-bottom: 300px;
+}
+
+.contentFooter {
+	padding-top:20px;
+}
+
+.contentFooter ul li a{
+	color: #fff;
+}
+
+.contentFooter img {
+	width: 100px;
+}
