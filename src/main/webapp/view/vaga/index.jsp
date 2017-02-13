@@ -28,7 +28,9 @@
 								<tr>
 									<td>${loop.count}</td>
 									<td>${vaga.titulo}</td>
-									<td>${vaga.empresa.nome}</td>
+									<td>
+										<a href="${pageContext.request.contextPath}/empresa/perfil?id=${vaga.empresa.id}" target="_blank">${vaga.empresa.nome}</a>
+									</td>
 									<td>${vaga.descricao}</td>
 									<td>R$ ${vaga.valorDaBolsa}</td>
 									<td><a class="btn btn-default" href="${pageContext.request.contextPath}/vaga/detalhes?id=${vaga.id}">Detalhes</a></td>
