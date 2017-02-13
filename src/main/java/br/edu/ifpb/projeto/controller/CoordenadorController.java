@@ -374,4 +374,58 @@ public class CoordenadorController extends ApplicationController {
 		}
 		return dispatcher;
 	}
+
+	/*
+	 * Método responsável por realizar operações em lote em cima de empresas
+	 */
+	public RequestDispatcher empresaOperacaoLote() throws IOException {
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/");
+
+		// Verifica usuário
+		if (!super.canAccess("usuario", "Usuario")) {
+			super.addFlashMessage("error", "Você não possui acesso");
+			response.sendRedirect(request.getServletContext().getContextPath());
+			return dispatcher;
+		}
+
+		if (this.request.getParameter("op").isEmpty()) {
+			super.addFlashMessage("info", "É necessário informar uma operação");
+			response.sendRedirect(request.getServletContext().getContextPath());
+			return dispatcher;
+		}
+
+		String operacao = this.request.getParameter("op");
+		ArrayList<String> listEmpresas = new ArrayList<String>(Arrays.asList(request.getParameterValues("id")));
+
+		// Buscando empresas
+		for (String empresa : listEmpresas) {
+			Empresa emp = empresaDAO.find(Integer.parseInt(empresa));
+
+			// Se a empresa existir
+			if (emp != null) {
+				// Bloqueando empresas
+				if (operacao.equals("desabilitar")) {
+					empresaDAO.beginTransaction();
+					emp.setHabilitada(false);
+					empresaDAO.update(emp);
+					empresaDAO.commit();
+				}
+
+				// Desbloquando empresas
+				if (operacao.equals("habilitando")) {
+					empresaDAO.beginTransaction();
+					emp.setHabilitada(true);
+					empresaDAO.update(emp);
+					empresaDAO.commit();
+				}
+
+				super.addFlashMessage("success", String.format("Operação realizada na empresa: %s", emp.getNome()));
+			}
+
+		}
+
+		response.sendRedirect(request.getServletContext().getContextPath() + "coordenacao/empresas/listar");
+
+		return dispatcher;
+	}
 }

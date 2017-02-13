@@ -26,6 +26,7 @@ public class Router {
 		addRoute("/coordenacao/empresas/habilitar", "CoordenadorController", "habilitarempresa");
 		addRoute("/coordenacao/empresas/listar", "CoordenadorController", "listarEmpresas");
 		addRoute("/coordenacao/empresa/editar", "CoordenadorController", "editarEmpresa");
+		addRoute("/coordenacao/empresas/editar", "CoordenadorController", "empresaOperacaoLote");
 		addRoute("/coordenacao/vagas/listar", "CoordenadorController", "listarVagas");
 		addRoute("/coordenacao/vagas/detalhes", "CoordenadorController", "verAlunosCandidatos");
 		addRoute("/coordenacao/estagio/habilitar", "CoordenadorController", "habiltarEstagio");
