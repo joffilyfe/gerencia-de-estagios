@@ -42,9 +42,12 @@ public class ApplicationController {
 
 		for (String field : fields) {
 			System.out.println(field);
+			boolean error = false;
+
 			if (this.request.getParameter(field) == null || this.request.getParameter(field).length() < 1) {
 				errors.add("O campo " + field + " precisa ser preenchido.");
-				return false;
+				// return false;
+				error = true;
 			}
 
 			// custom validation for dates
@@ -52,13 +55,20 @@ public class ApplicationController {
 				if (!this.request.getParameter(field)
 						.matches("(0[1-9]|[12][0-9]|3[01])/(0[1-9]|1[012])/(19|20)\\d{2,2}")) {
 					errors.add("O campo " + field + " precisa de um formato válido.");
-					return false;
+					// return false;
+					error = true;
 				}
 
 			}
 
 			// set valid attributes to request
-			this.request.setAttribute(field, this.request.getParameter(field));
+			if (!error) {
+				this.request.setAttribute(field, this.request.getParameter(field));
+			}
+		}
+
+		if (!this.errors.isEmpty()) {
+			return false;
 		}
 
 		return true;
