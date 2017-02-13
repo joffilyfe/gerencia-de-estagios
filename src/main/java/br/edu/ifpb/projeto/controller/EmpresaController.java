@@ -49,7 +49,7 @@ public class EmpresaController extends ApplicationController {
 		Empresa empresa = (Empresa) session.getAttribute("usuario");
 
 		List<String> fields = new ArrayList<String>(
-				Arrays.asList("areaEstagio", "setor", "horarioEntrada", "horarioSaida", "valorBolsa", "vagas",
+				Arrays.asList("titulo", "areaEstagio", "setor", "horarioEntrada", "horarioSaida", "valorBolsa", "vagas",
 						"beneficios", "numeroAlunosSelecao", "periodoDivulgacaoInicio-data",
 						"periodoDivulgacaoFim-data", "dataEntrevista-data", "principaisAtividades"));
 
@@ -60,6 +60,7 @@ public class EmpresaController extends ApplicationController {
 				SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 				sdf.setLenient(false);
 
+				vaga.setTitulo(request.getParameter("titulo"));
 				vaga.setAreaDeFormacao(request.getParameter("areaEstagio"));
 				vaga.setSetor(request.getParameter("setor"));
 				vaga.setHorarioEntrada(request.getParameter("horarioEntrada"));
@@ -77,6 +78,8 @@ public class EmpresaController extends ApplicationController {
 				vagaDAO.commit();
 
 				this.addFlashMessage("success", "Cadastro realizado com sucesso");
+				response.sendRedirect(request.getServletContext().getContextPath() + "/usuario/painel");
+				return dispatcher;
 			}
 		}
 
