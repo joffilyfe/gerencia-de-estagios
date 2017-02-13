@@ -25,9 +25,11 @@
 						<tbody>
 							<tr>
 								<td>${loop.count}</td>
-								<td>${estagio.aluno.nome}</td>
 								<td>
-									<a href="${pageContext.request.contextPath}/vaga/detalhes?id=${estagio.vaga.id}" target="blank">${estagio.vaga.titulo}</a>
+									<a href="${pageContext.request.contextPath}/aluno/perfil?id=${estagio.aluno.id}" target="_blank">${estagio.aluno.nome}</a>
+								</td>
+								<td>
+									<a href="${pageContext.request.contextPath}/vaga/detalhes?id=${estagio.vaga.id}" target="_blank">${estagio.vaga.titulo}</a>
 								</td>
 								<td>${estagio.empresa.nome}</td>
 								<td>
