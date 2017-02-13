@@ -123,9 +123,25 @@ public class UsuarioController extends ApplicationController {
 	 * Método responsável por exibir o painel do usuário
 	 */
 	public RequestDispatcher painel() throws IOException {
-		// Se o usuário não estiver logado, redireciona para o login
-		super.authUserOrRedirect("usuario");
 		RequestDispatcher dispatcher = request.getRequestDispatcher("/view/usuario/painel.jsp");
+		HttpSession session = request.getSession();
+
+		if (session.getAttribute("usuario") == null) {
+			response.sendRedirect(request.getServletContext().getContextPath() + "/usuario/login");
+			return dispatcher;
+		}
+
+		Usuario usuario = (Usuario) session.getAttribute("usuario");
+		if (usuario.isEmpresa()) {
+			Empresa user = empresaDAO.find(usuario.getId());
+			// request.setAttribute("usuario", user);
+			session.setAttribute("usuario", user);
+		} else if (usuario.isAluno()) {
+			Aluno user = alunoDAO.find(usuario.getId());
+			// request.setAttribute("usuario", user);
+			session.setAttribute("usuario", user);
+		}
+
 		return dispatcher;
 	}
 
