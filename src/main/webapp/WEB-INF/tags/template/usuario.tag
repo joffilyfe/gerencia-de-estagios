@@ -3,7 +3,7 @@
 
 <t:layout>
 	<jsp:body>
-	  <div class="col-sm-4">
+	  <div class="col-sm-3">
 			 <div class="list-group header">
 			  <a href="#" class="list-group-item disabled"><strong>Menu</strong></a>
 
@@ -23,14 +23,13 @@
 			  
 			  <%-- Menu para coordenador --%>
 			  <c:if test="${usuario.coordenador}">
-				<a href="${pageContext.request.contextPath}/coordenacao/empresas/listar" class="list-group-item">Visualizar empresas</a>
-			  	<a href="${pageContext.request.contextPath}/coordenacao/empresas/habilitar" class="list-group-item">Habilitar empresa</a>
-			  	<a href="${pageContext.request.contextPath}/coordenacao/vagas/listar" class="list-group-item">Visualizar Vagas</a>
-			  	<a href="${pageContext.request.contextPath}/coordenacao/estagios/listar" class="list-group-item">Ver estágios</a>
+				<a href="${pageContext.request.contextPath}/coordenacao/empresas/listar" class="list-group-item">Empresas</a>
+			  	<a href="${pageContext.request.contextPath}/coordenacao/vagas/listar" class="list-group-item">Vagas</a>
+			  	<a href="${pageContext.request.contextPath}/coordenacao/estagios/listar" class="list-group-item">Estágios</a>
               </c:if>
 			</div>
 		</div>
- 		<div class="col-sm-8">
+ 		<div class="col-sm-9">
  			<jsp:doBody />
 		</div>
 	</jsp:body>

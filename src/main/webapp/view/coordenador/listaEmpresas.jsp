@@ -11,32 +11,57 @@
 			    	<table class="table table-hover">
 				    	<thead>
 							<tr>
+								<th>#</th>
 								<th>Nome</th>
 								<th>Email</th>
 								<th>Situação</th>
 								<th>Responsável</th>
 								<th>Telefone</th>
-								<th>E-mail</th>
-								<th>Ações</th>
+								<th>Ação</th>
+								<th>Ação</th>
 							</tr>
 		    			</thead>
-				        <c:forEach var="empresa" items="${empresas}">
+				        <c:forEach var="empresa" items="${empresas}" varStatus="loop">
 						<tbody>
 							<tr>
+								<td>
+									<form method="POST">
+										<input type="checkbox" name="id">
+									</form>
+								</td>
 								<td>${empresa.nome}</td>
 								<td>${empresa.email}</td>
 								<td>
 									<c:choose>
 										<c:when test="${empresa.habilitada}">
-											Liberada
+											<span class="label label-success">Habilitada</span>
 										</c:when>
+										<c:when test="${not empresa.habilitada}">
+											<span class="label label-default">Desabilitada</span>
+										</c:when>							
 									</c:choose>
 								</td>
 								<td>${empresa.responsavel}</td>
 								<td>${empresa.telefone}</td>
-								<td>${empresa.email}</td>
 								<td>
 									<a class="btn btn-default" href="${pageContext.request.contextPath}/coordenacao/empresa/editar?id=${empresa.id}">Editar</a>
+								</td>
+								<td>
+								<c:choose>
+									<c:when test="${empresa.habilitada}">
+											<form method="post" action="${pageContext.request.contextPath}/coordenacao/empresas/habilitar">
+												<input type="hidden" name="id" value="${empresa.id}">
+												<button type="submit" class="btn btn-danger btn-md" name="habilitar" value ="false">Desabilitar</button>
+											</form>
+									</c:when>
+									<c:otherwise>
+											<form method="post" action="${pageContext.request.contextPath}/coordenacao/empresas/habilitar">
+												<input type="hidden" name="id" value="${empresa.id}">
+												<button type="submit" class="btn btn-primary btn-md" name="habilitar" value="true">Habilitar</button>
+											</form>
+
+									</c:otherwise>
+								</c:choose>
 								</td>
 							</tr>
 						</tbody>

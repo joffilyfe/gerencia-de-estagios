@@ -48,7 +48,7 @@ public class CoordenadorController extends ApplicationController {
 	}
 
 	public RequestDispatcher habilitarempresa() throws IOException {
-		RequestDispatcher dispatcher = this.request.getRequestDispatcher("/view/coordenador/habilitaEmpresas.jsp");
+		RequestDispatcher dispatcher = this.request.getRequestDispatcher("/view/coordenador/listaEmpresas.jsp");
 		HttpSession session = request.getSession();
 		int idNumber;
 		this.request.setAttribute("empresas", empresaDAO.findAll());
