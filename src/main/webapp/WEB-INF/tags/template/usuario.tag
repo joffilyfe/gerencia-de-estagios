@@ -9,7 +9,7 @@
 
 			  <%-- Menu para empresas --%>
 			  <c:if test="${usuario.empresa}">
-			  	<a href="${pageContext.request.contextPath}/#" class="list-group-item">Vagas ofertadas</a>
+				<a href="${pageContext.request.contextPath}/vagas/visualizarvagas" class="list-group-item">Vagas ofertadas</a>
 			  	<c:if test="${usuario.habilitada}">
 		  			<a href="${pageContext.request.contextPath}/empresa/cadastro" class="list-group-item">Cadastrar vaga</a>
 		  		</c:if>
