@@ -57,9 +57,13 @@
 			<c:if test="${not empty errors}">
 				<div align="left">
 					<div>
-						<c:forEach var="msg" items="${errors}">
-							<div class="alert alert-danger" role="alert">${msg}</div>
-						</c:forEach>
+						<div class="alert alert-danger" role="alert">
+							<ul>
+							<c:forEach var="msg" items="${errors}">
+								<li>${msg}</li>
+							</c:forEach>
+							</ul>
+						</div>
 						 <c:remove var="errors"/>
 					</div>
 				</div>
