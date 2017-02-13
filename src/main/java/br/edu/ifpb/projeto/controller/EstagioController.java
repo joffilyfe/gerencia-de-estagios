@@ -81,6 +81,9 @@ public class EstagioController extends ApplicationController {
 				alunoDAO.update(aluno);
 				alunoDAO.commit();
 
+				//Decrementa o número de vagas
+				vaga.decrementarVaga();
+				
 				// Atualiza a vaga
 				vagaDAO.beginTransaction();
 				vagaDAO.update(vaga);
