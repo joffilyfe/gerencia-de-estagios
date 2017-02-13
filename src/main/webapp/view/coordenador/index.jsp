@@ -4,7 +4,7 @@
 
 <t:usuario>
 	<jsp:body>
- 		<div class="col-sm-8">
+ 		<div class="col-sm-12">
  			<div class="jumbotron">
 				<h3>Ao lado você tem as opções específicas do coordenador.</h3>
 			</div>

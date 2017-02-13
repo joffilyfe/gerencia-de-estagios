@@ -4,7 +4,7 @@
 
 <t:usuario>
 	<jsp:body>
- 		<div class="col-sm-8">
+ 		<div class="col-sm-12">
  		<h3>Editando Estágio</h3>
  			<form method="POST">
  				<input type="hidden" name="id" value="${estagio.id}">
