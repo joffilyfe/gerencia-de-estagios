@@ -69,6 +69,7 @@ public class UsuarioController extends ApplicationController {
 		}
 		return dispatcher;
 	}
+	
 
 	public RequestDispatcher login() throws IOException {
 		HttpSession session = request.getSession();
@@ -117,6 +118,7 @@ public class UsuarioController extends ApplicationController {
 		return null;
 	}
 
+
 	/*
 	 * Método responsável por exibir o painel do usuário
 	 */
@@ -151,4 +153,5 @@ public class UsuarioController extends ApplicationController {
 		RequestDispatcher dispatcher = request.getRequestDispatcher("/view/usuario/editar_perfil.jsp");
 		return dispatcher;
 	}
+
 }

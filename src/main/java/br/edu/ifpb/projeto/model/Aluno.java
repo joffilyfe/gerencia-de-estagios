@@ -12,6 +12,11 @@ import javax.persistence.Transient;
 public class Aluno extends Usuario {
 	private Integer matricula;
 	private String competencias;
+
+	
+	private boolean estagiando=false;
+	
+
 	@OneToMany(mappedBy = "aluno")
 	private List<VagaAluno> vagaAluno = new ArrayList<VagaAluno>();
 	@OneToMany(mappedBy = "aluno", cascade = CascadeType.REMOVE, orphanRemoval = true)
@@ -19,8 +24,18 @@ public class Aluno extends Usuario {
 	@Transient
 	private boolean admitido = false;
 
+
 	public Aluno() {
 	}
+
+	public boolean isEstagiario() {
+		return estagiando;
+	}
+
+	public void setEstagiando(boolean estagiando) {
+		this.estagiando = estagiando;
+	}
+
 
 	public Aluno(String nome, String email, Integer matricula) {
 		super(nome, email);

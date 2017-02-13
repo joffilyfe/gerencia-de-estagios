@@ -13,12 +13,14 @@ public class Router {
 		addRoute("/usuario/login", "UsuarioController", "login");
 		addRoute("/usuario/logout", "UsuarioController", "logout");
 		addRoute("/usuario/cadastro", "UsuarioController", "cadastro");
+
 		addRoute("/usuario/painel", "UsuarioController", "painel");
 		addRoute("/usuario/painel/perfil/editar", "UsuarioController", "editarPerfil");
 
 		// Aluno
 		addRoute("/aluno/perfil/editar", "AlunoController", "editarPerfil");
 		addRoute("/aluno/candidatar/vaga", "AlunoController", "candidatarVaga");
+
 
 		// Coordenacao
 		addRoute("/coordenacao", "CoordenadorController", "index");
@@ -29,6 +31,11 @@ public class Router {
 		addRoute("/coordenacao/estagio/habilitar", "CoordenadorController", "habiltarEstagio");
 		addRoute("/coordenacao/estagios/listar", "CoordenadorController", "listarEstagios");
 		addRoute("/coordenacao/estagios/editar", "CoordenadorController", "editarEstagio");
+		addRoute("/coordenacao/candidatos","CoordenadorController","candidatos");
+		addRoute("/coordenacao/encerrarEstagio","CoordenadorController","encerrar");
+		
+		
+
 
 		// Vaga
 		addRoute("/vagas", "VagaController", "index");
@@ -36,14 +43,21 @@ public class Router {
 		addRoute("/vagas/visualizarvagas", "VagaController", "listarVagas");
 		addRoute("/vagas/candidatos", "VagaController", "listarCandidatos");
 
+		
+
+		
+
+
 		// Empresa
 		addRoute("/empresa", "EmpresaController", "index");
 		addRoute("/empresa/vagas/candidatos", "VagaController", "listarCandidatos");
 		addRoute("/empresa/cadastro", "EmpresaController", "ofertarVaga");
 		addRoute("/empresa/editar", "EmpresaController", "editarPerfil");
 
+
 		// Estagio
 		addRoute("/estagiarios/admissao", "EstagioController", "admitirCandidato");
+
 	}
 
 	public void addRoute(String url, String controller, String method) {
