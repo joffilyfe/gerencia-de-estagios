@@ -43,6 +43,7 @@ public class Router {
 		addRoute("/empresa/vagas/candidatos", "VagaController", "listarCandidatos");
 		addRoute("/empresa/cadastro", "EmpresaController", "ofertarVaga");
 		addRoute("/empresa/editar", "EmpresaController", "editarPerfil");
+		addRoute("/empresa/perfil", "EmpresaController", "perfilPublico");
 
 		// Estagio
 		addRoute("/estagiarios/admissao", "EstagioController", "admitirCandidato");

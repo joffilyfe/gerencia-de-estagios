@@ -42,6 +42,31 @@ public class EmpresaController extends ApplicationController {
 		return dispatcher;
 	}
 
+	/*
+	 * Método responsável por exibir o perfil público da empresa
+	 */
+	public RequestDispatcher perfilPublico() throws IOException {
+		RequestDispatcher dispatcher = this.request.getRequestDispatcher("/view/empresa/perfil_publico.jsp");
+
+		if (!this.request.getParameter("id").matches("^\\d+$")) {
+			super.addFlashMessage("error", "Empresa não localizada");
+			response.sendRedirect(request.getServletContext().getContextPath());
+			return dispatcher;
+		}
+
+		Empresa empresa = empresaDAO.find(Integer.parseInt(this.request.getParameter("id")));
+
+		if (empresa == null) {
+			super.addFlashMessage("error", "Empresa não localizada");
+			response.sendRedirect(request.getServletContext().getContextPath());
+			return dispatcher;
+		}
+
+		this.request.setAttribute("empresa", empresa);
+		this.request.setAttribute("vagas", empresa.getVagas());
+		return dispatcher;
+	}
+
 	public RequestDispatcher ofertarVaga() throws IOException, ParseException {
 		super.authUserOrRedirect("usuario");
 		RequestDispatcher dispatcher = request.getRequestDispatcher("/view/empresa/cadastro.jsp");
