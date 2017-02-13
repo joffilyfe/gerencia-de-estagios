@@ -1,21 +1,17 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"   pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="t" tagdir="/WEB-INF/tags" %>    
+<%@ taglib prefix="t" tagdir="/WEB-INF/tags/template" %>    
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
-<t:layout>
+<t:usuario>
 	<jsp:body>
-		<c:if test="${sessionScope.usuario.coordenador}">
-			<t:menuCoordenador></t:menuCoordenador>
-		</c:if>
-		<c:if test="${sessionScope.usuario.tipo_usuario eq 'Empresa'}">
-			<t:menuEmpresa></t:menuEmpresa>
-		</c:if>
-		<div class="col-sm-8">
+		<div class="col-sm-12">
 			<c:if test="${not empty vagas}">
 				<h3>Vagas abertas</h3>
 				<table class="table table-hover">
 				    	<thead>
 							<tr>
+								<th>Título</th>
 								<th>Divulgação</th>
 								<th>Empresa</th>
 								<th>Descrição</th>
@@ -26,7 +22,8 @@
 		    			<c:forEach var="vaga" items="${vagas}">
 		    				<c:if test="${vaga.qtdVagas gt 0}">
 			    				<tr>
-			    					<td>${vaga.dataDivulgacaoInicio}</td>
+			    					<td>${vaga.titulo}</td>
+			    					<td><fmt:formatDate value="${vaga.dataDivulgacaoInicio }" pattern="dd/MM/yyyy" /></td>
 			    					<td>${vaga.empresa.nome}</td>
 			    					<td>${vaga.descricao}</td>
 			    					<td>${vaga.qtdVagas}</td>
@@ -55,4 +52,4 @@
 		</div>
 
 	</jsp:body>
-</t:layout>
+</t:usuario>
