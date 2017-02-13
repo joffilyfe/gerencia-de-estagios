@@ -6,7 +6,7 @@
 
 <t:layout title="Detalhes de vaga">
 	<jsp:body>
-		<h1 class="page-header">${vaga.empresa.nome }</h1>
+		<h1 class="page-header">${vaga.titulo}</h1>
 
 		<div class="col-md-6">
 			<c:if test="${not empty vaga.empresa.nome }">
