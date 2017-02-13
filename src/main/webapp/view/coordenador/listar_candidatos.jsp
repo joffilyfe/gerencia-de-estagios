@@ -44,7 +44,7 @@
 									</c:if>
 								</td>
 								<td>
-									<c:if test="${not aluno.estagiando}">
+									<c:if test="${not aluno.estagiando and aluno.admitido}">
 										<a class="btn btn-primary" href="${pageContext.request.contextPath}/coordenacao/estagio/habilitar?aluno=${aluno.id}&vaga=${vaga.id}">Transformar em estágio</a>
 									</c:if>
 								</td>
