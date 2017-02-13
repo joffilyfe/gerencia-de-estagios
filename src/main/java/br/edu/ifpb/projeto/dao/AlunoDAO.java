@@ -18,6 +18,7 @@ public class AlunoDAO extends GenericDAO<Aluno, Integer> {
 	public AlunoDAO() {
 		this(PersistenceUtil.getCurrentEntityManager());
 	}
+
 	
 	public  Aluno findById(String id) {
         Query q = this.getEntityManager().createQuery("select a from Aluno a where a.id = :id");
@@ -29,7 +30,7 @@ public class AlunoDAO extends GenericDAO<Aluno, Integer> {
         }
         return a;
     }
-public List<Aluno> ProcuraAlunos(){
+	public List<Aluno> ProcuraAlunos(){
 		
 		Query q = this.getEntityManager().createQuery("SELECT u FROM Aluno u");
 		
@@ -41,4 +42,5 @@ public List<Aluno> ProcuraAlunos(){
 		
 		return  alunos;
 	}
+
 }

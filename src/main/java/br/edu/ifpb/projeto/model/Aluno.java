@@ -5,23 +5,30 @@ import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.ManyToMany;
-import javax.persistence.OneToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Transient;
 
 @Entity
 public class Aluno extends Usuario {
 	private Integer matricula;
 	private String competencias;
+
 	
 	private boolean estagiando=false;
-	@OneToOne(mappedBy="aluno", targetEntity=Estagio.class, cascade=CascadeType.ALL)
-	private Estagio estagio;
-	@ManyToMany(mappedBy="alunos")
-	private List<Vaga> vagas = new ArrayList<Vaga>();
+	
 
-	public Aluno() {}
+	@OneToMany(mappedBy = "aluno")
+	private List<VagaAluno> vagaAluno = new ArrayList<VagaAluno>();
+	@OneToMany(mappedBy = "aluno", cascade = CascadeType.REMOVE, orphanRemoval = true)
+	private List<Estagio> estagios = new ArrayList<Estagio>();
+	@Transient
+	private boolean admitido = false;
 
-	public boolean isEstagiando() {
+
+	public Aluno() {
+	}
+
+	public boolean isEstagiario() {
 		return estagiando;
 	}
 
@@ -36,7 +43,20 @@ public class Aluno extends Usuario {
 	}
 
 	public List<Vaga> getVagas() {
-		return this.vagas;
+		List<Vaga> vagas = new ArrayList<Vaga>();
+		for (VagaAluno vaga : vagaAluno) {
+			vagas.add(vaga.getVaga());
+		}
+
+		return vagas;
+	}
+
+	public void addVagaAluno(VagaAluno vagaAluno) {
+		this.vagaAluno.add(vagaAluno);
+	}
+
+	public List<VagaAluno> getVagaAluno() {
+		return this.vagaAluno;
 	}
 
 	public Integer getMatricula() {
@@ -53,6 +73,35 @@ public class Aluno extends Usuario {
 
 	public void setCompetencias(String competencias) {
 		this.competencias = competencias;
+	}
+
+	public List<Estagio> getEstagios() {
+		return estagios;
+	}
+
+	public void setEstagios(List<Estagio> estagios) {
+		this.estagios = estagios;
+	}
+
+	public void addEstagio(Estagio estagio) {
+		this.estagios.add(estagio);
+	}
+
+	public boolean isEstagiando() {
+		for (Estagio estagio : estagios) {
+			if (!estagio.isEncerrado() && estagio.isEditado()) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public boolean isAdmitido() {
+		return admitido;
+	}
+
+	public void setAdmitido(boolean admitido) {
+		this.admitido = admitido;
 	}
 
 	@Override

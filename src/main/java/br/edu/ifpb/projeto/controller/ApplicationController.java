@@ -8,6 +8,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import br.edu.ifpb.projeto.model.Usuario;
+
 /*
  * Essa classe é responsável por disponibilizar métodos para todas as suas classes filhas.
  * Os métodos visam facilitar o tratamento de informações vindas de uma requesição.
@@ -64,19 +66,20 @@ public class ApplicationController {
 
 	// Add messages to request
 	protected void addFlashMessage(String type, String message) {
+		HttpSession session = request.getSession();
 		if (type == "success") {
 			this.success.add(message);
-			this.request.setAttribute("success", this.success);
+			session.setAttribute("success", this.success);
 		}
 
 		if (type == "info") {
 			this.info.add(message);
-			this.request.setAttribute("infos", this.info);
+			session.setAttribute("infos", this.info);
 		}
 
 		if (type == "error") {
 			this.errors.add(message);
-			this.request.setAttribute("errors", this.errors);
+			session.setAttribute("errors", this.errors);
 		}
 	}
 
@@ -85,5 +88,18 @@ public class ApplicationController {
 		if (session.getAttribute(field) == null) {
 			response.sendRedirect(request.getServletContext().getContextPath() + "/usuario/login");
 		}
+	}
+
+	/*
+	 * Esta função verifica se o usuário esta logado e o seu tipo
+	 */
+	protected boolean canAccess(String field, String cls) throws IOException {
+		HttpSession session = request.getSession();
+		if (session.getAttribute(field) == null
+				|| !((Usuario) session.getAttribute(field)).getTipo_usuario().equals(cls)) {
+			return false;
+		}
+
+		return true;
 	}
 }

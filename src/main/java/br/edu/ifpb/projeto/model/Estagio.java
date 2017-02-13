@@ -1,32 +1,39 @@
 package br.edu.ifpb.projeto.model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 
 @Entity
 public class Estagio {
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	@ManyToOne
 	private Empresa empresa;
-	@OneToOne
+	@ManyToOne
 	private Aluno aluno;
 	@ManyToOne
 	private Vaga vaga;
+	@Column(columnDefinition = "boolean default 'false'")
+	private boolean encerrado;
+	@Column(columnDefinition = "boolean default 'false'")
+	private boolean obrigatorio;
+	@Column(columnDefinition = "boolean default 'false'")
+	private boolean editado;
 
-	public Estagio() {}
+	public Estagio() {
+	}
 
 	public Estagio(Empresa empresa, Aluno aluno, Vaga vaga) {
 		this.empresa = empresa;
 		this.aluno = aluno;
 		this.vaga = vaga;
 	}
-	
+
 	public Integer getId() {
 		return id;
 	}
@@ -57,6 +64,30 @@ public class Estagio {
 
 	public void setVaga(Vaga vaga) {
 		this.vaga = vaga;
+	}
+
+	public boolean isEncerrado() {
+		return encerrado;
+	}
+
+	public void setEncerrado(boolean encerrado) {
+		this.encerrado = encerrado;
+	}
+
+	public boolean getObrigatorio() {
+		return obrigatorio;
+	}
+
+	public void setObrigatorio(boolean obrigatorio) {
+		this.obrigatorio = obrigatorio;
+	}
+
+	public boolean isEditado() {
+		return editado;
+	}
+
+	public void setEditado(boolean editado) {
+		this.editado = editado;
 	}
 
 }

@@ -8,14 +8,15 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 @Entity
 public class Vaga {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
+	private String titulo;
 	private String descricao;
 	private String areaDeFormacao;
 	private String setor;
@@ -28,8 +29,8 @@ public class Vaga {
 	private Date dataDivulgacaoInicio;
 	private Date dataDivulgacaoFim;
 	private Date dataEntrevista;
-	@ManyToMany
-	private List<Aluno> alunos = new ArrayList<Aluno>();
+	@OneToMany(mappedBy = "vaga")
+	private List<VagaAluno> vagaAluno = new ArrayList<VagaAluno>();
 	@ManyToOne
 	private Empresa empresa;
 
@@ -47,6 +48,14 @@ public class Vaga {
 
 	public void setId(Integer id) {
 		this.id = id;
+	}
+
+	public String getTitulo() {
+		return titulo;
+	}
+
+	public void setTitulo(String titulo) {
+		this.titulo = titulo;
 	}
 
 	public String getDescricao() {
@@ -146,15 +155,17 @@ public class Vaga {
 	}
 
 	public List<Aluno> getAlunos() {
+		List<Aluno> alunos = new ArrayList<Aluno>();
+
+		for (VagaAluno va : this.vagaAluno) {
+			alunos.add(va.getAluno());
+		}
+
 		return alunos;
 	}
 
-	public void setAlunos(ArrayList<Aluno> alunos) {
-		this.alunos = alunos;
-	}
-
-	public void addAluno(Aluno aluno) {
-		this.alunos.add(aluno);
+	public void addVagaAluno(VagaAluno vagaAluno) {
+		this.vagaAluno.add(vagaAluno);
 	}
 
 	public Empresa getEmpresa() {

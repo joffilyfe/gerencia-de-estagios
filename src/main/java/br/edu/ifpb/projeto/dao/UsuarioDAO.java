@@ -42,7 +42,7 @@ public class UsuarioDAO extends GenericDAO<Usuario, Integer> {
 
 		return usuarios.get(0);
 	}
-	
+
 	
 	
 	public  Usuario findById(String id) {
@@ -61,3 +61,6 @@ public class UsuarioDAO extends GenericDAO<Usuario, Integer> {
 	
 	
 }
+
+
+

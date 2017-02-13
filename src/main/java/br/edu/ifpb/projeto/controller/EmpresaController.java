@@ -5,7 +5,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -16,12 +15,12 @@ import javax.servlet.http.HttpSession;
 import br.edu.ifpb.projeto.dao.EmpresaDAO;
 import br.edu.ifpb.projeto.dao.PersistenceUtil;
 import br.edu.ifpb.projeto.dao.VagaDAO;
-import br.edu.ifpb.projeto.model.Aluno;
 import br.edu.ifpb.projeto.model.Empresa;
+import br.edu.ifpb.projeto.model.Usuario;
 import br.edu.ifpb.projeto.model.Vaga;
 
 public class EmpresaController extends ApplicationController {
-	
+
 	// DAOS
 	private EmpresaDAO empresaDAO = new EmpresaDAO(PersistenceUtil.getCurrentEntityManager());
 	private VagaDAO vagaDAO = new VagaDAO(PersistenceUtil.getCurrentEntityManager());
@@ -29,26 +28,38 @@ public class EmpresaController extends ApplicationController {
 	public EmpresaController(HttpServletRequest request, HttpServletResponse response) {
 		super(request, response);
 	}
-	
+
+	public RequestDispatcher index() throws IOException {
+		RequestDispatcher dispatcher = this.request.getRequestDispatcher("/view/empresa/index.jsp");
+		HttpSession session = request.getSession();
+		this.request.setAttribute("vagas", vagaDAO.findAll());
+
+		if (session.getAttribute("usuario") == null
+				|| ((Usuario) session.getAttribute("usuario")).isEmpresa() == false) {
+			response.sendRedirect(request.getServletContext().getContextPath());
+		}
+
+		return dispatcher;
+	}
+
 	public RequestDispatcher ofertarVaga() throws IOException, ParseException {
 		super.authUserOrRedirect("usuario");
 		RequestDispatcher dispatcher = request.getRequestDispatcher("/view/empresa/cadastro.jsp");
 		HttpSession session = request.getSession();
 		Empresa empresa = (Empresa) session.getAttribute("usuario");
-		
-		
-		
-		List<String> fields = new ArrayList<String>(Arrays.asList("areaEstagio", "setor", "horarioEntrada", "horarioSaida",
-				"valorBolsa", "vagas", "beneficios","numeroAlunosSelecao", "periodoDivulgacaoInicio-data","periodoDivulgacaoFim-data",
-				"dataEntrevista-data", "principaisAtividades"));
+
+		List<String> fields = new ArrayList<String>(
+				Arrays.asList("areaEstagio", "setor", "horarioEntrada", "horarioSaida", "valorBolsa", "vagas",
+						"beneficios", "numeroAlunosSelecao", "periodoDivulgacaoInicio-data",
+						"periodoDivulgacaoFim-data", "dataEntrevista-data", "principaisAtividades"));
 
 		if (request.getMethod().equals("POST")) {
 			if (super.validaFormulario(fields)) {
-				
+
 				Vaga vaga = new Vaga(request.getParameter("principaisAtividades"), empresa);
 				SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 				sdf.setLenient(false);
-				
+
 				vaga.setAreaDeFormacao(request.getParameter("areaEstagio"));
 				vaga.setSetor(request.getParameter("setor"));
 				vaga.setHorarioEntrada(request.getParameter("horarioEntrada"));
@@ -60,27 +71,28 @@ public class EmpresaController extends ApplicationController {
 				vaga.setDataDivulgacaoInicio(sdf.parse(request.getParameter("periodoDivulgacaoInicio-data")));
 				vaga.setDataDivulgacaoFim(sdf.parse(request.getParameter("periodoDivulgacaoFim-data")));
 				vaga.setDataEntrevista(sdf.parse(request.getParameter("dataEntrevista-data")));
-				
+
 				vagaDAO.beginTransaction();
 				vagaDAO.insert(vaga);
 				vagaDAO.commit();
 
-				this.addFlashMessage("success", "Cadastro realizado com sucesso" );
+				this.addFlashMessage("success", "Cadastro realizado com sucesso");
 			}
 		}
-			
+
 		return dispatcher;
 	}
-	
+
 	public RequestDispatcher editarPerfil() throws IOException {
 		super.authUserOrRedirect("usuario");
 		RequestDispatcher dispatcher = request.getRequestDispatcher("/view/empresa/editar_perfil.jsp");
 		HttpSession session = request.getSession();
 		Empresa empresa = (Empresa) session.getAttribute("usuario");
 
-		List<String> fields = new ArrayList<String>(Arrays.asList("nome", "cnpj", "endereco", "numero", "complemento", "bairro",
-			    "cidade", "estado", "cep", "referencia", "responsavel", "cargoResponsavel","nomeContatoSelecao", "telefone", "fax", "email"));
-		
+		List<String> fields = new ArrayList<String>(Arrays.asList("nome", "cnpj", "endereco", "numero", "complemento",
+				"bairro", "cidade", "estado", "cep", "referencia", "responsavel", "cargoResponsavel",
+				"nomeContatoSelecao", "telefone", "fax", "email"));
+
 		if (request.getMethod().equals("POST")) {
 			if (super.validaFormulario(fields)) {
 				empresa.setNome(request.getParameter("nome"));
@@ -99,7 +111,7 @@ public class EmpresaController extends ApplicationController {
 				empresa.setTelefone(request.getParameter("telefone"));
 				empresa.setFax(request.getParameter("fax"));
 				empresa.setEmail(request.getParameter("email"));
-				
+
 				empresaDAO.beginTransaction();
 				empresaDAO.update(empresa);
 				empresaDAO.commit();
@@ -129,5 +141,4 @@ public class EmpresaController extends ApplicationController {
 
 		return dispatcher;
 	}
-
 }

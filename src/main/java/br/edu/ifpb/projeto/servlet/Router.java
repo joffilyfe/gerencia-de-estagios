@@ -19,21 +19,29 @@ public class Router {
 
 		// Aluno
 		addRoute("/aluno/perfil/editar", "AlunoController", "editarPerfil");
+		addRoute("/aluno/candidatar/vaga", "AlunoController", "candidatarVaga");
 
 
 		// Coordenacao
 		addRoute("/coordenacao", "CoordenadorController", "index");
 		addRoute("/coordenacao/empresas/habilitar", "CoordenadorController", "habilitarempresa");
 		addRoute("/coordenacao/empresas/listar", "CoordenadorController", "listarEmpresas");
-
+		addRoute("/coordenacao/vagas/listar", "CoordenadorController", "listarVagas");
+		addRoute("/coordenacao/vagas/detalhes", "CoordenadorController", "verAlunosCandidatos");
+		addRoute("/coordenacao/estagio/habilitar", "CoordenadorController", "habiltarEstagio");
+		addRoute("/coordenacao/estagios/listar", "CoordenadorController", "listarEstagios");
+		addRoute("/coordenacao/estagios/editar", "CoordenadorController", "editarEstagio");
 		addRoute("/coordenacao/candidatos","CoordenadorController","candidatos");
 		addRoute("/coordenacao/encerrarEstagio","CoordenadorController","encerrar");
+		
 		
 
 
 		// Vaga
 		addRoute("/vagas", "VagaController", "index");
 		addRoute("/vaga/detalhes", "VagaController", "show");
+		addRoute("/vagas/visualizarvagas", "VagaController", "listarVagas");
+		addRoute("/vagas/candidatos", "VagaController", "listarCandidatos");
 
 		
 
@@ -41,8 +49,14 @@ public class Router {
 
 
 		// Empresa
+		addRoute("/empresa", "EmpresaController", "index");
+		addRoute("/empresa/vagas/candidatos", "VagaController", "listarCandidatos");
 		addRoute("/empresa/cadastro", "EmpresaController", "ofertarVaga");
 		addRoute("/empresa/editar", "EmpresaController", "editarPerfil");
+
+
+		// Estagio
+		addRoute("/estagiarios/admissao", "EstagioController", "admitirCandidato");
 
 	}
 
