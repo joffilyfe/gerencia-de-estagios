@@ -31,7 +31,9 @@
 								<td>
 									<a href="${pageContext.request.contextPath}/vaga/detalhes?id=${estagio.vaga.id}" target="_blank">${estagio.vaga.titulo}</a>
 								</td>
-								<td>${estagio.empresa.nome}</td>
+								<td>
+									<a href="${pageContext.request.contextPath}/empresa/perfil?id=${estagio.empresa.id}" target="_blank">${estagio.empresa.nome}</a>
+								</td>
 								<td>
 									<c:if test="${estagio.obrigatorio}">
 										<span class="label label-success">Sim</span>
