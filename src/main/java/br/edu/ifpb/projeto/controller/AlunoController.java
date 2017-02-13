@@ -11,7 +11,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import br.edu.ifpb.projeto.dao.AlunoDAO;
-import br.edu.ifpb.projeto.dao.EstagioDAO;
 import br.edu.ifpb.projeto.dao.PersistenceUtil;
 import br.edu.ifpb.projeto.dao.VagaAlunoDAO;
 import br.edu.ifpb.projeto.dao.VagaDAO;
@@ -24,7 +23,6 @@ public class AlunoController extends ApplicationController {
 	// DAO
 	private AlunoDAO alunoDAO = new AlunoDAO(PersistenceUtil.getCurrentEntityManager());
 	private VagaDAO vagaDAO = new VagaDAO(PersistenceUtil.getCurrentEntityManager());
-	private EstagioDAO estagioDAO = new EstagioDAO(PersistenceUtil.getCurrentEntityManager());
 
 	public AlunoController(HttpServletRequest request, HttpServletResponse response) {
 		super(request, response);
@@ -125,6 +123,30 @@ public class AlunoController extends ApplicationController {
 		super.addFlashMessage("success", "Parabéns você está concorrendo a vaga (" + vaga.getId() + ")");
 		response.sendRedirect(request.getServletContext().getContextPath() + "/vagas");
 
+		return dispatcher;
+	}
+
+	/*
+	 * Método responsável por exibir o perfil público do aluno
+	 */
+	public RequestDispatcher perfilPublico() throws IOException {
+		RequestDispatcher dispatcher = this.request.getRequestDispatcher("/view/aluno/perfil_publico.jsp");
+
+		if (!this.request.getParameter("id").matches("^\\d+$")) {
+			super.addFlashMessage("error", "Aluno não localizado");
+			response.sendRedirect(request.getServletContext().getContextPath());
+			return dispatcher;
+		}
+
+		Aluno aluno = alunoDAO.find(Integer.parseInt(this.request.getParameter("id")));
+
+		if (aluno == null) {
+			super.addFlashMessage("error", "Aluno não localizado");
+			response.sendRedirect(request.getServletContext().getContextPath());
+			return dispatcher;
+		}
+
+		this.request.setAttribute("aluno", aluno);
 		return dispatcher;
 	}
 
