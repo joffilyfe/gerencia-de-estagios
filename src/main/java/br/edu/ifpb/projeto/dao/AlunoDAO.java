@@ -2,7 +2,7 @@ package br.edu.ifpb.projeto.dao;
 
 import javax.persistence.EntityManager;
 
-import model.Aluno;
+import br.edu.ifpb.projeto.model.Aluno;
 
 public class AlunoDAO extends GenericDAO<Aluno, Integer> {
 

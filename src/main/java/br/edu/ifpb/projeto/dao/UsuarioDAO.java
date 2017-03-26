@@ -7,7 +7,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import javax.xml.bind.DatatypeConverter;
 
-import model.Usuario;
+import br.edu.ifpb.projeto.model.Usuario;
 
 public class UsuarioDAO extends GenericDAO<Usuario, Integer> {
 

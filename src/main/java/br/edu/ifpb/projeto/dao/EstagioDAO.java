@@ -5,9 +5,9 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
-import model.Aluno;
-import model.Estagio;
-import model.Vaga;
+import br.edu.ifpb.projeto.model.Aluno;
+import br.edu.ifpb.projeto.model.Estagio;
+import br.edu.ifpb.projeto.model.Vaga;
 
 public class EstagioDAO extends GenericDAO<Estagio, Integer> {
 	public EstagioDAO(EntityManager em) {
