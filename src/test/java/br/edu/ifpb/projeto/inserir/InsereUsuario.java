@@ -9,11 +9,11 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import dao.AlunoDAO;
-import dao.EmpresaDAO;
-import dao.ManagedEMContext;
-import dao.PersistenceUtil;
-import dao.UsuarioDAO;
+import br.edu.ifpb.projeto.dao.AlunoDAO;
+import br.edu.ifpb.projeto.dao.EmpresaDAO;
+import br.edu.ifpb.projeto.dao.ManagedEMContext;
+import br.edu.ifpb.projeto.dao.PersistenceUtil;
+import br.edu.ifpb.projeto.dao.UsuarioDAO;
 import model.Aluno;
 import model.Empresa;
 import model.Usuario;

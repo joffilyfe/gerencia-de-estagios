@@ -1,4 +1,4 @@
-package dao;
+package br.edu.ifpb.projeto.dao;
 
 import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
