@@ -1,0 +1,9 @@
+language: java
+sudo: false
+
+jdk:
+  - oraclejdk8
+
+script:
+  - nohup mvn exec:java -Dexec.mainClass="org.hsqldb.server.Server" -Dexec.args="-database.0 file:target/data/databases/estagiarios --dbname.0 estagiarios" &
+  - mvn clean compile
