@@ -1,4 +1,4 @@
-package dao;
+package br.edu.ifpb.projeto.dao;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -33,7 +33,6 @@ public class PersistenceUtil {
 	}
 
 	public static EntityManager getCurrentEntityManager() {
-		emc.currentEntityManager().clear();
 		return emf.createEntityManager();
 	}
 

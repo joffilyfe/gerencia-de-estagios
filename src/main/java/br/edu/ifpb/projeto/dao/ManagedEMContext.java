@@ -1,4 +1,4 @@
-package dao;
+package br.edu.ifpb.projeto.dao;
 
 import java.util.HashMap;
 import java.util.Map;

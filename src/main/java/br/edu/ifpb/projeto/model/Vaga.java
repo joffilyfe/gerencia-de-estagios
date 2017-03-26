@@ -1,4 +1,4 @@
-package model;
+package br.edu.ifpb.projeto.model;
 
 import java.util.ArrayList;
 import java.util.Date;

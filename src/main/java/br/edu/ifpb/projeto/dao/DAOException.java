@@ -1,4 +1,4 @@
-package dao;
+package br.edu.ifpb.projeto.dao;
 
 public class DAOException extends RuntimeException {
 	private static final long serialVersionUID = -5839726585588766122L;
