@@ -1,0 +1,78 @@
+.navbar {
+	border-radius: 0;
+	padding-top: 1rem;
+	padding-bottom: 1rem;
+	margin-bottom: 1.5rem;
+}
+
+.navbar-inverse {
+	background-color: #4078c0;
+	border-color: #4078c0;
+	font-size: 1.6rem;
+}
+
+.navbar-inverse .navbar-brand {
+	color: #fff;
+}
+
+.navbar-inverse .navbar-nav>li>a {
+	color: rgba(255, 255, 255, 0.5);
+}
+
+.messages {
+	display: block;
+	padding: 0;
+}
+
+.messages li {
+	display: block;
+}
+
+.vaga {
+	margin-bottom: 15px;
+}
+
+.company-image {
+	display: flex;
+	width: 100%;
+	height: 150px;
+	background: rgb(54, 54, 54);
+	text-align: center;
+	align-items: center;
+	justify-content: center;
+	color: #fff;
+	border-radius: 4px;
+}
+
+.form-login {
+	width: 50%;
+	margin: 0 auto;
+}
+
+.form-login .form-group input {
+	height: auto !important;
+	padding: 15px !important;
+	font-size: 17px;
+}
+
+.dropdown-menu>li>form>a {
+	display: block;
+	padding: 3px 20px;
+	clear: both;
+	font-weight: normal;
+	line-height: 1.42857143;
+	color: #333;
+	white-space: nowrap;
+}
+
+.dropdown-menu>li>form>a:hover, .dropdown-menu>li>form>a:focus {
+	color: #262626;
+	text-decoration: none;
+	background-color: #f5f5f5;
+}
+
+nav > .open > a,
+.navbar-inverse .navbar-nav > .open > a:hover,
+.navbar-inverse .navbar-nav > .open > a:focus {
+	background-color: #4078c0;
+}

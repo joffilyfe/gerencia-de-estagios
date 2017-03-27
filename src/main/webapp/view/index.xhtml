@@ -6,10 +6,34 @@
 	xmlns:h="http://xmlns.jcp.org/jsf/html"
 	xmlns:f="http://xmlns.jcp.org/jsf/core">
 
-	<h:body>
-		<h1>Teste</h1>
-		<h:form>
-			<h:commandButton value="ok" action="#{loginBean.carrega()}"/>
-		</h:form>
-	</h:body>
+<f:metadata>
+	<f:event type="preRenderView" listener="#{homeBean.listarVagas}"></f:event>
+</f:metadata>
+
+<ui:composition template="templates/base.xhtml">
+	<ui:define name="header-title">Estágios disponíveis</ui:define>
+
+	<ui:define name="content">
+
+		<ui:repeat var="vaga" value="#{homeBean.vagas}">
+			<div class="row vaga">
+				<div class="col-md-3">
+					<div class="company-image">
+						<h2>#{vaga.empresa.nome}</h2>
+					</div>
+				</div>
+				<div class="col-md-9">
+					<h3>#{vaga.titulo}
+						<small>						<h:outputText value="#{vaga.dataDivulgacaoInicio}">
+							<f:convertDateTime dateStyle="medium" />
+						</h:outputText></small>
+					</h3>
+					<p>#{vaga.descricao}</p>
+					<a class="btn btn-primary" href="#">Detalhes<span
+						class="glyphicon glyphicon-chevron-right"></span></a>
+				</div>
+			</div>
+		</ui:repeat>
+	</ui:define>
+</ui:composition>
 </html>
