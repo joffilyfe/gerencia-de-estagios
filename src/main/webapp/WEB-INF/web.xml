@@ -8,5 +8,11 @@
     <welcome-file>default.html</welcome-file>
     <welcome-file>default.htm</welcome-file>
     <welcome-file>default.jsp</welcome-file>
+    <welcome-file>cadastro.html</welcome-file>
+    <welcome-file>cadastro.htm</welcome-file>
+    <welcome-file>cadastro.jsp</welcome-file>
+    <welcome-file>editar_perfil.html</welcome-file>
+    <welcome-file>editar_perfil.htm</welcome-file>
+    <welcome-file>editar_perfil.jsp</welcome-file>
   </welcome-file-list>
 </web-app>

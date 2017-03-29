@@ -1,0 +1,142 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+	<h:body>
+		<h:form>
+			<h1 class="page-header" >Atualização de Perfil</h1>
+		<h3 >Dados da Empresa</h3>
+
+		<h:form>
+		  <div class="form-group" id="tipo-1">
+		    <label for="nome-input">Nome</label>
+		    <h:inputText type="text" class="form-control" id="nome-input" placeholder="Nome completo" name="nome"  value="#{empresaBean.empresa.matricula}" />
+		  </div>
+		  
+		  <div class="form-group" id="tipo-2">
+		    <label for="cnpj-input">CNPJ</label>
+		    <h:inputText type="text" class="form-control" id="cnpj-input" placeholder="Número do CNPJ (apenas números)" name="cnpj" onkeyup="numeros(this)" value="${empresaBean.empresa.cnpj}"/>
+		  </div>
+		  
+		  <div class="form-group">
+		    <label for="endereco-input">Endereço</label>
+		    <h:inputText type="text" class="form-control" id="endereco-input" placeholder="" name="endereco" value="${empresaBean.empresa.endereco}"/>
+		  </div>
+		  
+		   <div class="form-group" id="tipo-3">
+		    <label for="numero-input">Número</label>
+		    <h:inputText type="text" class="form-control" id="numero-input" placeholder="Nº" name="numero" onkeyup="numeros(this)"  value="${empresaBean.empresa.numero}" />
+		   
+		  </div>
+		  
+		  <div class="form-group" id="tipo-4">
+		    <label for="complemento-input">Complemento</label>
+		    <h:inputText type="text" class="form-control" id="complemento-input" placeholder="" name="complemento" value="${empresaBean.empresa.complemento}" />
+		  </div>
+		  
+	      <div class="form-group" id="tipo-4">
+		    <label for="bairro-input">Bairro</label>
+		    <h:inputText type="text" class="form-control" id="bairro-input" placeholder="" name="bairro" value="${empresaBean.empresa.bairro}"/>
+		  </div>
+		  
+		   <div class="form-group" id="tipo-5">
+		    <label for="cidade-input">Cidade</label>
+		    <h:inputText type="text" class="form-control" id="cidade-input" placeholder="" name="cidade" value="${empresaBean.empresa.cidade}"/>
+		  </div>
+		  
+		  <div class="form-group" id="tipo-3">
+		    <label for="estado-input">Estado</label>
+		    <h:inputText type="text" class="form-control" id="estado-input" placeholder="" name="estado" value="${empresaBean.empresa.estado}"/>
+		  </div>
+		  
+		  <div class="form-group" id="tipo-3">
+		    <label for="cep-input">CEP</label>
+		    <h:inputText type="text" class="form-control" id="cep-input" placeholder="" name="cep" onkeyup="numerosIdentificacao(this)" value="${empresaBean.empresa.cep}"/>
+		  </div>
+		  
+		  <div class="form-group">
+		    <label for="referencia-input">Ponto de referência</label>
+		    <h:inputText type="text" class="form-control" id="referencia-input" placeholder="" name="referencia" value="${empresaBean.empresa.referencia}"/>
+		  </div>
+		  
+		   <div class="form-group">
+		    <label for="responsavel-input">Responsável pela empresa</label>
+		    <h:inputText type="text" class="form-control" id="responsavel-input" placeholder="Nome do responsável" name="responsavel" value="${empresaBean.empresa.responsavel}"/>
+		  </div>
+		  
+		   <div class="form-group">
+		    <label for="cargoResponsavel-input">Cargo do responsável</label>
+		    <h:inputText type="text" class="form-control" id="cargoResponsavel-input" placeholder="Cargo do responsável" name="cargoResponsavel" value="${empresaBean.empresa.cargoResponsavel}"/>
+		  </div>
+		  
+		   <div class="form-group">
+		    <label for="nomeContatoSelecao-input">Nome do contato para seleção de estágio</label>
+		    <h:inputText type="text" class="form-control" id="nomeContatoSelecao-input" placeholder="Nome" name="nomeContatoSelecao" value="${empresaBean.empresa.nomeContatoSelecao}"/>
+		  </div>
+		  
+		   <div class="form-group" id="tipo-2">
+		    <label for="telefone-input">Telefone</label>
+		    <h:inputText type="text" class="form-control" id="telefone-input" placeholder="Número do telefone" name="telefone" onkeyup="numerosTelefonicos(this)" value="${empresaBean.empresa.telefone}"/>
+		  </div>
+		  
+		  <div class="form-group" id="tipo-2">
+		    <label for="fax-input">FAX</label>
+		    <h:inputText type="text" class="form-control" id="fax-input" placeholder="Número do FAX" name="fax" onkeyup="numerosTelefonicos(this)" value="${empresaBean.empresa.fax}" />
+		  </div>
+		  
+		  <div class="form-group" id="tipo-4">
+		    <label for="fax-input">E-mail</label>
+		    <h:inputText type="email" class="form-control" id="email-input" placeholder="E-mail" name="email"  value="${empresaBean.empresa.email}"/>
+		  </div>
+		  
+		  <h:commandButton id="btnSalvar" value="Salvar" action="#{empresaBean.editar}" />
+		</h:form>
+		
+		<script>
+			//Para numeros como: cep, cnpj ...
+		    function numerosIdentificacao(num) {
+		        var rgx = /[^0-9.-]/;
+		        rgx.lastIndex = 0;
+		        var campo = num;
+		        if (rgx.test(campo.value)) {
+		          campo.value = "";
+		        }
+		    }
+		    
+		   // Para fax e telefone 
+		    function numerosTelefonicos(num) {
+		        var rgx = /[^0-9-]/;
+		        rgx.lastIndex = 0;
+		        var campo = num;
+		        if (rgx.test(campo.value)) {
+		          campo.value = "";
+		        }
+		    }
+		    
+		    //Para numeros sem caracteres especiais
+		    function numeros(num) {
+		        var rgx = /[^0-9]/;
+		        rgx.lastIndex = 0;
+		        var campo = num;
+		        if (rgx.test(campo.value)) {
+		          campo.value = "";
+		        }
+		    }
+		    
+		   //Para numeros do tipo monetario
+		    function numerosMonetario(num) {
+		        var rgx = /[^0-9.]/;
+		        rgx.lastIndex = 0;
+		        var campo = num;
+		        if (rgx.test(campo.value)) {
+		          campo.value = "";
+		        }
+		    } 
+		 </script>
+		</h:form>
+	</h:body>
+</html>

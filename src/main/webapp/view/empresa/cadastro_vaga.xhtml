@@ -1,0 +1,106 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+
+	<ui:composition template="/view/templates/base.xhtml">
+	<ui:define name="header-title">Cadastro de Oportunidade</ui:define>
+		<ui:define name="content">
+		
+		<h:form value="#{empresaBean.vagas}" var="vaga">
+			<h3>Dados do Vaga</h3>
+			
+			<div class="form-group" >
+			  <label for="titulo-input">Título da vaga</label>
+			  <h:inputText type="text" class="form-control" id="titulo-input" placeholder="" name="titulo"  value="#{empresaBean.vaga.titulo}"/>
+			</div>
+			
+			<div class="form-group" >
+			  <label for="areaEstagio-input">Área do estágio/Curso de formação do aluno</label>
+			  <h:inputText type="text" class="form-control" id="areaEstagio-input" placeholder="" name="areaEstagio"  value="#{empresaBean.vaga.areaDeFormacao}"/>
+			</div>
+			
+			<div class="form-group" >
+			  <label for="setor-input">Setor da Empresa</label>
+			  <h:inputText type="text" class="form-control" id="setor-input" placeholder="Nome do Setor" name="setor"  value="#{empresaBean.vaga.setor}"/>
+			</div>
+			
+			<div class="form-group" >
+				<label for="horario-input">Horário de Trabalho</label>
+			</div>
+			
+			<div class="form-group" id="tipo-6">
+				<label for="horarioEntrada-input">Entrada</label>
+				<h:inputText type="time" class="form-control" id="horarioEntrada-input"  name="horarioEntrada"  value="#{empresaBean.vaga.horarioEntrada}"/>
+			</div>
+			
+			<div class="form-group" id="tipo-6">
+				<label for="horarioSaida-input">Saída</label>
+			  	<h:inputText type="time" class="form-control" id="horarioSaida-input"  name="horarioSaida"  value="#{empresaBean.vaga.horarioSaida}"/>
+			</div>
+			
+			<div class="form-group" id="tipo-6">
+			  	<label for="valorBolsa-input">Valor da bolsa</label>
+			  	<h:inputText type="text" class="form-control" id="valorBolsa-input" placeholder="" name="valorBolsa" onkeyup="numerosMonetario(this)" value="#{empresaBean.vaga.valorDaBolsa}"/>
+			</div>
+			
+			<div class="form-group" id="tipo-6">
+			 	 <label for="vagas-input">Número de vagas</label>
+			 	 <h:inputText type="text" class="form-control" id="vagas-input" placeholder="" name="vagas" onkeyup="numeros(this)" value="#{empresaBean.vaga.qtdVagas}"/>
+			</div>
+			 
+			 <div class="form-group" >
+				<label for="beneficios-input">Outros benefícios</label>
+				<h:inputTextarea  class="form-control noresize" id="beneficios-input"  name="beneficios" value="#{empresaBean.vaga.beneficios}"/>
+				
+			 </div>
+			 
+ 			<div class="form-group" >
+				<label for="numeroAlunosSelecao-input">Número de alunos para a seleção</label>
+				<h:inputText type="text" class="form-control" id="numeroAlunosSelecao-input" placeholder="" name="numeroAlunosSelecao"  value="#{empresaBean.vaga.qtdAlunos}"/>
+			</div>
+			 
+			 <div class="form-group" >
+				<label for="periodoDivulgacaoFim-input">Peridodo de divulgação</label>
+			 </div>
+			 
+			 <div class="form-group" id="tipo-6">
+			  <label for="periodoDivulgacaoFim-input">De:</label>
+			   <h:inputText type="text" class="form-control" id="periodoDivulgacaoInicio-input" placeholder="(dd/mm/aaaa)" name="periodoDivulgacaoInicio-data"  value="#{empresaBean.vaga.dataDivulgacaoInicio}">
+			 	  <f:convertDateTime pattern="dd/MM/yyyy"/>
+			 	</h:inputText>
+			</div>
+			 
+			 <div class="form-group" id="tipo-6">
+			   <label for="periodoDivulgacaoInicio-input">Até:</label>
+			    <h:inputText type="text" class="form-control" id="periodoDivulgacaoFim-input" placeholder="(dd/mm/aaaa)" name="periodoDivulgacaoFim-data"  value="#{empresaBean.vaga.dataDivulgacaoFim}">
+			  	  <f:convertDateTime pattern="dd/MM/yyyy"/>
+			  	</h:inputText>
+			 </div> 
+			 
+			  <div class="form-group" >
+			  	<label for="dataEntrevista-input">Data da Entrevista</label>
+			  	<h:inputText type="text" class="form-control" id="dataEntrevista-input" placeholder="(dd/mm/aaaa)" name="dataEntrevista-data"  value="#{empresaBean.vaga.dataEntrevista}">
+			  		<f:convertDateTime  pattern="dd/MM/yyyy"/>
+			  	</h:inputText>
+			 </div>
+			 
+			 <div class="form-group" >
+			  	<label  for="principaisAtividades-input">Principais atividades a serem desenvolvidas na empresa:</label>
+			 	<h:inputTextarea  class="form-control noresize" id="principaisAtividades-input"  name="principaisAtividades" value="#{empresaBean.vaga.atividades}"/>
+			 </div>
+			
+			<div class="clearfix"></div>
+			
+			<h:commandButton id="btnCadastrar" value="Cadastrar" styleClass="btn btn-success" action="#{empresaBean.cadastrar}" />
+		</h:form>
+		
+		</ui:define>
+	</ui:composition>
+		
+	
+</html>

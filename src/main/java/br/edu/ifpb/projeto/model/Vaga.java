@@ -25,6 +25,23 @@ public class Vaga {
 	private Double valorDaBolsa;
 	private Integer qtdVagas;
 	private String beneficios;
+	private String atividades;
+	public String getAtividades() {
+		return atividades;
+	}
+
+	public void setAtividades(String atividades) {
+		this.atividades = atividades;
+	}
+
+	public List<VagaAluno> getVagaAluno() {
+		return vagaAluno;
+	}
+
+	public void setVagaAluno(List<VagaAluno> vagaAluno) {
+		this.vagaAluno = vagaAluno;
+	}
+
 	private Integer qtdAlunos;
 	private Date dataDivulgacaoInicio;
 	private Date dataDivulgacaoFim;
