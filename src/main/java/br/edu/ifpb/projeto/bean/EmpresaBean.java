@@ -1,10 +1,14 @@
 package br.edu.ifpb.projeto.bean;
 
 import java.util.List;
+import java.util.Map;
 
+import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
 
 import br.edu.ifpb.projeto.dao.EmpresaDAO;
 import br.edu.ifpb.projeto.dao.VagaDAO;
@@ -14,17 +18,9 @@ import br.edu.ifpb.projeto.model.Vaga;
 @ManagedBean(name="empresaBean")
 @ViewScoped
 public class EmpresaBean {
-	private Empresa empresa;
+
+	private Empresa empresa = new Empresa();
 	private Vaga vaga = new Vaga();
-	private List<Vaga> vagas;
-
-	public List<Vaga> getVagas() {
-		return vagas;
-	}
-
-	public void setVagas(List<Vaga> vagas) {
-		this.vagas = vagas;
-	}
 
 	public Empresa getEmpresa() {
 		return empresa;
@@ -44,6 +40,8 @@ public class EmpresaBean {
 	
 	public String cadastrar()
 	{
+		vaga.setEmpresa(empresa);
+		
 		VagaDAO tDao = new VagaDAO();
 		tDao.beginTransaction();
 		tDao.insert(vaga);
@@ -59,5 +57,13 @@ public class EmpresaBean {
 		tDao.commit();
 
 		return "/view/index?faces-redirect=true";
+	}
+	
+	@PostConstruct
+    public void init()
+	{
+		Map<String, Object> map = FacesContext.getCurrentInstance().getExternalContext().getSessionMap();
+		UsuarioBean user = (UsuarioBean) map.get("usuarioBean");
+		empresa = (Empresa) user.getUsuario();
 	}
 }

@@ -54,6 +54,9 @@
 						aria-expanded="false">Olá #{usuarioBean.usuario.nome} <span
 							class="caret"></span></a>
 						<ul class="dropdown-menu">
+							<li><h:link outcome="/view/empresa/cadastro_vaga.xhtml" value="Cadastrar vaga" /></li>
+							<li><h:link outcome="/view/empresa/editar_perfil.xhtml" value="Editar perfil" /></li>
+							<li><h:link outcome="/view/empresa/minhas_vagas.xhtml" value="Minhas vagas" /></li>
 							<li>
 								<h:form>
 									<h:commandLink value="Logout" action="#{usuarioBean.logout()}"/>
