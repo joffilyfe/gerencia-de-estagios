@@ -43,7 +43,7 @@
 				<li><a href="#">Vagas</a></li>
 				<ui:fragment rendered="#{usuarioBean.usuario == null}">
 					<li><h:link outcome="/view/usuario/login.xhtml" value="Login" /></li>
-					<li><a href="#">Cadastro</a></li>
+					<li><h:link outcome="/view/usuario/cadastrar.xhtml" value="Cadastrar" /></li>
 				</ui:fragment>
 				<ui:fragment rendered="#{usuarioBean.usuario != null}">
 					<li class="dropdown"><a href="#" class="dropdown-toggle"
