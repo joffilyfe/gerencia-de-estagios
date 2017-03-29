@@ -1,46 +1,27 @@
 package br.edu.ifpb.projeto.bean;
 
-import java.util.Map;
-
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
-import javax.faces.context.FacesContext;
 
+import br.edu.ifpb.project.util.Application;
 import br.edu.ifpb.projeto.dao.AlunoDAO;
-import br.edu.ifpb.projeto.dao.PersistenceUtil;
 import br.edu.ifpb.projeto.model.Aluno;
 
 @ManagedBean(name = "alunoBean")
 @ViewScoped
 public class AlunoBean {
+
+	@ManagedProperty(value = "#{usuarioBean}")
+	private UsuarioBean usuario;
 	private AlunoDAO alunoDao;
 	private Aluno aluno;
-	private String email;
-	private String nome;
-	private String competencias;
 
 	@PostConstruct
 	public void init() {
-		Map<String, Object> map = FacesContext.getCurrentInstance().getExternalContext().getSessionMap();
-		UsuarioBean usuario = (UsuarioBean) map.get("usuarioBean");
 		this.aluno = (Aluno) usuario.getUsuario();
-	}
-
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
-	public String getNome() {
-		return nome;
-	}
-
-	public void setNome(String nome) {
-		this.nome = nome;
 	}
 
 	public Aluno getAluno() {
@@ -51,21 +32,18 @@ public class AlunoBean {
 		this.aluno = aluno;
 	}
 
-	public String getCompetencias() {
-		return competencias;
-	}
-
-	public void setCompetencias(String competencias) {
-		this.competencias = competencias;
+	public void setUsuario(UsuarioBean usuario) {
+		this.usuario = usuario;
 	}
 
 	public String atualizar() {
-
-		alunoDao = new AlunoDAO(PersistenceUtil.getCurrentEntityManager());
+		alunoDao = new AlunoDAO();
 
 		alunoDao.beginTransaction();
 		alunoDao.update(this.aluno);
 		alunoDao.commit();
+
+		Application.addMessage("Alterações realizadas com sucesso!", FacesMessage.SEVERITY_INFO);
 
 		return "/view/index?faces-redirect=true";
 	}
