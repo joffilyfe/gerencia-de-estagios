@@ -10,6 +10,7 @@ import javax.persistence.OneToMany;
 @Entity
 public class Empresa extends Usuario {
 	private Integer cnpj;
+	private String nome;
 	private String endereco;
 	private Integer numero;
 	private String complemento;
@@ -40,7 +41,21 @@ public class Empresa extends Usuario {
 	public void addEstagio(Estagio estagio) {
 		this.estagios.add(estagio);
 	}
+	public String getNome() {
+		return nome;
+	}
 
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
+
+	public void setEstagios(List<Estagio> estagios) {
+		this.estagios = estagios;
+	}
+
+	public void setVagas(List<Vaga> vagas) {
+		this.vagas = vagas;
+	}
 	public List<Estagio> getEstagios() {
 		return this.estagios;
 	}

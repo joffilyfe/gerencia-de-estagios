@@ -25,6 +25,8 @@ public class Vaga {
 	private Double valorDaBolsa;
 	private Integer qtdVagas;
 	private String beneficios;
+	private String atividades;
+
 	private Integer qtdAlunos;
 	private Date dataDivulgacaoInicio;
 	private Date dataDivulgacaoFim;
@@ -174,6 +176,21 @@ public class Vaga {
 
 	public void setEmpresa(Empresa empresa) {
 		this.empresa = empresa;
+	}
+	public String getAtividades() {
+		return atividades;
+	}
+
+	public void setAtividades(String atividades) {
+		this.atividades = atividades;
+	}
+
+	public List<VagaAluno> getVagaAluno() {
+		return vagaAluno;
+	}
+
+	public void setVagaAluno(List<VagaAluno> vagaAluno) {
+		this.vagaAluno = vagaAluno;
 	}
 
 	@Override
