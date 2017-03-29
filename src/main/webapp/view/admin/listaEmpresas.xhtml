@@ -31,8 +31,8 @@
 
 				<h:column>
 					<f:facet name="header">Habilitar/Desabilitar</f:facet>
-						<h:commandButton value="Habilitar" actionListener="#{coordenadorBean.habilitarEmpresa(empresa)}" rendered="#{not empresa.habilitada}"/>
-						<h:commandButton value="Desabilitar" actionListener="#{coordenadorBean.desabilitarEmpresa(empresa)}" rendered="#{empresa.habilitada}" />
+						<h:commandButton value="Habilitar" action="#{coordenadorBean.habilitarEmpresa(empresa)}" rendered="#{not empresa.habilitada}"/>
+						<h:commandButton value="Desabilitar" action="#{coordenadorBean.desabilitarEmpresa(empresa)}" rendered="#{empresa.habilitada}" />
 				</h:column>
 				
 				<h:column>

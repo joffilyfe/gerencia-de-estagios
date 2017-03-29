@@ -19,10 +19,9 @@ public class CoordenadorBean {
 		this.empresas = empresaDao.findAll();
 	}
 	
-	public String habilitarEmpresa(Empresa e){
+	public String habilitarEmpresa(Empresa empresa){
 		EmpresaDAO empresaDao = new EmpresaDAO();
 		
-		Empresa empresa = empresaDao.find(e.getId());
 		empresa.setHabilitada(true);
 		
 		empresaDao.beginTransaction();
@@ -32,10 +31,9 @@ public class CoordenadorBean {
 		return "/view/admin/listaEmpresas?faces-redirect=true";
 	}
 	
-	public String desabilitarEmpresa(Empresa e){
+	public String desabilitarEmpresa(Empresa empresa){
 		EmpresaDAO empresaDao = new EmpresaDAO();
 		
-		Empresa empresa = empresaDao.find(e.getId());
 		empresa.setHabilitada(false);
 		
 		empresaDao.beginTransaction();
