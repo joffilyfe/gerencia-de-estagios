@@ -53,9 +53,15 @@
 							class="caret"></span></a>
 						<ul class="dropdown-menu">
 							<ui:fragment rendered="#{usuarioBean.usuario.aluno}">
+								<li>
+									<h:form>
+											<h:commandLink value="Editar perfil"
+												action="/view/aluno/editar.xhtml?faces-redirect=true" />
+									</h:form>
+								</li>
 								<li><h:form>
-										<h:commandLink value="Editar perfil"
-											action="/view/aluno/perfil.xhtml?faces-redirect=true" />
+										<h:commandLink value="Candidaturas"
+											action="/view/aluno/candidaturas.xhtml?faces-redirect=true" />
 									</h:form></li>
 							</ui:fragment>
 							<li><h:form>
