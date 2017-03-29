@@ -1,0 +1,7 @@
+#tipo-1 { width:70%; float:left; }
+#tipo-2 { width:30%; float:right; }
+#tipo-3 {width:20%; float:left;}
+#tipo-4 {width:40%; float:left;}
+#tipo-5 {width:60%; float:left;}
+#tipo-6 {width:50%; float:left;}
+	.clearfix { clear:both; }

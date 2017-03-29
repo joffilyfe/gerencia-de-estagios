@@ -1,0 +1,43 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+	
+<f:metadata>
+	<f:event listener="#{empresaBean.listarVagas}" type="preRenderView"></f:event>
+	<f:viewParam name="id" value="#{empresaBean.id}" />
+	
+</f:metadata>
+<h:body>
+
+<ui:composition template="/view/templates/admin_empresa.xhtml">
+	<ui:define name="header-title">Minhas vagas cadastradas</ui:define>
+		<ui:define name="content">
+		
+		<h:dataTable var="vaga" value="#{empresaBean.vagas}"
+					rendered="#{not empty empresaBean.vagas}"
+					styleClass="table table-striped table-hover" id="tabela_vagas">
+		<h:column>
+		<f:facet name="header">Título da Vaga</f:facet>
+					#{vaga.titulo}
+		</h:column>
+
+</h:dataTable>
+</ui:define>
+</ui:composition>
+<ui:composition template="/view/templates/base.xhtml">
+	<ui:define name="header-title">Minhas vagas cadastradas</ui:define>
+		<ui:define name="content">
+		
+
+		
+		</ui:define>
+	</ui:composition>
+
+</h:body>
+
+</html>

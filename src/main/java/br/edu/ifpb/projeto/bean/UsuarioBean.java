@@ -29,6 +29,7 @@ public class UsuarioBean {
 		}
 
 		Application.addMessage("Login realizado com sucesso", FacesMessage.SEVERITY_INFO);
+		
 
 		return "/view/index?faces-redirect=true";
 	}
@@ -39,7 +40,7 @@ public class UsuarioBean {
 	public String logout() {
 		this.usuario = null;
 		Application.addMessage("Logout realizado com sucesso", FacesMessage.SEVERITY_INFO);
-		return "index?faces-redirect=true";
+		return "/view/index?faces-redirect=true";
 	}
 
 	/*

@@ -1,0 +1,105 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+
+<ui:composition template="/view/templates/admin_empresa.xhtml">
+
+
+
+	<ui:define name="header-title">Atualização de Perfil</ui:define>
+		<ui:define name="content">
+		<h3 >Dados da Empresa</h3>
+		<h:form>
+
+		  <div class="form-group" id="tipo-1">
+		    <label for="nome-input">Nome</label>
+		    <h:inputText type="text" class="form-control" id="nome-input" placeholder="Nome completo" name="nome"  value="#{empresaBean.empresa.nome}" required="true"/>
+		  </div>
+		  
+		  <div class="form-group" id="tipo-2">
+		    <label for="cnpj-input">CNPJ</label>
+		    <h:inputText type="text" class="form-control" id="cnpj-input" placeholder="Número do CNPJ (apenas números)" name="cnpj" onkeyup="numeros(this)" value="${empresaBean.empresa.cnpj}" required="true"/>
+		  </div>
+		  
+		  <div class="form-group">
+		    <label for="endereco-input">Endereço</label>
+		    <h:inputText type="text" class="form-control" id="endereco-input" placeholder="" name="endereco" value="${empresaBean.empresa.endereco}" required="true"/>
+		  </div>
+		  
+		   <div class="form-group" id="tipo-3">
+		    <label for="numero-input">Número</label>
+		    <h:inputText type="text" class="form-control" id="numero-input" placeholder="Nº" name="numero" onkeyup="numeros(this)"  value="${empresaBean.empresa.numero}" required="true"/>
+		   
+		  </div>
+		  
+		  <div class="form-group" id="tipo-4">
+		    <label for="complemento-input">Complemento</label>
+		    <h:inputText type="text" class="form-control" id="complemento-input" placeholder="" name="complemento" value="${empresaBean.empresa.complemento}" />
+		  </div>
+		  
+	      <div class="form-group" id="tipo-4">
+		    <label for="bairro-input">Bairro</label>
+		    <h:inputText type="text" class="form-control" id="bairro-input" placeholder="" name="bairro" value="${empresaBean.empresa.bairro}" required="true"/>
+		  </div>
+		  
+		   <div class="form-group" id="tipo-5">
+		    <label for="cidade-input">Cidade</label>
+		    <h:inputText type="text" class="form-control" id="cidade-input" placeholder="" name="cidade" value="${empresaBean.empresa.cidade}" required="true"/>
+		  </div>
+		  
+		  <div class="form-group" id="tipo-3">
+		    <label for="estado-input">Estado</label>
+		    <h:inputText type="text" class="form-control" id="estado-input" placeholder="" name="estado" value="${empresaBean.empresa.estado}" required="true"/>
+		  </div>
+		  
+		  <div class="form-group" id="tipo-3">
+		    <label for="cep-input">CEP</label>
+		    <h:inputText type="text" class="form-control" id="cep-input" placeholder="" name="cep" onkeyup="numerosIdentificacao(this)" value="${empresaBean.empresa.cep}" required="true"/>
+		  </div>
+		  
+		  <div class="form-group">
+		    <label for="referencia-input">Ponto de referência</label>
+		    <h:inputText type="text" class="form-control" id="referencia-input" placeholder="" name="referencia" value="${empresaBean.empresa.pontoDeReferencia}"/>
+		  </div>
+		  
+		   <div class="form-group">
+		    <label for="responsavel-input">Responsável pela empresa</label>
+		    <h:inputText type="text" class="form-control" id="responsavel-input" placeholder="Nome do responsável" name="responsavel" value="${empresaBean.empresa.responsavel}" required="true"/>
+		  </div>
+		  
+		   <div class="form-group">
+		    <label for="cargoResponsavel-input">Cargo do responsável</label>
+		    <h:inputText type="text" class="form-control" id="cargoResponsavel-input" placeholder="Cargo do responsável" name="cargoResponsavel" value="${empresaBean.empresa.cargoResponsavel}" required="true"/>
+		  </div>
+		  
+		   <div class="form-group">
+		    <label for="nomeContatoSelecao-input">Nome do contato para seleção de estágio</label>
+		    <h:inputText type="text" class="form-control" id="nomeContatoSelecao-input" placeholder="Nome" name="nomeContatoSelecao" value="${empresaBean.empresa.nomeDoContato}" required="true"/>
+		  </div>
+		  
+		   <div class="form-group" id="tipo-2">
+		    <label for="telefone-input">Telefone</label>
+		    <h:inputText type="text" class="form-control" id="telefone-input" placeholder="Número do telefone" name="telefone" onkeyup="numerosTelefonicos(this)" value="${empresaBean.empresa.telefone}" required="true"/>
+		  </div>
+		  
+		  <div class="form-group" id="tipo-2">
+		    <label for="fax-input">FAX</label>
+		    <h:inputText type="text" class="form-control" id="fax-input" placeholder="Número do FAX" name="fax" onkeyup="numerosTelefonicos(this)" value="${empresaBean.empresa.fax}" />
+		  </div>
+		  
+		  <div class="form-group" id="tipo-4">
+		    <label for="fax-input">E-mail</label>
+		    <h:inputText type="email" class="form-control" id="email-input" placeholder="E-mail" name="email"  value="${empresaBean.empresa.email}" required="true"/>
+		  </div>
+		  
+		  <h:commandButton id="btnSalvar" value="Salvar" styleClass="btn btn-success" action="#{empresaBean.editar}" />
+		
+		</h:form>
+		</ui:define>
+	</ui:composition>
+</html>
