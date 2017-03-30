@@ -1,0 +1,78 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+<f:metadata>
+	<f:event type="preRenderView"
+		listener="#{coordenadorBean.listarEstagios}"></f:event>
+</f:metadata>
+
+<ui:composition template="/view/templates/admin.xhtml">
+	<ui:define name="header-title">Estágios</ui:define>
+
+	<ui:define name="content">
+		<h:panelGroup rendered="#{coordenadorBean.estagios == null}">
+			<h3>Não há estágios disponíveis</h3>
+		</h:panelGroup>
+
+		<h:form id="formConCtt">
+			<h:messages errorStyle="color:red" infoStyle="color:blue"
+				layout="table" />
+
+			<h:dataTable var="estagio" value="#{coordenadorBean.estagios}"
+				styleClass="table table-hover">
+
+				<h:column>
+					<f:facet name="header">#</f:facet>
+					#{estagio.id}
+					</h:column>
+
+				<h:column>
+					<f:facet name="header">Aluno</f:facet>
+					<h:commandLink id="bt_aluno" action="#" value="#{estagio.aluno.nome}" />
+				</h:column>
+
+				<h:column>
+					<f:facet name="header">Vaga</f:facet>
+					<h:commandLink id="bt_vaga" action="#" value="#{estagio.vaga.titulo}" />
+				</h:column>
+
+				<h:column>
+					<f:facet name="header">Empresa</f:facet>
+					<h:commandLink id="bt_empresa" action="#" value="#{estagio.empresa.nome}" />
+				</h:column>
+
+				<h:column>
+					<f:facet name="header">Obrigatório</f:facet>
+					<h:outputText rendered="#{estagio.obrigatorio == true}" styleClass="label label-success" value="Sim" />
+					<h:outputText rendered="#{estagio.obrigatorio == false}" styleClass="label label-danger" value="Não" />
+
+				</h:column>
+
+				<h:column>
+					<f:facet name="header">Encerrado</f:facet>
+					<h:outputText rendered="#{estagio.encerrado == true}" styleClass="label label-success" value="Sim" />
+					<h:outputText rendered="#{estagio.encerrado == false}" styleClass="label label-danger" value="Não" />
+
+				</h:column>
+
+				<h:column>
+					<f:facet name="header">Ações</f:facet>
+
+					<h:commandLink id="bt_edit"
+						action="#{coordenadorBean.editarEstagio(estagio)}" value="Editar" />
+				</h:column>
+
+			</h:dataTable>
+
+
+		</h:form>
+
+	</ui:define>
+
+</ui:composition>
+</html>

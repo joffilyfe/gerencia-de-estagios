@@ -10,28 +10,20 @@
 	<ui:define name="header-title">Editando estágio</ui:define>
 	
 	<ui:define name="content">
-	
-		
 		<h:form>
-			
-			<h:selectOneRadio id="obrigatorio" value="#{coordenadorBean.obrigatorio}" styleClass="form-control">
-			
-				<f:selectItem itemLabel="Obrigatório" itemValue="true" />
-				<f:selectItem itemLabel="Não obrigatório" itemValue="false" />
-				
-			</h:selectOneRadio>
-			
-			<h:selectOneRadio id="encerrado" value="#{coordenadorBean.encerrado}" styleClass="form-control">
-			
-	
+			<h:outputLabel value="Estágio obrigatório?"/>
+			<h:selectOneRadio id="obrigatorio" value="#{coordenadorBean.estagio.obrigatorio}" styleClass="form-control">
+				<f:selectItem itemLabel="Obrigatório" itemValue="true"/>
+				<f:selectItem itemLabel="Não obrigatório" itemValue="false"/>
+			</h:selectOneRadio>			
+
+			<h:outputLabel value="Estágio Encerrado?"/>
+			<h:selectOneRadio id="encerrado" value="#{coordenadorBean.estagio.encerrado}" styleClass="form-control">
 				<f:selectItem itemLabel="Encerrado" itemValue="true" />
 				<f:selectItem itemLabel="Não Encerrado" itemValue="false" />
-				
 			</h:selectOneRadio>
 				
-			<h:commandButton  action="#{coordenadorBean.salvar}" value="Salvar" styleClass="form-control btn btn-success" />
-				
-				
+			<h:commandButton  action="#{coordenadorBean.salvarEstagio}" value="Salvar" styleClass="form-control btn btn-success" />
 			
 		</h:form>
 	   
