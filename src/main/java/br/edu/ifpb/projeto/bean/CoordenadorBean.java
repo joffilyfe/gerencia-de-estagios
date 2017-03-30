@@ -6,10 +6,8 @@ import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 
-import br.edu.ifpb.projeto.dao.AlunoDAO;
 import br.edu.ifpb.projeto.dao.EmpresaDAO;
 import br.edu.ifpb.projeto.dao.EstagioDAO;
-import br.edu.ifpb.projeto.dao.PersistenceUtil;
 import br.edu.ifpb.projeto.dao.VagaAlunoDAO;
 import br.edu.ifpb.projeto.dao.VagaDAO;
 import br.edu.ifpb.projeto.model.Aluno;
@@ -80,7 +78,6 @@ public class CoordenadorBean {
 		this.estagio = estagio;
 	}
 
-	// ação ao clickar no titulo da vaga 
 	public String detalhesVaga(Vaga vaga){
 		this.vaga = vaga;
 		
@@ -106,15 +103,7 @@ public class CoordenadorBean {
 		}
 	}
 	
-	public String salvarEstagio(){
-		EstagioDAO estagioDao = new EstagioDAO();
-		
-		estagioDao.beginTransaction();
-		estagioDao.update(this.estagio);
-		estagioDao.commit();
-		
-		return "/view/coordenador/listaEstagios?faces-redirect=true";
-	}
+	// listagens
 
 	public void listarEmpresas(){
 		EmpresaDAO empresaDao = new EmpresaDAO();
@@ -130,6 +119,8 @@ public class CoordenadorBean {
 		EstagioDAO estagioDao = new EstagioDAO();
 		this.estagios = estagioDao.getAllActive();
 	}
+	
+	// metodos para operações
 	
 	public String habilitarEmpresa(Empresa e){
 		EmpresaDAO empresaDao = new EmpresaDAO();
@@ -158,10 +149,18 @@ public class CoordenadorBean {
 	}
 
 	public String editarEstagio(Estagio e){
-		EmpresaDAO empresaDao = new EmpresaDAO();
-		
 		this.estagio = e;
 		
 		return "/view/coordenador/editarEstagio?faces-redirect=true";
+	}
+	
+	public String salvarEstagio(){
+		EstagioDAO estagioDao = new EstagioDAO();
+		
+		estagioDao.beginTransaction();
+		estagioDao.update(this.estagio);
+		estagioDao.commit();
+		
+		return "/view/coordenador/listaEstagios?faces-redirect=true";
 	}
 }
