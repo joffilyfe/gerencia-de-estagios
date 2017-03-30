@@ -1,4 +1,4 @@
-﻿package br.edu.ifpb.projeto.bean;
+package br.edu.ifpb.projeto.bean;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,20 +16,20 @@ import br.edu.ifpb.projeto.model.Estagio;
 import br.edu.ifpb.projeto.model.Vaga;
 import br.edu.ifpb.projeto.model.VagaAluno;
 
-@ManagedBean(name="coordenadorBean")
+@ManagedBean(name = "coordenadorBean")
 @SessionScoped
 public class CoordenadorBean {
-	
+
 	private List<Aluno> alunos;
-	private List<Empresa> empresas;	
+	private List<Empresa> empresas;
 	private List<Estagio> estagios;
-	private List<Vaga>  vagas;
-	
+	private List<Vaga> vagas;
+
 	private Vaga vaga;
 	private Estagio estagio;
-	
+
 	// getters and setters
-	
+
 	public List<Aluno> getAlunos() {
 		return alunos;
 	}
@@ -78,16 +78,16 @@ public class CoordenadorBean {
 		this.estagio = estagio;
 	}
 
-	public String detalhesVaga(Vaga vaga){
+	public String detalhesVaga(Vaga vaga) {
 		this.vaga = vaga;
-		
+
 		return "/view/coordenador/listaCandidatos?faces-redirect=true";
 	}
-	
-	//preRenderView do listar candidatos 
-	public void listarCandidatos(){
+
+	// preRenderView do listar candidatos
+	public void listarCandidatos() {
 		this.alunos = new ArrayList<Aluno>();
-		
+
 		VagaAlunoDAO vagaAlunoDAO = new VagaAlunoDAO();
 		List<VagaAluno> vagaAlunos = vagaAlunoDAO.findBy(this.vaga);
 
@@ -102,14 +102,14 @@ public class CoordenadorBean {
 			}
 		}
 	}
-	
+
 	// listagens
 
-	public void listarEmpresas(){
+	public void listarEmpresas() {
 		EmpresaDAO empresaDao = new EmpresaDAO();
 		this.empresas = empresaDao.findAll();
 	}
-	
+
 	public void listarVagas() {
 		VagaDAO vagaDao = new VagaDAO();
 		this.vagas = vagaDao.findAll();
@@ -119,48 +119,48 @@ public class CoordenadorBean {
 		EstagioDAO estagioDao = new EstagioDAO();
 		this.estagios = estagioDao.getAllActive();
 	}
-	
+
 	// metodos para operações
-	
-	public String habilitarEmpresa(Empresa e){
+
+	public String habilitarEmpresa(Empresa e) {
 		EmpresaDAO empresaDao = new EmpresaDAO();
-		
+
 		Empresa empresa = empresaDao.find(e.getId());
 		empresa.setHabilitada(true);
-		
+
 		empresaDao.beginTransaction();
 		empresaDao.update(empresa);
 		empresaDao.commit();
-		
-		return "/view/coordenador/listaEmpresas?faces-redirect=true";
-	}
-	
-	public String desabilitarEmpresa(Empresa e){
-		EmpresaDAO empresaDao = new EmpresaDAO();
-		
-		Empresa empresa = empresaDao.find(e.getId());
-		empresa.setHabilitada(false);
-		
-		empresaDao.beginTransaction();
-		empresaDao.update(empresa);
-		empresaDao.commit();
-		
+
 		return "/view/coordenador/listaEmpresas?faces-redirect=true";
 	}
 
-	public String editarEstagio(Estagio e){
+	public String desabilitarEmpresa(Empresa e) {
+		EmpresaDAO empresaDao = new EmpresaDAO();
+
+		Empresa empresa = empresaDao.find(e.getId());
+		empresa.setHabilitada(false);
+
+		empresaDao.beginTransaction();
+		empresaDao.update(empresa);
+		empresaDao.commit();
+
+		return "/view/coordenador/listaEmpresas?faces-redirect=true";
+	}
+
+	public String editarEstagio(Estagio e) {
 		this.estagio = e;
-		
+
 		return "/view/coordenador/editarEstagio?faces-redirect=true";
 	}
-	
-	public String salvarEstagio(){
+
+	public String salvarEstagio() {
 		EstagioDAO estagioDao = new EstagioDAO();
-		
+
 		estagioDao.beginTransaction();
 		estagioDao.update(this.estagio);
 		estagioDao.commit();
-		
+
 		return "/view/coordenador/listaEstagios?faces-redirect=true";
 	}
 }
