@@ -1,0 +1,69 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+<f:metadata>
+	<f:event type="preRenderView"
+		listener="#{coordenadorBean.listarCandidatos}"></f:event>
+</f:metadata>
+
+<ui:composition template="/view/templates/admin.xhtml">
+	<ui:define name="header-title"> Candidatos</ui:define>
+
+	<ui:define name="content">
+
+		<h:panelGroup rendered="#{coordenadorBean.alunos == null}">
+			<h3>Não há alunos candidatos</h3>
+		</h:panelGroup>
+
+		<h:form id="form">
+			<h:messages errorStyle="color:red" infoStyle="color:blue"
+				layout="table" />
+
+			<h:dataTable var="aluno" value="#{coordenadorBean.alunos}"
+				styleClass="table table-hover">
+				<h:column>
+					<f:facet name="header">#</f:facet>
+					#{aluno.id}
+				</h:column>
+
+				<h:column>
+					<f:facet name="header">Nome</f:facet>
+					${aluno.nome}
+				</h:column>
+
+				<h:column>
+					<f:facet name="header">Competências</f:facet>
+					#{aluno.competencias}
+				</h:column>
+
+				<h:column>
+					<f:facet name="header">Admitido</f:facet>
+					<h:outputText rendered="#{aluno.admitido == true}" styleClass="label label-success" value="Sim" />
+					<h:outputText rendered="#{aluno.admitido == false}" styleClass="label label-danger" value="Não" />
+				</h:column>
+
+				<h:column>
+					<f:facet name="header">Estagiando</f:facet>
+					<h:outputText rendered="#{aluno.estagiando == true}" styleClass="label label-success" value="Sim" />
+					<h:outputText rendered="#{aluno.estagiando == false}" styleClass="label label-danger" value="Não" />
+				</h:column>
+
+				<h:column>
+					<f:facet name="header">Ações</f:facet>
+					<h:commandLink id="bt_transforma" value="Tranformar em estagio"
+						action="#{coordenadorBean.transformaEstagio(aluno,vaga)}"
+						rendered="#{aluno.estagiando == false and aluno.admitido == true}" />
+				</h:column>
+
+			</h:dataTable>
+
+		</h:form>
+
+	</ui:define>
+</ui:composition>
+</html>

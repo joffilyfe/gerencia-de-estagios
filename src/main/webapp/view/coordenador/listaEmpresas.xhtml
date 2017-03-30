@@ -18,7 +18,7 @@
 
 	<ui:define name="content">
 		<h:form>
-			<h:dataTable var="empresa" value="#{coordenadorBean.empresas}">
+			<h:dataTable var="empresa" value="#{coordenadorBean.empresas}" styleClass="table table-hover">
 				<h:column>
 					<f:facet name="header">ID</f:facet>
 					#{empresa.id}
@@ -31,13 +31,14 @@
 
 				<h:column>
 					<f:facet name="header">Habilitar/Desabilitar</f:facet>
-						<h:commandButton value="Habilitar" action="#{coordenadorBean.habilitarEmpresa(empresa)}" rendered="#{not empresa.habilitada}"/>
-						<h:commandButton value="Desabilitar" action="#{coordenadorBean.desabilitarEmpresa(empresa)}" rendered="#{empresa.habilitada}" />
+					<h:commandButton value="Habilitar" actionListener="#{coordenadorBean.habilitarEmpresa(empresa)}" rendered="#{not empresa.habilitada}" styleClass="btn btn-success" />
+					<h:commandButton value="Desabilitar" actionListener="#{coordenadorBean.desabilitarEmpresa(empresa)}" rendered="#{empresa.habilitada}" styleClass="btn btn-danger"/>
 				</h:column>
 				
 				<h:column>
 					<f:facet name="header">Situação</f:facet>
-					#{empresa.habilitada}
+					<h:outputLabel styleClass="label label-success" rendered="#{empresa.habilitada}">Habilitada</h:outputLabel>
+					<h:outputLabel styleClass="label label-danger" rendered="#{not empresa.habilitada}">Desabilitada</h:outputLabel>
 				</h:column>
 			</h:dataTable>
 		</h:form>
