@@ -27,6 +27,7 @@ public class Usuario {
 	private String email;
 	private String senha;
 	private Boolean coordenador;
+	private String tipo;
 
 	public Usuario() {
 	}
@@ -37,7 +38,7 @@ public class Usuario {
 		this.coordenador = false;
 	}
 	
-	public String getTipo_usuario() {
+	public String getTipo() {
 		return this.getClass().getSimpleName();
 	}
 
