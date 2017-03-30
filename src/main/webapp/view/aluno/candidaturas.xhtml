@@ -1,0 +1,40 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+<ui:composition template="/view/templates/base.xhtml">
+	<ui:define name="header-title">Vagas que fui candidato</ui:define>
+	<ui:define name="content">
+		<h:dataTable var="vaga" value="#{alunoBean.aluno.vagas}"
+			styleClass="table table-striped table-hover">
+			<h:column>
+				<f:facet name="header">Empresa</f:facet>
+						#{vaga.empresa.nome}
+			</h:column>
+			<h:column>
+				<f:facet name="header">Título da vaga</f:facet>
+						#{vaga.titulo}
+			</h:column>
+			<h:column>
+				<f:facet name="header">Título da vaga</f:facet>
+				<h:outputText value="#{vaga.dataDivulgacaoInicio}">
+					<f:convertDateTime dateStyle="medium" />
+				</h:outputText>
+			</h:column>
+			<h:column>
+				<f:facet name="header">Descrição</f:facet>
+					#{vaga.descricao}
+			</h:column>
+			<h:column>
+				<f:facet name="header">Ver detalhes</f:facet>
+				<a class="btn btn-primary" href="#">Detalhes<span
+					class="glyphicon glyphicon-chevron-right"></span></a>
+			</h:column>
+		</h:dataTable>
+	</ui:define>
+</ui:composition>
+</html>

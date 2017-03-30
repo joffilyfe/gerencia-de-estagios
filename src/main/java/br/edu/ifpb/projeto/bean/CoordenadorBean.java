@@ -122,10 +122,10 @@ public class CoordenadorBean {
 
 	// metodos para operações
 
-	public String habilitarEmpresa(Empresa e) {
+	
+	public String habilitarEmpresa(Empresa empresa){
 		EmpresaDAO empresaDao = new EmpresaDAO();
-
-		Empresa empresa = empresaDao.find(e.getId());
+		
 		empresa.setHabilitada(true);
 
 		empresaDao.beginTransaction();
@@ -134,11 +134,10 @@ public class CoordenadorBean {
 
 		return "/view/coordenador/listaEmpresas?faces-redirect=true";
 	}
-
-	public String desabilitarEmpresa(Empresa e) {
+	
+	public String desabilitarEmpresa(Empresa empresa){
 		EmpresaDAO empresaDao = new EmpresaDAO();
-
-		Empresa empresa = empresaDao.find(e.getId());
+		
 		empresa.setHabilitada(false);
 
 		empresaDao.beginTransaction();

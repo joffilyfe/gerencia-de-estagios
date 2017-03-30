@@ -43,7 +43,8 @@
 				<li><a href="#">Vagas</a></li>
 				<ui:fragment rendered="#{usuarioBean.usuario == null}">
 					<li><h:link outcome="/view/usuario/login.xhtml" value="Login" /></li>
-					<li><h:link outcome="/view/usuario/cadastrar.xhtml" value="Cadastrar" /></li>
+					<li><h:link outcome="/view/usuario/cadastrar.xhtml"
+							value="Cadastrar" /></li>
 				</ui:fragment>
 				<ui:fragment rendered="#{usuarioBean.usuario != null}">
 					<li class="dropdown"><a href="#" class="dropdown-toggle"
@@ -51,11 +52,22 @@
 						aria-expanded="false">Olá #{usuarioBean.usuario.nome} <span
 							class="caret"></span></a>
 						<ul class="dropdown-menu">
-							<li>
-								<h:form>
-									<h:commandLink value="Logout" action="#{usuarioBean.logout()}"/>
-								</h:form>
-							</li>
+							<ui:fragment rendered="#{usuarioBean.usuario.aluno}">
+								<li>
+									<h:form>
+											<h:commandLink value="Editar perfil"
+												action="/view/aluno/editar.xhtml?faces-redirect=true" />
+									</h:form>
+								</li>
+								<li><h:form>
+										<h:commandLink value="Candidaturas"
+											action="/view/aluno/candidaturas.xhtml?faces-redirect=true" />
+									</h:form></li>
+							</ui:fragment>
+							<li><h:form>
+									<h:commandLink value="Logout" action="#{usuarioBean.logout()}" />
+								</h:form></li>
+
 						</ul></li>
 				</ui:fragment>
 			</ul>
