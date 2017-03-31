@@ -3,6 +3,8 @@ package br.edu.ifpb.projeto.bean;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpSession;
 
 import br.edu.ifpb.project.util.Application;
 import br.edu.ifpb.projeto.dao.UsuarioDAO;
@@ -37,9 +39,9 @@ public class UsuarioBean {
 	 * Realiza o logout do usuário
 	 */
 	public String logout() {
-		this.usuario = null;
+		((HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false)).invalidate();
 		Application.addMessage("Logout realizado com sucesso", FacesMessage.SEVERITY_INFO);
-		return "index?faces-redirect=true";
+		return "/view/index?faces-redirect=true";
 	}
 
 	/*
