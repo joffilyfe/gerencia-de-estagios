@@ -1,0 +1,37 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core">
+<f:metadata>
+	<f:viewParam value="#{alunoBean.id}" name="id"/>
+	<f:event listener="#{alunoBean.verAluno()}" type="preRenderView"></f:event>
+</f:metadata>
+
+<ui:composition template="/view/templates/base.xhtml">
+	<ui:define name="header-title">Perfil do aluno</ui:define>
+	<ui:define name="content">
+		<div class="col-md-12">
+			<h4>Nome</h4>
+			<div class="well well-sm">
+				<h:outputText value="#{alunoBean.aluno.nome}"/>
+			</div>
+			<h4>Contato</h4>
+			<div class="well well-sm">
+				<h:outputText value="#{alunoBean.aluno.email}"/>
+			</div>
+			<h4>Competências</h4>
+			<div class="well well-sm">
+				<ui:fragment rendered="#{not empty alunoBean.aluno.competencias}">
+					<h:outputText value="#{alunoBean.aluno.competencias}"/>
+				</ui:fragment>	
+				<ui:fragment rendered="#{empty alunoBean.aluno.competencias}">
+					<p>Este não informou suas competências.</p>
+				</ui:fragment>
+			</div>			
+		</div>
+	</ui:define>
+</ui:composition>
+</html>
