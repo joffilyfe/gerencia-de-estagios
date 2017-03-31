@@ -53,9 +53,7 @@
 
 				<h:column>
 					<f:facet name="header">Ações</f:facet>
-					<h:commandButton value="Transformar em estagio"
-						action="#{coordenadorBean.transformaEstagio(aluno)}"
-						rendered="#{aluno.estagiando == false}" />
+					<h:commandButton class="btn btn-primary" value="Transformar em estagio" action="#{coordenadorBean.transformaEstagio(aluno)}" rendered="#{aluno.estagiando == false}" />
 				</h:column>
 
 			</h:dataTable>

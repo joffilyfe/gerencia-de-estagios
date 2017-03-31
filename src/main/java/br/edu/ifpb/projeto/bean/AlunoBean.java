@@ -18,6 +18,7 @@ public class AlunoBean {
 	private UsuarioBean usuario;
 	private AlunoDAO alunoDao;
 	private Aluno aluno;
+	private int id;
 
 	@PostConstruct
 	public void init() {
@@ -36,6 +37,14 @@ public class AlunoBean {
 		this.usuario = usuario;
 	}
 
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
 	public String atualizar() {
 		alunoDao = new AlunoDAO();
 
@@ -47,4 +56,11 @@ public class AlunoBean {
 
 		return "/view/index?faces-redirect=true";
 	}
+
+	public void verAluno() {
+		System.out.println("Entrou!");
+		alunoDao = new AlunoDAO();
+		this.aluno = alunoDao.find(this.id);
+	}
+
 }

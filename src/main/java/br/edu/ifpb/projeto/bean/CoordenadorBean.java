@@ -63,7 +63,7 @@ public class CoordenadorBean {
 	public void setVagas(List<Vaga> vagas) {
 		this.vagas = vagas;
 	}
-	
+
 	public Aluno getAluno() {
 		return aluno;
 	}
@@ -92,12 +92,7 @@ public class CoordenadorBean {
 		this.vaga = vaga;
 		return "/view/coordenador/listaCandidatos?faces-redirect=true";
 	}
-	
-//	public String transformaEstagio(Aluno aluno){
-//		this.aluno = aluno;
-//		return "/view/coordenador/habilitaEstagio?faces-redirect=true";
-//	}
-	
+
 	// listagens
 
 	public void listarEmpresas() {
@@ -114,7 +109,7 @@ public class CoordenadorBean {
 		EstagioDAO estagioDao = new EstagioDAO();
 		this.estagios = estagioDao.getAllActive();
 	}
-	
+
 	// preRenderView do listar candidatos
 	public void listarCandidatos() {
 		this.alunos = new ArrayList<Aluno>();
@@ -136,34 +131,30 @@ public class CoordenadorBean {
 
 	// metodos para operações
 
-	public String transformaEstagio(Aluno aluno){
+	public String transformaEstagio(Aluno aluno) {
 		EstagioDAO estagioDao = new EstagioDAO();
 		AlunoDAO alunoDao = new AlunoDAO();
-		
+
 		Estagio estagio = estagioDao.getBy(this.vaga, aluno);
-		if(estagio != null){
-			System.out.println(estagio.getId());
-		}else{
-			System.out.println("Vazio");
+		
+		if (estagio != null) {
+			estagio.setEditado(true);
+			estagioDao.beginTransaction();
+			estagioDao.update(estagio);
+			estagioDao.commit();
+
+			alunoDao.beginTransaction();
+			aluno.addEstagio(estagio);
+			alunoDao.update(aluno);
+			alunoDao.commit();
 		}
 		
-		estagio.setEditado(true);
-
-		estagioDao.beginTransaction();
-		estagioDao.update(estagio);
-		estagioDao.commit();
-
-		alunoDao.beginTransaction();
-		aluno.addEstagio(estagio);
-		alunoDao.update(aluno);
-		alunoDao.commit();
-
 		return "/view/coordenador/listaEmpresas?faces-redirect=true";
 	}
-	
-	public String habilitarEmpresa(Empresa empresa){
+
+	public String habilitarEmpresa(Empresa empresa) {
 		EmpresaDAO empresaDao = new EmpresaDAO();
-		
+
 		empresa.setHabilitada(true);
 
 		empresaDao.beginTransaction();
@@ -172,10 +163,10 @@ public class CoordenadorBean {
 
 		return "/view/coordenador/listaEmpresas?faces-redirect=true";
 	}
-	
-	public String desabilitarEmpresa(Empresa empresa){
+
+	public String desabilitarEmpresa(Empresa empresa) {
 		EmpresaDAO empresaDao = new EmpresaDAO();
-		
+
 		empresa.setHabilitada(false);
 
 		empresaDao.beginTransaction();
