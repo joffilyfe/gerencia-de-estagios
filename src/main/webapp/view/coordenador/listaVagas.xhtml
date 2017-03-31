@@ -4,8 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
 	xmlns:h="http://xmlns.jcp.org/jsf/html"
-	xmlns:f="http://xmlns.jcp.org/jsf/core"
-	>
+	xmlns:f="http://xmlns.jcp.org/jsf/core">
 
 <f:metadata>
 	<f:event type="preRenderView" listener="#{coordenadorBean.listarVagas}"></f:event>
@@ -13,49 +12,43 @@
 
 <ui:composition template="/view/templates/admin.xhtml">
 	<ui:define name="header-title">Vagas abertas</ui:define>
-	
-	<ui:define name="content">
-	
-		
-			<h:panelGroup rendered="#{coordenadorBean.vagas == null}">
-				
-				<h3>Não há vagas disponíveis</h3>
-				
-			</h:panelGroup>
-		
-	
-		<h:form id="formV">
-			
-				
-				<h:messages errorStyle="color:red" infoStyle="color:blue" layout="table"/>
 
-				<h:dataTable var="vaga" value="#{coordenadorBean.vagas}" styleClass="table table-hover">
-					
-					<h:column >
-					  <f:facet name="header">#</f:facet>
-						#{vaga.id}
-					</h:column>
-					
-					<h:column>
-					  <f:facet name="header">Titulo</f:facet>
-						<h:commandLink id="bt_detalhes" action="#{coordenadorBean.detalhesVaga(vaga)}" value="#{vaga.titulo}"  />
-					</h:column>
-					
-					<h:column>
-					  <f:facet name="header">Empresa</f:facet>
-						#{vaga.empresa.nome}
-					</h:column>
-					
-					<h:column>
-						<f:facet name="header">Alunos interessados</f:facet>
-						#{vaga.alunos.size()}
-					</h:column>
+	<ui:define name="content">
+		<h:panelGroup rendered="#{coordenadorBean.vagas == null}">
+			<h3>Não há vagas disponíveis</h3>
+		</h:panelGroup>
+
+		<h:form id="formV">
+			<h:messages errorStyle="color:red" infoStyle="color:blue" layout="table" />
+
+			<h:dataTable var="vaga" value="#{coordenadorBean.vagas}" styleClass="table table-hover">
+
+				<h:column>
+					<f:facet name="header">#</f:facet>
+					#{vaga.id}
+				</h:column>
+
+				<h:column>
+					<f:facet name="header">Titulo</f:facet>
+					<h:outputLabel value="#{vaga.titulo}" />
+				</h:column>
+
+				<h:column>
+					<f:facet name="header">Empresa</f:facet>
+					#{vaga.empresa.nome}
+				</h:column>
+
+				<h:column>
+					<f:facet name="header">Alunos Interessados</f:facet>
+					#{vaga.alunos.size()}
+				</h:column>
 				
-				</h:dataTable>
-				
-			
-			</h:form>
-	   
+				<h:column>
+					<f:facet name="header">Ver Interessados</f:facet>
+					<h:commandButton class="btn btn-primary" value="Ver candidatos" action="#{coordenadorBean.candidatos(vaga)}" />
+				</h:column>
+			</h:dataTable>
+		</h:form>
 	</ui:define>
 
 </ui:composition>

@@ -1,0 +1,33 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core">
+
+<ui:composition template="/view/templates/admin.xhtml">
+	<ui:define name="header-title">
+	    Habilitar Estagio
+	</ui:define>
+	<ui:define name="content">
+		<h:form>
+			<h:outputLabel value="Estágio é obrigatório?" />
+			<h:selectOneRadio id="obrigatorio" value="#{coordenadorBean.estagio.obrigatorio}">
+				<f:selectItem itemLabel="Obrigatório" itemValue="true" />
+				<f:selectItem itemLabel="Não obrigatório" itemValue="false" />
+			</h:selectOneRadio>
+
+			<h:outputLabel value="Estágio esta encerrado?" />
+			<h:selectOneRadio id="encerrado" value="#{coordenadorBean.estagio.encerrado}">
+				<f:selectItem itemLabel="Encerrado" itemValue="true" />
+				<f:selectItem itemLabel="Não Encerrado" itemValue="false" />
+			</h:selectOneRadio>
+			
+			<h:commandButton styleClass="btn btn-success" action="#{coordenadorBean.habilitarEstagio()}" value="Autorizar estágio"/>
+			
+		</h:form>
+	</ui:define>
+
+</ui:composition>
+</html>
