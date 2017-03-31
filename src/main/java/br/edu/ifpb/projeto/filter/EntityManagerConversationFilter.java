@@ -20,6 +20,18 @@ import org.hibernate.StaleObjectStateException;
 import br.edu.ifpb.projeto.dao.ManagedEMContext;
 import br.edu.ifpb.projeto.dao.PersistenceUtil;
 
+/**
+ * Este filtro controla o EntityManager para conversaï¿½ï¿½es longas. O EM ï¿½
+ * colocado e retirado da HttpSession a cada request para servlets e JSPs.
+ * Quando o servlet e os JSPs utilizarem o EM (via DAOs, por exemplo) ele
+ * estarï¿½ disponï¿½vel via PersistenceUtil.getCurrentEntityManager(). Este
+ * filtro redireciona para a pï¿½gina principal de consulta caso a HttpSession
+ * tenha sido fechada. Ou seja, se ele for ativado sem que uma sess~]ao tenha
+ * sido previamente criada, ele redirecionarï¿½ para esta pï¿½gina index.jsp.
+ *
+ * @author Fred
+ *
+ */
 @WebFilter(urlPatterns = { "*.jsf", "/faces/*" })
 public class EntityManagerConversationFilter implements Filter {
 	private static Logger logger = Logger.getLogger(EntityManagerConversationFilter.class);
@@ -47,13 +59,13 @@ public class EntityManagerConversationFilter implements Filter {
 
 			// Start a new conversation or in the middle?
 			if (disconnectedEM == null) {
-				logger.debug(context + ">>> Nova conversão");
+				logger.debug(context + ">>> Nova conversaï¿½ï¿½o");
 				// Define o modo manual de flush
 				currentEntityManager = emf.createEntityManager();
 				((org.hibernate.Session) currentEntityManager.getDelegate())
 						.setFlushMode(org.hibernate.FlushMode.MANUAL);
 			} else {
-				logger.debug(context + "< Continuando conversão");
+				logger.debug(context + "< Continuando conversaï¿½ï¿½o");
 				currentEntityManager = disconnectedEM;
 			}
 
@@ -67,29 +79,27 @@ public class EntityManagerConversationFilter implements Filter {
 			if (request.getAttribute(END_OF_CONVERSATION_FLAG) != null
 					|| request.getParameter(END_OF_CONVERSATION_FLAG) != null) {
 
-				// currentEntityManager.flush();
-				// logger.debug(context + "Executou flush do EntityManager");
-
 				currentEntityManager.close();
 				logger.debug(context + "Fechando o EntityManager");
 
 				ManagedEMContext.unbind(emf);
 				logger.debug(context + "Desassociou EntityManager do contexto");
 
-				httpSession.removeAttribute(ENTITYMANAGER_FACTORY_KEY);
-				logger.debug(context + "Retirou EntityManager da HttpSession");
+				if (((HttpServletRequest) request).isRequestedSessionIdValid()) {
+					httpSession.removeAttribute(ENTITYMANAGER_FACTORY_KEY);
+					logger.debug(context + "Retirou EntityManager da HttpSession");
+				}
 
-				logger.debug(context + "<<< Fim da conversa��o");
+				logger.debug(context + "<<< Fim da conversaï¿½ï¿½o");
 
 			} else {
-				// currentEntityManager.flush();
-				// logger.debug(context + "Executou flush do EntityManager");
-
 				ManagedEMContext.unbind(emf);
 				logger.debug(context + "Desassociou EntityManager do contexto");
 
-				httpSession.setAttribute(ENTITYMANAGER_FACTORY_KEY, currentEntityManager);
-				logger.debug(context + "Associou EntityManager a HttpSession");
+				if (((HttpServletRequest) request).isRequestedSessionIdValid()) {
+					httpSession.setAttribute(ENTITYMANAGER_FACTORY_KEY, currentEntityManager);
+					logger.debug(context + "Associou EntityManager a HttpSession");
+				}
 
 				logger.debug(context + "> Retornando para o usuario");
 			}
@@ -97,25 +107,17 @@ public class EntityManagerConversationFilter implements Filter {
 		} catch (StaleObjectStateException staleEx) {
 			logger.error(context + "This interceptor does not implement optimistic concurrency control!");
 			logger.error(context + "Your application will not work until you add compensation actions!");
-			// Rollback, close everything, possibly compensate for any permanent
-			// changes
-			// during the conversation, and finally restart business
-			// conversation. Maybe
-			// give the user of the application a chance to merge some of his
-			// work with
-			// fresh data... what you do here depends on your applications
-			// design.
 			throw staleEx;
 		} catch (Throwable ex) {
 			// Rollback only
 			logger.debug(context + "Original exception:", ex);
 			try {
 				if (PersistenceUtil.getCurrentEntityManager().getTransaction().isActive()) {
-					logger.debug(context + "Tentando rollback da transa��o ap�s exception");
+					logger.debug(context + "Tentando rollback da transaï¿½ï¿½o apï¿½s exception");
 					PersistenceUtil.getCurrentEntityManager().getTransaction().rollback();
 				}
 			} catch (Throwable rbEx) {
-				logger.error(context + "Rollback não efetivado!", rbEx);
+				logger.error(context + "Rollback nï¿½o efetivado!", rbEx);
 			} finally {
 				logger.error(context + "Cleanup after exception!");
 
@@ -124,10 +126,12 @@ public class EntityManagerConversationFilter implements Filter {
 				logger.debug(context + "Desassociou EntityManager do contexto");
 
 				currentEntityManager.close();
-				logger.debug(context + "Fechou EntityManager ap�s exception");
+				logger.debug(context + "Fechou EntityManager apï¿½s exception");
 
-				httpSession.setAttribute(ENTITYMANAGER_FACTORY_KEY, null);
-				logger.debug(context + "Removeu EntityManager da HttpSession");
+				if (((HttpServletRequest) request).isRequestedSessionIdValid()) {
+					httpSession.setAttribute(ENTITYMANAGER_FACTORY_KEY, null);
+					logger.debug(context + "Removeu EntityManager da HttpSession");
+				}
 
 			}
 
@@ -141,14 +145,10 @@ public class EntityManagerConversationFilter implements Filter {
 	@Override
 	public void init(FilterConfig filterConfig) throws ServletException {
 		emf = PersistenceUtil.getEntityManagerFactory();
-		logger.info("Filtro de conversa��es longas inicializado.");
 	}
 
 	@Override
 	public void destroy() {
-		if (emf != null) {
-			emf.close();
-		}
 	}
 
 }
