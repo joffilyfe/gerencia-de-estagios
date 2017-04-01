@@ -12,23 +12,30 @@
 
 <h:body>
 
-<ui:composition template="/view/templates/admin_empresa.xhtml">
+<ui:composition template="/view/templates/base.xhtml">
 	<ui:define name="header-title">Alunos Candidatos</ui:define>
 		<ui:define name="content">
 		
 		<f:facet name="header">Vaga #{empresaBean.vaga.titulo}</f:facet>
+		
+		<ui:fragment rendered="#{empty empresaBean.vaga.alunos}">
+  				<h3>Esta vaga não possui alunos candidatos.</h3>
+		</ui:fragment>
 					
 		<h:form>
-		<h:dataTable var="aluno" value="#{empresaBean.vaga.getAlunos()}"
-					rendered="#{not empty empresaBean.vaga.getAlunos()}"
+		<h:dataTable var="aluno" value="#{empresaBean.vaga.alunos}"	rendered="#{not empty empresaBean.vaga.alunos}"
 					styleClass="table table-striped table-hover" id="tabela_vagas">
 			<h:column>
 				<f:facet name="header">Nome</f:facet>
-				<h:commandLink value="#{aluno.nome}" action="#" />
+				#{aluno.nome}
 			</h:column>
 			<h:column>
 			<f:facet name="header">Matricula</f:facet>
 						#{aluno.matricula}
+			</h:column>
+			<h:column>
+			<f:facet name="header">Contato</f:facet>
+						#{aluno.email}
 			</h:column>
 			<h:column>
 			<f:facet name="header">Competências</f:facet>
@@ -42,14 +49,6 @@
 		</h:form>
 	</ui:define>
 </ui:composition>
-<ui:composition template="/view/templates/base.xhtml">
-	<ui:define name="header-title">Minhas vagas cadastradas</ui:define>
-		<ui:define name="content">
-		
-
-		
-		</ui:define>
-	</ui:composition>
 
 </h:body>
 

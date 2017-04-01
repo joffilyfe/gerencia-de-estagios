@@ -52,9 +52,6 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 						<li>
 							<h:link outcome="/view/coordenador/index.xhtml" value="Área Coordenador" rendered="#{usuarioBean.usuario.coordenador}"/>
 						</li>
-						<li>
-							<h:link outcome="/view/empresa/welcome.xhtml" value="Área Administrador" rendered="#{usuarioBean.usuario.tipo eq 'Empresa'}"/>
-						</li>
 						<ui:fragment rendered="#{usuarioBean.usuario.aluno}">
 							<li>
 								<h:link value="Editar perfil" outcome="/view/aluno/editar.xhtml?faces-redirect=true" />
@@ -64,6 +61,17 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 							</li>
              				 <li>
 								<h:link value="Visualizar perfil" outcome="/view/aluno/perfil.xhtml?id=#{usuarioBean.usuario.id}" />
+							</li>
+						</ui:fragment>
+						<ui:fragment rendered="#{usuarioBean.usuario.empresa}">
+							<li>
+								<h:link value="Cadastrar vaga" outcome="/view/empresa/cadastro_vaga.jsf?faces-redirect=true" />
+							</li>
+							<li>
+								<h:link value="Editar perfil" outcome="/view/empresa/editar_perfil.jsf?faces-redirect=true" />
+							</li>
+							<li>
+								<h:link value="Minhas vagas" outcome="/view/empresa/minhas_vagas.jsf?faces-redirect=true" />
 							</li>
 						</ui:fragment>
 						<li>
