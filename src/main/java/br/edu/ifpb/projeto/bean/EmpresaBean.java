@@ -86,6 +86,7 @@ public class EmpresaBean {
 		tDao.beginTransaction();
 		tDao.update(empresa);
 		tDao.commit();
+		Application.addMessage("Alterações realizadas com sucesso", FacesMessage.SEVERITY_INFO);
 
 		return "/view/index?faces-redirect=true";
 	}
