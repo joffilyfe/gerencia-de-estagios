@@ -17,6 +17,18 @@ public class VagaDAO extends GenericDAO<Vaga, Integer> {
 		this(PersistenceUtil.getCurrentEntityManager());
 	}
 
+	public List<Vaga> latest() {
+		Query q = this.entityManager.createQuery("SELECT v FROM Vaga v ORDER BY v.id DESC");
+		@SuppressWarnings("unchecked")
+		List<Vaga> vagas = q.getResultList();
+
+		if (vagas.isEmpty()) {
+			return null;
+		}
+
+		return vagas;
+	}
+
 	public List<Vaga> getByAluno(Aluno aluno) {
 		Query q = this.entityManager.createQuery("SELECT v FROM Vaga v JOIN v.alunos a WHERE a.id = :id");
 		q.setParameter("aluno", aluno.getId());
