@@ -15,7 +15,7 @@
 <h:body>
 
 
-<ui:composition template="/view/templates/admin_empresa.xhtml">
+<ui:composition template="/view/templates/base.xhtml">
 	<ui:define name="header-title">Vagas cadastradas</ui:define>
 		<ui:define name="content">
 		<h:form>
@@ -40,6 +40,10 @@
 		<h:column>
 		<f:facet name="header">Nº de vagas</f:facet>
 					#{vaga.qtdVagas}
+		</h:column>
+		<h:column>
+		<f:facet name="header">Nº de candidatos</f:facet>
+					#{vaga.alunos.size()}
 		</h:column>
 		
 		<h:column>
