@@ -1,8 +1,16 @@
+.page-header {
+	border: 0;
+}
+
 .navbar {
 	border-radius: 0;
 	padding-top: 1rem;
 	padding-bottom: 1rem;
 	margin-bottom: 1.5rem;
+}
+
+.navbar-inverse .navbar-nav > .open > a {
+	background-color: #4078c0;
 }
 
 .navbar-inverse {
@@ -30,20 +38,70 @@
 
 .vaga {
 	margin-bottom: 15px;
+	border: 1px solid #d8d8d8;
+	border-radius: 5px;
+	height: 150px;
+	overflow: hidden;
 }
+
+.vaga:hover {
+	box-shadow: 0 2px 14px 0 rgba(0, 0, 0, 0.08);
+}
+
+.vaga .title {
+	color: #4DA1A9;
+}
+
+.vaga .description {
+	color: #bbb;
+}
+
+.vaga .location,
+.vaga .company {
+	color: #000;
+	font-size: 17px;
+	display: inline-block;
+}
+
+.vaga .location span,
+.vaga .company span {
+	color: #bbb;
+}
+
+.vaga .title .date  {
+	color: #bbb;
+	font-size: 16px;
+	float: right;
+}
+
 
 .company-image {
 	display: flex;
 	width: 100%;
 	height: 150px;
-	background: rgb(54, 54, 54);
+	/* background: rgb(54, 54, 54); */
 	text-align: center;
 	align-items: center;
 	justify-content: center;
-	color: #fff;
+	color: #555;
 	border-radius: 4px;
+	/* margin-left: -30px; */
+	/* padding: 15px; */
 }
 
+a:nth-child(even) .vaga .company-image {
+	/* background: #A1C084; */
+	color: #A1C084 !important;
+}
+
+a:nth-child(odd) .vaga .company-image {
+	/* background: #69A2B0; */
+	color: #69A2B0 !important;
+}
+
+.centered {
+	margin: 0 auto;
+}
 .form-login {
 	width: 50%;
 	margin: 0 auto;
