@@ -28,17 +28,17 @@
 					<f:facet name="header">Nome</f:facet>
 					#{empresa.nome}
 				</h:column>
+	
+				<h:column>
+					<f:facet name="header">Situação</f:facet>
+					<h:outputLabel styleClass="label label-success" rendered="#{empresa.habilitada}">Habilitada</h:outputLabel>
+					<h:outputLabel styleClass="label label-danger" rendered="#{not empresa.habilitada}">Desabilitada</h:outputLabel>
+				</h:column>
 
 				<h:column>
 					<f:facet name="header">Habilitar/Desabilitar</f:facet>
 					<h:commandButton value="Habilitar" actionListener="#{coordenadorBean.habilitarEmpresa(empresa)}" rendered="#{not empresa.habilitada}" styleClass="btn btn-success" />
 					<h:commandButton value="Desabilitar" actionListener="#{coordenadorBean.desabilitarEmpresa(empresa)}" rendered="#{empresa.habilitada}" styleClass="btn btn-danger"/>
-				</h:column>
-				
-				<h:column>
-					<f:facet name="header">Situação</f:facet>
-					<h:outputLabel styleClass="label label-success" rendered="#{empresa.habilitada}">Habilitada</h:outputLabel>
-					<h:outputLabel styleClass="label label-danger" rendered="#{not empresa.habilitada}">Desabilitada</h:outputLabel>
 				</h:column>
 			</h:dataTable>
 		</h:form>
