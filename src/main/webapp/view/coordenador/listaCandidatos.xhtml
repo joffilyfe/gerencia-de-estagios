@@ -12,7 +12,7 @@
 </f:metadata>
 
 <ui:composition template="/view/templates/admin.xhtml">
-	<ui:define name="header-title"> Candidatos</ui:define>
+	<ui:define name="header-title">Candidatos</ui:define>
 
 	<ui:define name="content">
 
@@ -21,11 +21,9 @@
 		</h:panelGroup>
 
 		<h:form id="form">
-			<h:messages errorStyle="color:red" infoStyle="color:blue"
-				layout="table" />
+			<h:messages errorStyle="color:red" infoStyle="color:blue" layout="table" />
 
-			<h:dataTable var="aluno" value="#{coordenadorBean.alunos}"
-				styleClass="table table-hover">
+			<h:dataTable var="aluno" value="#{coordenadorBean.alunos}" styleClass="table table-hover">
 				<h:column>
 					<f:facet name="header">#</f:facet>
 					#{aluno.id}
@@ -55,9 +53,7 @@
 
 				<h:column>
 					<f:facet name="header">Ações</f:facet>
-					<h:commandLink id="bt_transforma" value="Tranformar em estagio"
-						action="#{coordenadorBean.transformaEstagio(aluno,vaga)}"
-						rendered="#{aluno.estagiando == false and aluno.admitido == true}" />
+					<h:commandButton class="btn btn-primary" value="Transformar em estagio" action="#{coordenadorBean.transformaEstagio(aluno)}" rendered="#{aluno.estagiando == false}" />
 				</h:column>
 
 			</h:dataTable>

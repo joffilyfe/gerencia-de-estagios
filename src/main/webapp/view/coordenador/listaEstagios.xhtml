@@ -61,18 +61,19 @@
 				</h:column>
 
 				<h:column>
-					<f:facet name="header">Ações</f:facet>
+					<f:facet name="header">Editado</f:facet>
+					<h:outputText rendered="#{estagio.editado == true}" styleClass="label label-success" value="Sim" />
+					<h:outputText rendered="#{estagio.editado == false}" styleClass="label label-danger" value="Não" />
 
-					<h:commandLink id="bt_edit"
-						action="#{coordenadorBean.editarEstagio(estagio)}" value="Editar" />
 				</h:column>
 
+				<h:column>
+					<f:facet name="header">Ações</f:facet>
+					<h:commandButton styleClass="btn btn-primary" action="#{coordenadorBean.editarEstagio(estagio)}" value="Editar" />
+				</h:column>
 			</h:dataTable>
-
-
 		</h:form>
 
 	</ui:define>
-
 </ui:composition>
 </html>

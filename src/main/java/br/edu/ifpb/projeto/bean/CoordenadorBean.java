@@ -6,6 +6,7 @@ import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 
+import br.edu.ifpb.projeto.dao.AlunoDAO;
 import br.edu.ifpb.projeto.dao.EmpresaDAO;
 import br.edu.ifpb.projeto.dao.EstagioDAO;
 import br.edu.ifpb.projeto.dao.VagaAlunoDAO;
@@ -25,6 +26,7 @@ public class CoordenadorBean {
 	private List<Estagio> estagios;
 	private List<Vaga> vagas;
 
+	private Aluno aluno;
 	private Vaga vaga;
 	private Estagio estagio;
 
@@ -62,6 +64,14 @@ public class CoordenadorBean {
 		this.vagas = vagas;
 	}
 
+	public Aluno getAluno() {
+		return aluno;
+	}
+
+	public void setAluno(Aluno aluno) {
+		this.aluno = aluno;
+	}
+
 	public Vaga getVaga() {
 		return vaga;
 	}
@@ -78,29 +88,9 @@ public class CoordenadorBean {
 		this.estagio = estagio;
 	}
 
-	public String detalhesVaga(Vaga vaga) {
+	public String candidatos(Vaga vaga) {
 		this.vaga = vaga;
-
 		return "/view/coordenador/listaCandidatos?faces-redirect=true";
-	}
-
-	// preRenderView do listar candidatos
-	public void listarCandidatos() {
-		this.alunos = new ArrayList<Aluno>();
-
-		VagaAlunoDAO vagaAlunoDAO = new VagaAlunoDAO();
-		List<VagaAluno> vagaAlunos = vagaAlunoDAO.findBy(this.vaga);
-
-		if (vagaAlunos != null) {
-			for (VagaAluno vagaAluno : vagaAlunos) {
-				Aluno aluno = vagaAluno.getAluno();
-
-				// Se aluno estiver admitido nao eh candidato
-				if (!aluno.isAdmitido()) {
-					this.alunos.add(aluno);
-				}
-			}
-		}
 	}
 
 	// listagens
@@ -120,12 +110,51 @@ public class CoordenadorBean {
 		this.estagios = estagioDao.getAllActive();
 	}
 
+	// preRenderView do listar candidatos
+	public void listarCandidatos() {
+		this.alunos = new ArrayList<Aluno>();
+
+		VagaAlunoDAO vagaAlunoDAO = new VagaAlunoDAO();
+		List<VagaAluno> vagaAlunos = vagaAlunoDAO.findBy(this.vaga);
+
+		if (vagaAlunos != null) {
+			for (VagaAluno vagaAluno : vagaAlunos) {
+				Aluno aluno = vagaAluno.getAluno();
+
+				// Se aluno estiver estagiando e estagiando nao eh candidato
+				if (!aluno.isEstagiando()) {
+					this.alunos.add(aluno);
+				}
+			}
+		}
+	}
+
 	// metodos para operações
 
-	
-	public String habilitarEmpresa(Empresa empresa){
-		EmpresaDAO empresaDao = new EmpresaDAO();
+	public String transformaEstagio(Aluno aluno) {
+		EstagioDAO estagioDao = new EstagioDAO();
+		AlunoDAO alunoDao = new AlunoDAO();
+
+		Estagio estagio = estagioDao.getBy(this.vaga, aluno);
 		
+		if (estagio != null) {
+			estagio.setEditado(true);
+			estagioDao.beginTransaction();
+			estagioDao.update(estagio);
+			estagioDao.commit();
+
+			alunoDao.beginTransaction();
+			aluno.addEstagio(estagio);
+			alunoDao.update(aluno);
+			alunoDao.commit();
+		}
+		
+		return "/view/coordenador/listaEmpresas?faces-redirect=true";
+	}
+
+	public String habilitarEmpresa(Empresa empresa) {
+		EmpresaDAO empresaDao = new EmpresaDAO();
+
 		empresa.setHabilitada(true);
 
 		empresaDao.beginTransaction();
@@ -134,10 +163,10 @@ public class CoordenadorBean {
 
 		return "/view/coordenador/listaEmpresas?faces-redirect=true";
 	}
-	
-	public String desabilitarEmpresa(Empresa empresa){
+
+	public String desabilitarEmpresa(Empresa empresa) {
 		EmpresaDAO empresaDao = new EmpresaDAO();
-		
+
 		empresa.setHabilitada(false);
 
 		empresaDao.beginTransaction();
