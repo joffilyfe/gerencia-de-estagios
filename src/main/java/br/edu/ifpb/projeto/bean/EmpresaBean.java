@@ -12,10 +12,17 @@ import javax.faces.context.Flash;
 import javax.faces.event.ComponentSystemEvent;
 
 import br.edu.ifpb.project.util.Application;
+import br.edu.ifpb.projeto.dao.AlunoDAO;
 import br.edu.ifpb.projeto.dao.EmpresaDAO;
+import br.edu.ifpb.projeto.dao.EstagioDAO;
+import br.edu.ifpb.projeto.dao.PersistenceUtil;
+import br.edu.ifpb.projeto.dao.VagaAlunoDAO;
 import br.edu.ifpb.projeto.dao.VagaDAO;
+import br.edu.ifpb.projeto.model.Aluno;
 import br.edu.ifpb.projeto.model.Empresa;
+import br.edu.ifpb.projeto.model.Estagio;
 import br.edu.ifpb.projeto.model.Vaga;
+import br.edu.ifpb.projeto.model.VagaAluno;
 
 @ManagedBean(name = "empresaBean")
 @ViewScoped
@@ -118,6 +125,59 @@ public class EmpresaBean {
 		loadFlash();
 		return "/view/empresa/candidatos?faces-redirect=true";
 	}
+	
+	public String admitir(Aluno aluno) {
+		
+		VagaDAO vagaDAO = new VagaDAO();
+		AlunoDAO alunoDAO = new AlunoDAO();
+		EstagioDAO estagioDAO = new EstagioDAO();
+		VagaAlunoDAO vaDAO = new VagaAlunoDAO();
+		
+		loadFlash();
+		
+		VagaAluno vagaAluno = vaDAO.findBy(aluno, vaga);
+		
+		if (vagaAluno != null && vagaAluno.isAdmitido()) {
+			Application.addMessage("Este aluno já foi admitido", FacesMessage.SEVERITY_INFO);
+			return "/view/empresa/candidatos?faces-redirect=true";
+		}
+
+		Estagio estagio = new Estagio(vaga.getEmpresa(), aluno, vaga);
+
+		// Cria pedido de estágio
+		estagioDAO.beginTransaction();
+		estagioDAO.insert(estagio);
+		estagioDAO.commit();
+
+		// Seta o aluno como admitido
+		vaDAO.beginTransaction();
+		vagaAluno.setAdmitido(true);
+		vaDAO.update(vagaAluno);
+		vaDAO.commit();
+
+		// Atualiza aluno
+		alunoDAO.beginTransaction();
+		alunoDAO.update(aluno);
+		alunoDAO.commit();
+
+		// Atualiza a vaga
+		vagaDAO.beginTransaction();
+		vagaDAO.update(vaga);
+		vagaDAO.commit();
+		
+		Application.addMessage("Parabéns, você selecionou o aluno "+aluno.getNome()+" para a vaga "+vaga.getTitulo(), FacesMessage.SEVERITY_INFO);
+		
+		return "/view/empresa/candidatos?faces-redirect=true";
+	}
+	
+	public void loadAlunos() {
+		VagaAlunoDAO vaDAO = new VagaAlunoDAO();
+		
+		for(Aluno a : vaga.getAlunos()) {
+			VagaAluno v = vaDAO.findBy(a, vaga);
+			a.setAdmitido(v.isAdmitido());
+		}
+	}
 
 	private void loadFlash() {
 		Flash flash = FacesContext.getCurrentInstance().getExternalContext().getFlash();
@@ -129,7 +189,6 @@ public class EmpresaBean {
 		Flash flash = FacesContext.getCurrentInstance().getExternalContext().getFlash();
 		this.setEmpresa((Empresa) flash.get(empresa));
 		this.setVaga((Vaga) flash.get("vaga"));
-
 	}
 
 	public void init() {

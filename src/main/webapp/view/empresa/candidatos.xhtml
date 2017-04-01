@@ -8,6 +8,7 @@
 
 <f:metadata>
 	<f:event listener="#{empresaBean.unloadFlash()}" type="preRenderView"></f:event>
+	<f:event listener="#{empresaBean.loadAlunos()}" type="preRenderView"></f:event>
 </f:metadata>
 
 <h:body>
@@ -42,7 +43,8 @@
 						#{aluno.competencias}
 			</h:column>
 			<h:column>
-			<h:commandButton id="btnAdmitir" class="btn btn-primary" value="Admitir" action="#{empresaBean.admitir(aluno)}" />
+				<h:commandButton class="btn btn-primary" value="Admitir" action="#{empresaBean.admitir(aluno)}" rendered="#{not aluno.admitido}"/>
+				<h:commandButton class="btn btn-default" value="Já admitido" disabled="true" rendered="#{aluno.admitido}"/>
 			</h:column>
 
 		</h:dataTable>
