@@ -1,7 +1,9 @@
 package br.edu.ifpb.projeto.bean;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
@@ -29,6 +31,8 @@ public class CoordenadorBean {
 	private Aluno aluno;
 	private Vaga vaga;
 	private Estagio estagio;
+
+	private Map<Long, Boolean> checked = new HashMap<Long, Boolean>();
 
 	// getters and setters
 
@@ -88,6 +92,14 @@ public class CoordenadorBean {
 		this.estagio = estagio;
 	}
 
+	public Map<Long, Boolean> getChecked() {
+		return checked;
+	}
+
+	public void setChecked(Map<Long, Boolean> checked) {
+		this.checked = checked;
+	}
+
 	public String candidatos(Vaga vaga) {
 		this.vaga = vaga;
 		return "/view/coordenador/listaCandidatos?faces-redirect=true";
@@ -136,7 +148,7 @@ public class CoordenadorBean {
 		AlunoDAO alunoDao = new AlunoDAO();
 
 		Estagio estagio = estagioDao.getBy(this.vaga, aluno);
-		
+
 		if (estagio != null) {
 			estagio.setEditado(true);
 			estagioDao.beginTransaction();
@@ -148,30 +160,67 @@ public class CoordenadorBean {
 			alunoDao.update(aluno);
 			alunoDao.commit();
 		}
-		
+
 		return "/view/coordenador/listaEmpresas?faces-redirect=true";
 	}
 
 	public String habilitarEmpresa(Empresa empresa) {
 		EmpresaDAO empresaDao = new EmpresaDAO();
+		int qtd = 0; // Variavel para saber quantidade de empresas marcadas
 
-		empresa.setHabilitada(true);
+		for (Empresa e : empresas)
+			// descobrir quantidade de empresas selecionadas
+			if (checked.get(e.getId()))
+				qtd++;
 
-		empresaDao.beginTransaction();
-		empresaDao.update(empresa);
-		empresaDao.commit();
+		if (qtd == 0) {
+			empresa.setHabilitada(true);
+
+			empresaDao.beginTransaction();
+			empresaDao.update(empresa);
+			empresaDao.commit();
+		} else {
+			empresaDao.beginTransaction();
+			for (Empresa e : empresas)
+				if (checked.get(e.getId())) {
+					e.setHabilitada(true);
+					empresaDao.update(e);
+				}
+			empresaDao.commit();
+		}
+		// limpa o hashmap
+		checked.clear();
 
 		return "/view/coordenador/listaEmpresas?faces-redirect=true";
+
 	}
 
 	public String desabilitarEmpresa(Empresa empresa) {
 		EmpresaDAO empresaDao = new EmpresaDAO();
+		int qtd = 0; // Variavel para saber quantidade de empresas marcadas
 
-		empresa.setHabilitada(false);
+		for (Empresa e : empresas)
+			// descobrir quantidade de empresas selecionadas
+			if (checked.get(e.getId()))
+				qtd++;
 
-		empresaDao.beginTransaction();
-		empresaDao.update(empresa);
-		empresaDao.commit();
+		if (qtd == 0) {
+			empresa.setHabilitada(false);
+
+			empresaDao.beginTransaction();
+			empresaDao.update(empresa);
+			empresaDao.commit();
+		} else {
+			empresaDao.beginTransaction();
+			for (Empresa e : empresas)
+				if (checked.get(e.getId())) {
+					e.setHabilitada(false);
+					empresaDao.update(e);
+				}
+			empresaDao.commit();
+		}
+		// limpa o hashmap
+		checked.clear();
 
 		return "/view/coordenador/listaEmpresas?faces-redirect=true";
 	}

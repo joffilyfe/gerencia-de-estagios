@@ -20,6 +20,11 @@
 		<h:form>
 			<h:dataTable var="empresa" value="#{coordenadorBean.empresas}" styleClass="table table-hover">
 				<h:column>
+					<f:facet name="header">#</f:facet>
+			        <h:selectBooleanCheckbox value="#{coordenadorBean.checked[empresa.id]}" />
+			    </h:column>
+			
+				<h:column>
 					<f:facet name="header">ID</f:facet>
 					#{empresa.id}
 				</h:column>
