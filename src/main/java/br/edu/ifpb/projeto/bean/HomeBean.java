@@ -14,7 +14,7 @@ public class HomeBean {
 
 	public void listarVagas() {
 		VagaDAO dao = new VagaDAO();
-		this.vagas = dao.findAll();
+		this.vagas = dao.latest();
 	}
 
 	public List<Vaga> getVagas() {
