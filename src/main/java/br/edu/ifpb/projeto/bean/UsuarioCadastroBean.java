@@ -33,6 +33,7 @@ public class UsuarioCadastroBean {
 		this.usuario.setNome(this.nome);
 		this.usuario.setEmail(this.email);
 		this.usuario.setSenha(this.senha);
+		this.usuario.setCoordenador(false);
 
 		UsuarioDAO dao = new UsuarioDAO();
 		dao.beginTransaction();
