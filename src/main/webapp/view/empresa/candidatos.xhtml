@@ -28,7 +28,7 @@
 					styleClass="table table-striped table-hover" id="tabela_vagas">
 			<h:column>
 				<f:facet name="header">Nome</f:facet>
-				#{aluno.nome}
+				<h:link value="#{aluno.nome}" outcome="/view/aluno/perfil.xhtml?id=#{aluno.id}"/>
 			</h:column>
 			<h:column>
 			<f:facet name="header">Matricula</f:facet>
