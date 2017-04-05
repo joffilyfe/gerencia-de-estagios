@@ -75,16 +75,21 @@ public class EmpresaBean {
 	}
 
 	public String cadastrar() {
-		vaga.setEmpresa(empresa);
+		if (empresa.getHabilitada()) {
+			vaga.setEmpresa(empresa);
 
-		VagaDAO tDao = new VagaDAO();
-		tDao.beginTransaction();
-		tDao.insert(vaga);
-		tDao.commit();
+			VagaDAO tDao = new VagaDAO();
+			tDao.beginTransaction();
+			tDao.insert(vaga);
+			tDao.commit();
 
-		Application.addMessage("Vaga cadastrada com sucesso!", FacesMessage.SEVERITY_INFO);
-		vagas.add(vaga);
-		return "/view/empresa/minhas_vagas?faces-redirect=true";
+			Application.addMessage("Vaga cadastrada com sucesso!", FacesMessage.SEVERITY_INFO);
+			vagas.add(vaga);
+			return "/view/empresa/minhas_vagas?faces-redirect=true";			
+		} else {
+			Application.addMessage("Seu perfil de empresa ainda não foi habilitada pelo coordenador", FacesMessage.SEVERITY_ERROR);
+			return null;						
+		}
 
 	}
 
