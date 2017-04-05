@@ -6,8 +6,8 @@
 	xmlns:h="http://xmlns.jcp.org/jsf/html"
 	xmlns:f="http://xmlns.jcp.org/jsf/core">
 <f:metadata>
-	<f:viewParam value="#{alunoBean.id}" name="id"/>
-	<f:event listener="#{alunoBean.verAluno()}" type="preRenderView"></f:event>
+	<f:viewParam value="#{verAlunoBean.id}" name="id"/>
+	<f:event listener="#{verAlunoBean.verAluno()}" type="preRenderView"></f:event>
 </f:metadata>
 
 <ui:composition template="/view/templates/base.xhtml">
@@ -16,18 +16,18 @@
 		<div class="col-md-12">
 			<h4>Nome</h4>
 			<div class="well well-sm">
-				<h:outputText value="#{alunoBean.aluno.nome}"/>
+				<h:outputText value="#{verAlunoBean.aluno.nome}"/>
 			</div>
 			<h4>Contato</h4>
 			<div class="well well-sm">
-				<h:outputText value="#{alunoBean.aluno.email}"/>
+				<h:outputText value="#{verAlunoBean.aluno.email}"/>
 			</div>
 			<h4>Competências</h4>
 			<div class="well well-sm">
-				<ui:fragment rendered="#{not empty alunoBean.aluno.competencias}">
-					<h:outputText value="#{alunoBean.aluno.competencias}"/>
+				<ui:fragment rendered="#{not empty verAlunoBean.aluno.competencias}">
+					<h:outputText value="#{verAlunoBean.aluno.competencias}"/>
 				</ui:fragment>	
-				<ui:fragment rendered="#{empty alunoBean.aluno.competencias}">
+				<ui:fragment rendered="#{empty verAlunoBean.aluno.competencias}">
 					<p>Este não informou suas competências.</p>
 				</ui:fragment>
 			</div>			

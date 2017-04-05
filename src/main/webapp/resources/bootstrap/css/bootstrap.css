@@ -6758,3 +6758,8 @@ button.close {
   }
 }
 /*# sourceMappingURL=bootstrap.css.map */
+
+select.form-control,
+input.form-control {
+	height: 34px !important;
+}

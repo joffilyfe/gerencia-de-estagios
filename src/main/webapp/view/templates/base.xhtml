@@ -65,6 +65,9 @@ xmlns:f="http://xmlns.jcp.org/jsf/core">
 						</ui:fragment>
 						<ui:fragment rendered="#{usuarioBean.usuario.empresa}">
 							<li>
+								<h:link value="Ver meu perfil" outcome="/view/empresa/perfil_publico.jsf?id=#{usuarioBean.usuario.id}"/>
+							</li>
+							<li>
 								<h:link value="Editar perfil" outcome="/view/empresa/editar_perfil.jsf?faces-redirect=true" />
 							</li>
 							<li>

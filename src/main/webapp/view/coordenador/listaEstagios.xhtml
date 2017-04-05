@@ -20,9 +20,6 @@
 		</h:panelGroup>
 
 		<h:form id="formConCtt">
-			<h:messages errorStyle="color:red" infoStyle="color:blue"
-				layout="table" />
-
 			<h:dataTable var="estagio" value="#{coordenadorBean.estagios}"
 				styleClass="table table-hover">
 
@@ -33,17 +30,17 @@
 
 				<h:column>
 					<f:facet name="header">Aluno</f:facet>
-					<h:commandLink id="bt_aluno" action="#" value="#{estagio.aluno.nome}" />
+					<h:link value="#{estagio.aluno.nome}" outcome="/view/aluno/perfil.xhtml?id=#{estagio.aluno.id}" />
 				</h:column>
 
 				<h:column>
 					<f:facet name="header">Vaga</f:facet>
-					<h:commandLink id="bt_vaga" action="#" value="#{estagio.vaga.titulo}" />
+					<h:link value="#{estagio.vaga.titulo}" outcome="/view/vaga/detalhes.jsf?id=#{estagio.vaga.id}"/>
 				</h:column>
 
 				<h:column>
 					<f:facet name="header">Empresa</f:facet>
-					<h:commandLink id="bt_empresa" action="#" value="#{estagio.empresa.nome}" />
+					<h:link value="#{estagio.vaga.empresa.nome}" outcome="/view/empresa/perfil_publico.jsf?id=#{estagio.vaga.empresa.id}"/>
 				</h:column>
 
 				<h:column>
@@ -57,13 +54,6 @@
 					<f:facet name="header">Encerrado</f:facet>
 					<h:outputText rendered="#{estagio.encerrado == true}" styleClass="label label-success" value="Sim" />
 					<h:outputText rendered="#{estagio.encerrado == false}" styleClass="label label-danger" value="Não" />
-
-				</h:column>
-
-				<h:column>
-					<f:facet name="header">Editado</f:facet>
-					<h:outputText rendered="#{estagio.editado == true}" styleClass="label label-success" value="Sim" />
-					<h:outputText rendered="#{estagio.editado == false}" styleClass="label label-danger" value="Não" />
 
 				</h:column>
 

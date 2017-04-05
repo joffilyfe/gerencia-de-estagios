@@ -8,25 +8,34 @@
 
 	
 <f:metadata>
-	<f:viewParam name="id" value="#{empresaBean.id}" />
-	<f:event listener="#{empresaBean.init}" type="preRenderView"></f:event>
+	<f:viewParam value="#{verEmpresaBean.id}" name="id"/>
+	<f:event listener="#{verEmpresaBean.verPerfil()}" type="preRenderView"></f:event>
 </f:metadata>
+
 <h:body>
-#{empresaBean.unloadFlash()}
 
 <ui:composition template="/view/templates/base.xhtml">
 	<ui:define name="header-title">Perfil da empresa</ui:define>
 		<ui:define name="content">
 		
-		<h4>
-			Nome: #{empresaBean.empresa.nome}<br>
-			Endereço: #{empresaBean.empresa.endereco}</br>
-			Contato: #{empresaBean.empresa.nomeDoContato}
-		</h4>
+		<h4>Nome</h4>
+		<div class="well well-sm">
+			<h:outputText value="#{verEmpresaBean.empresa.nome}"/>
+		</div>
+
+		<h4>Endereço</h4>
+		<div class="well well-sm">
+			<h:outputText value="#{verEmpresaBean.empresa.endereco}"/>
+		</div>
+
+		<h4>Nome do contato</h4>
+		<div class="well well-sm">
+			<h:outputText value="#{verEmpresaBean.empresa.nomeDoContato}"/>
+		</div>
 		
 		<h3>Vagas:</h3>
 		
-		<h:dataTable var="vaga" value="#{empresaBean.empresa.vagas}" rendered="#{not empty empresaBean.empresa.vagas}"
+		<h:dataTable var="vaga" value="#{verEmpresaBean.empresa.vagas}" rendered="#{not empty verEmpresaBean.empresa.vagas}"
 		styleClass="table table-striped table-hover" id="tabela_empresas">
 			<h:column>
 			<f:facet name="header">Titulo</f:facet>

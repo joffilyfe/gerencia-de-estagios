@@ -21,7 +21,6 @@
 		</h:panelGroup>
 
 		<h:form id="form">
-			<h:messages errorStyle="color:red" infoStyle="color:blue" layout="table" />
 
 			<h:dataTable var="aluno" value="#{coordenadorBean.alunos}" styleClass="table table-hover">
 				<h:column>
@@ -31,7 +30,7 @@
 
 				<h:column>
 					<f:facet name="header">Nome</f:facet>
-					${aluno.nome}
+					<h:link value="#{aluno.nome}" outcome="/view/aluno/perfil.xhtml?id=#{aluno.id}" />
 				</h:column>
 
 				<h:column>
@@ -41,8 +40,8 @@
 
 				<h:column>
 					<f:facet name="header">Admitido</f:facet>
-					<h:outputText rendered="#{aluno.admitido == true}" styleClass="label label-success" value="Sim" />
-					<h:outputText rendered="#{aluno.admitido == false}" styleClass="label label-danger" value="Não" />
+					<h:outputText rendered="#{aluno.admitido}" styleClass="label label-success" value="Sim" />
+					<h:outputText rendered="#{not aluno.admitido}" styleClass="label label-danger" value="Não" />
 				</h:column>
 
 				<h:column>
@@ -53,7 +52,8 @@
 
 				<h:column>
 					<f:facet name="header">Ações</f:facet>
-					<h:commandButton class="btn btn-primary" value="Transformar em estagio" action="#{coordenadorBean.transformaEstagio(aluno)}" rendered="#{aluno.estagiando == false}" />
+					<h:commandButton class="btn btn-primary" value="Transformar em estagio" action="#{coordenadorBean.transformaEstagio(aluno)}" rendered="#{not aluno.estagiando and aluno.admitido and not aluno.estagiou}" />
+					<h:commandButton class="btn btn-default" value="Aluno já estagiou" action="#" disabled="true" rendered="#{aluno.estagiou}" />
 				</h:column>
 
 			</h:dataTable>
