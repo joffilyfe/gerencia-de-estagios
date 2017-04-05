@@ -11,7 +11,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.context.Flash;
 import javax.faces.event.ComponentSystemEvent;
 
-import br.edu.ifpb.project.util.Application;
+import br.edu.ifpb.project.util.App;
 import br.edu.ifpb.projeto.dao.AlunoDAO;
 import br.edu.ifpb.projeto.dao.EmpresaDAO;
 import br.edu.ifpb.projeto.dao.EstagioDAO;
@@ -83,13 +83,14 @@ public class EmpresaBean {
 			tDao.insert(vaga);
 			tDao.commit();
 
-			Application.addMessage("Vaga cadastrada com sucesso!", FacesMessage.SEVERITY_INFO);
+			App.addMessage("Vaga cadastrada com sucesso!", FacesMessage.SEVERITY_INFO);
 			vagas.add(vaga);
 			return "/view/empresa/minhas_vagas?faces-redirect=true";			
 		} else {
-			Application.addMessage("Seu perfil de empresa ainda não foi habilitada pelo coordenador", FacesMessage.SEVERITY_ERROR);
+			App.addMessage("Seu perfil de empresa ainda não foi habilitada pelo coordenador", FacesMessage.SEVERITY_ERROR);
 			return null;						
 		}
+
 
 	}
 
@@ -98,7 +99,7 @@ public class EmpresaBean {
 		tDao.beginTransaction();
 		tDao.update(empresa);
 		tDao.commit();
-		Application.addMessage("Alterações realizadas com sucesso", FacesMessage.SEVERITY_INFO);
+		App.addMessage("Alterações realizadas com sucesso", FacesMessage.SEVERITY_INFO);
 
 		return "/view/index?faces-redirect=true";
 	}
@@ -143,7 +144,7 @@ public class EmpresaBean {
 		VagaAluno vagaAluno = vaDAO.findBy(aluno, vaga);
 		
 		if (vagaAluno != null && vagaAluno.isAdmitido()) {
-			Application.addMessage("Este aluno já foi admitido", FacesMessage.SEVERITY_INFO);
+			App.addMessage("Este aluno já foi admitido", FacesMessage.SEVERITY_INFO);
 			return "/view/empresa/candidatos?faces-redirect=true";
 		}
 
@@ -170,7 +171,7 @@ public class EmpresaBean {
 		vagaDAO.update(vaga);
 		vagaDAO.commit();
 		
-		Application.addMessage("Parabéns, você selecionou o aluno "+aluno.getNome()+" para a vaga "+vaga.getTitulo(), FacesMessage.SEVERITY_INFO);
+		App.addMessage("Parabéns, você selecionou o aluno "+aluno.getNome()+" para a vaga "+vaga.getTitulo(), FacesMessage.SEVERITY_INFO);
 		
 		return "/view/empresa/candidatos?faces-redirect=true";
 	}

@@ -1,0 +1,55 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+	
+<f:metadata>
+	<f:viewParam name="id" value="#{empresaBean.id}" />
+	<f:event listener="#{empresaBean.init}" type="preRenderView"></f:event>
+</f:metadata>
+<h:body>
+#{empresaBean.unloadFlash()}
+
+<ui:composition template="/view/templates/base.xhtml">
+	<ui:define name="header-title">Perfil da empresa</ui:define>
+		<ui:define name="content">
+		
+		<h4>
+			Nome: #{empresaBean.empresa.nome}<br>
+			Endereço: #{empresaBean.empresa.endereco}</br>
+			Contato: #{empresaBean.empresa.nomeDoContato}
+		</h4>
+		
+		<h3>Vagas:</h3>
+		
+		<h:dataTable var="vaga" value="#{empresaBean.empresa.vagas}" rendered="#{not empty empresaBean.empresa.vagas}"
+		styleClass="table table-striped table-hover" id="tabela_empresas">
+			<h:column>
+			<f:facet name="header">Titulo</f:facet>
+						#{vaga.titulo}
+			</h:column>
+			<h:column>
+			<f:facet name="header">Descrição</f:facet>
+						#{vaga.descricao}
+			</h:column>
+			<h:column>
+			<f:facet name="header">Area</f:facet>
+						#{vaga.areaDeFormacao}
+			</h:column>
+			<h:column>
+			<f:facet name="header">Vagas</f:facet>
+						#{vaga.qtdVagas}
+						
+			</h:column>
+		</h:dataTable>
+		
+		</ui:define>
+	</ui:composition>
+
+</h:body>
+
+</html>

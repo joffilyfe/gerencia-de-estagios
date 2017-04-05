@@ -4,7 +4,7 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
-import br.edu.ifpb.project.util.Application;
+import br.edu.ifpb.project.util.App;
 import br.edu.ifpb.projeto.dao.UsuarioDAO;
 import br.edu.ifpb.projeto.model.Aluno;
 import br.edu.ifpb.projeto.model.Empresa;
@@ -40,7 +40,7 @@ public class UsuarioCadastroBean {
 		dao.insert(this.usuario);
 		dao.commit();
 
-		Application.addMessage("Cadastro realizado com sucesso!", FacesMessage.SEVERITY_INFO);
+		App.addMessage("Cadastro realizado com sucesso!", FacesMessage.SEVERITY_INFO);
 		return "/view/index?faces-redirect=true";
 	}
 

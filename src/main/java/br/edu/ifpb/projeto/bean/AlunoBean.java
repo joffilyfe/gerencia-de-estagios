@@ -6,7 +6,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 
-import br.edu.ifpb.project.util.Application;
+import br.edu.ifpb.project.util.App;
 import br.edu.ifpb.projeto.dao.AlunoDAO;
 import br.edu.ifpb.projeto.model.Aluno;
 
@@ -52,7 +52,7 @@ public class AlunoBean {
 		alunoDao.update(this.aluno);
 		alunoDao.commit();
 
-		Application.addMessage("Alterações realizadas com sucesso!", FacesMessage.SEVERITY_INFO);
+		App.addMessage("Alterações realizadas com sucesso!", FacesMessage.SEVERITY_INFO);
 
 		return "/view/index?faces-redirect=true";
 	}

@@ -5,7 +5,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 
-import br.edu.ifpb.project.util.Application;
+import br.edu.ifpb.project.util.App;
 import br.edu.ifpb.projeto.dao.AlunoDAO;
 import br.edu.ifpb.projeto.dao.VagaAlunoDAO;
 import br.edu.ifpb.projeto.dao.VagaDAO;
@@ -29,14 +29,14 @@ public class VagaBean {
 
 		if (aluno == null || vaga == null) {
 			System.out.println("Algo nullo");
-			Application.addMessage("Não foi possível candidatar-se a vaga.", FacesMessage.SEVERITY_ERROR);
+			App.addMessage("Não foi possível candidatar-se a vaga.", FacesMessage.SEVERITY_ERROR);
 			return "/view/vaga/index.xhtml?faces-redirect=true";
 		}
 
 		VagaAlunoDAO vagaAlunoDAO = new VagaAlunoDAO();
 
 		if (vagaAlunoDAO.findBy(aluno, vaga) != null) {
-			Application.addMessage("Você já está concorrendo a vaga", FacesMessage.SEVERITY_INFO);
+			App.addMessage("Você já está concorrendo a vaga", FacesMessage.SEVERITY_INFO);
 			return String.format("/view/vaga/detalhes.xhtml?id=%d&faces-redirect=true", vaga.getId());
 		}
 
@@ -63,7 +63,7 @@ public class VagaBean {
 		alunoDAO.update(aluno);
 		alunoDAO.commit();
 
-		Application.addMessage(String.format("Parabéns você está concorrendo a vaga %s.", vaga.getTitulo()),
+		App.addMessage(String.format("Parabéns você está concorrendo a vaga %s.", vaga.getTitulo()),
 				FacesMessage.SEVERITY_INFO);
 		return String.format("/view/vaga/detalhes.xhtml?id=%d&faces-redirect=true", vaga.getId());
 	}
