@@ -18,6 +18,8 @@ public class Aluno extends Usuario {
 	private List<Estagio> estagios = new ArrayList<Estagio>();
 	@Transient
 	private boolean admitido = false;
+	@Transient
+	private boolean estagiou = false;
 
 	public Aluno() {
 	}
@@ -87,6 +89,14 @@ public class Aluno extends Usuario {
 
 	public void setAdmitido(boolean admitido) {
 		this.admitido = admitido;
+	}
+
+	public boolean isEstagiou() {
+		return estagiou;
+	}
+
+	public void setEstagiou(boolean estagiou) {
+		this.estagiou = estagiou;
 	}
 
 	@Override

@@ -11,18 +11,20 @@
 
 	<ui:define name="content">
 		<h:form>
-			<h:outputLabel value="Estágio obrigatório?" />
-			<h:selectOneRadio id="obrigatorio" value="#{coordenadorBean.estagio.obrigatorio}" styleClass="form-control">
-				<f:selectItem itemLabel="Obrigatório" itemValue="true" />
-				<f:selectItem itemLabel="Não obrigatório" itemValue="false" />
-			</h:selectOneRadio>
-
-			<h:outputLabel value="Estágio Encerrado?" />
-			<h:selectOneRadio id="encerrado" value="#{coordenadorBean.estagio.encerrado}" styleClass="form-control">
-				<f:selectItem itemLabel="Encerrado" itemValue="true" />
-				<f:selectItem itemLabel="Não Encerrado" itemValue="false" />
-			</h:selectOneRadio>
-
+			<div class="form-group">
+				<h:outputLabel value="Estágio obrigatório?" />
+				<h:selectOneMenu id="obrigatorio" value="#{coordenadorBean.estagio.obrigatorio}" class="form-control">
+					<f:selectItem itemLabel="Obrigatório" itemValue="true" />
+					<f:selectItem itemLabel="Não obrigatório" itemValue="false" />
+				</h:selectOneMenu>
+			</div>
+			<div class="form-group">
+				<h:outputLabel value="Estágio Encerrado?" />
+				<h:selectOneMenu id="encerrado" value="#{coordenadorBean.estagio.encerrado}" styleClass="form-control">
+					<f:selectItem itemLabel="Encerrado" itemValue="true" />
+					<f:selectItem itemLabel="Não Encerrado" itemValue="false" />
+				</h:selectOneMenu>
+			</div>
 			<h:commandButton action="#{coordenadorBean.salvarEstagio}" value="Salvar" styleClass="form-control btn btn-success" />
 
 		</h:form>

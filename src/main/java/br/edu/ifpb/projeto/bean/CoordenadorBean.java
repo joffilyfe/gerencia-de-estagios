@@ -3,9 +3,11 @@ package br.edu.ifpb.projeto.bean;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 
+import br.edu.ifpb.project.util.Application;
 import br.edu.ifpb.projeto.dao.AlunoDAO;
 import br.edu.ifpb.projeto.dao.EmpresaDAO;
 import br.edu.ifpb.projeto.dao.EstagioDAO;
@@ -121,10 +123,18 @@ public class CoordenadorBean {
 			for (VagaAluno vagaAluno : vagaAlunos) {
 				Aluno aluno = vagaAluno.getAluno();
 
-				// Se aluno estiver estagiando e estagiando nao eh candidato
-				if (!aluno.isEstagiando()) {
-					this.alunos.add(aluno);
+				if (vagaAluno.isAdmitido()) {
+					aluno.setAdmitido(true);
 				}
+
+				EstagioDAO estagioDAO = new EstagioDAO();
+				Estagio estagio = estagioDAO.getBy(vaga, aluno);
+
+				if (estagio != null && estagio.isEditado()) {
+					aluno.setEstagiou(true);
+				}
+
+				this.alunos.add(aluno);
 			}
 		}
 	}
@@ -136,7 +146,7 @@ public class CoordenadorBean {
 		AlunoDAO alunoDao = new AlunoDAO();
 
 		Estagio estagio = estagioDao.getBy(this.vaga, aluno);
-		
+
 		if (estagio != null) {
 			estagio.setEditado(true);
 			estagioDao.beginTransaction();
@@ -147,8 +157,10 @@ public class CoordenadorBean {
 			aluno.addEstagio(estagio);
 			alunoDao.update(aluno);
 			alunoDao.commit();
+
+			Application.addMessage("Estágio iniciado com sucesso", FacesMessage.SEVERITY_INFO);
 		}
-		
+
 		return "/view/coordenador/listaEmpresas?faces-redirect=true";
 	}
 
@@ -160,6 +172,7 @@ public class CoordenadorBean {
 		empresaDao.beginTransaction();
 		empresaDao.update(empresa);
 		empresaDao.commit();
+		Application.addMessage("Empresa habilitada com sucesso", FacesMessage.SEVERITY_INFO);
 
 		return "/view/coordenador/listaEmpresas?faces-redirect=true";
 	}
@@ -172,6 +185,8 @@ public class CoordenadorBean {
 		empresaDao.beginTransaction();
 		empresaDao.update(empresa);
 		empresaDao.commit();
+
+		Application.addMessage("Empresa desabilitada com sucesso", FacesMessage.SEVERITY_INFO);
 
 		return "/view/coordenador/listaEmpresas?faces-redirect=true";
 	}
@@ -188,6 +203,7 @@ public class CoordenadorBean {
 		estagioDao.beginTransaction();
 		estagioDao.update(this.estagio);
 		estagioDao.commit();
+		Application.addMessage("Estágio salvo com sucesso", FacesMessage.SEVERITY_INFO);
 
 		return "/view/coordenador/listaEstagios?faces-redirect=true";
 	}
